@@ -1,0 +1,99 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+$primary-color-1: #00a595;
+$primary-color-2: #3fa9f5;
+$primary-color-3: #ff4d68;
+$primary-color-4: #ba7b05;
+$primary-color-5: #ffa543;
+
+$primary-color-dark-1: #00a595;
+$primary-color-dark-2: #00a595;
+$primary-color-dark-3: #7b2427;
+$primary-color-dark-4: #794f00;
+$primary-color-dark-5: #00a595;
+
+$primary-color-light-1: #00a595;
+$primary-color-light-2: #67c0ff;
+$primary-color-light-3: #ff6d72;
+$primary-color-light-4: #f29f05;
+$primary-color-light-5: #00a595;
+
+$primary-color-lightest-1: #d8ebf2;
+$primary-color-lightest-2: #e6f2d9;
+$primary-color-lightest-3: #f2d9d9;
+$primary-color-lightest-4: #f7e8bc;
+
+$white: #ffffff;
+
+$background-color-1: #f0f0f0;
+$background-color-2: #edf1f4;
+
+$font-color-primary: #595959;
+$font-color-dark: #222222;
+$font-color-light: #818181;
+$font-color-lightest: #c3c6c8;
+
+:root {
+  --primary-color-1: #00a595;
+  --primary-color-2: #3fa9f5;
+  --primary-color-3: #ff4d68;
+  --primary-color-4: #ba7b05;
+  --primary-color-5: #ffa543;
+
+  --primary-color-dark-1: #00a595;
+  --primary-color-dark-2: #0644f4;
+  --primary-color-dark-3: #7b2427;
+  --primary-color-dark-4: #794f00;
+  --primary-color-dark-5: #00a595;
+
+  --primary-color-light-1: #00a595;
+  --primary-color-light-2: #67c0ff;
+  --primary-color-light-3: #ff6d72;
+  --primary-color-light-4: #f29f05;
+  --primary-color-light-5: #00a595;
+
+  --primary-color-lightest-1: #d8ebf2;
+  --primary-color-lightest-2: #e6f2d9;
+  --primary-color-lightest-3: #f2d9d9;
+  --primary-color-lightest-4: #f7e8bc;
+
+  --white: #ffffff;
+
+  --background-color-1: #f0f0f0;
+  --background-color-2: #edf1f4;
+
+  --font-color-primary: #595959;
+  --font-color-dark: #222222;
+  --font-color-light: #818181;
+  --font-color-lightest: #c3c6c8;
+}
+:export {
+  primaryColor1: $primary-color-1;
+  primaryColorLight1: $primary-color-light-1;
+  primaryColorLightest1: $primary-color-lightest-1;
+  primaryColorDark1: $primary-color-dark-1;
+  primaryColor2: $primary-color-2;
+  primaryColorLightest2: $primary-color-lightest-2;
+  primaryColorLight2: $primary-color-light-2;
+  primaryColorDark2: $primary-color-dark-2;
+  primaryColor3: $primary-color-3;
+  primaryColorLight3: $primary-color-light-3;
+  primaryColorLightest3: $primary-color-lightest-3;
+  primaryColorDark3: $primary-color-dark-3;
+  primaryColor4: $primary-color-4;
+  primaryColorLight4: $primary-color-light-4;
+  primaryColorLightest4: $primary-color-lightest-4;
+  primaryColorDark4: $primary-color-dark-4;
+  primaryColor5: $primary-color-5;
+  primaryColorLight5: $primary-color-light-5;
+  primaryColorDark5: $primary-color-dark-5;
+  backgroundColor1: $background-color-1;
+  backgroundColor2: $background-color-2;
+  fontColorPrimary: $font-color-primary;
+  fontColorLight: $font-color-light;
+  fontColorLightest: $font-color-lightest;
+}

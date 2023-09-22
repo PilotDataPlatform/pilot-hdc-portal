@@ -1,0 +1,28 @@
+{
+  "create_project": {
+    "project_code": "A unique code to identify the Project. This code cannot be changed later. Contains 1-32 lower case letters and numbers (no spaces or symbols) and must start with a letter.",
+    "project_name": "A short name for the Project.  Maximum 100 characters, can be changed later.",
+    "project_description": "A textual narrative statement describing the Project. Maximum 250 characters.",
+    "tags": "Keywords to promote discoverability. Lowercase letters, numbers and/or hyphens (no spaces).  10 maximum tags, each tag maximum length 32 characters."
+  },
+  "create_dataset": {
+    "dataset_name": "A short name for the Dataset.  Maximum 100 characters, can be changed later.",
+    "dataset_code": "A unique code to identify the Dataset. This code cannot be changed later. Contains 3-32 lower case letters and numbers (no spaces or symbols).",
+    "authors": "One or several authors of the Dataset. 10 maximum authors, each author maximum length 50 characters.",
+    "dataset_type": "A term to describe the structure of the dataset. Select the default type \"GENERAL\" (no specific structure), or BIDS if using the BIDS (Brain Imaging Data Structure) validator.",
+    "description": "A textual narrative statement describing the Dataset. Maximum length 5000 characters.",
+    "modality": "One or several modalities of the Dataset. Multiple-choice from drop-down list.",
+    "collection_method": "One or several collection methods of the Dataset. 10 maximum methods, each method maximum length 20 characters.",
+    "license": "The name of the license under which this dataset can be shared, for example, licenses specified by Creative Commons or Open Data Commons. Abbreviations are recommended. Maximum length 20 characters.",
+    "tags": "Keywords to promote discoverability. Lowercase letters, numbers and/or hyphens (no spaces).  10 maximum tags, each tag maximum length 32 characters."
+  },
+  "project_add_member": {
+    "admin": "Project Administrators can add or remove users in their Project and upload, view, and download any data in the Project Green Room or Core.",
+    "collaborator": "Project Collaborators can upload, view, and download their own files in the Project Green Room and access all data in the Project Core.",
+    "contributor": "Project Contributors can upload, view, and download their own files in the Project Green Room but cannot access any data in the Project Core."
+  },
+  "platform_invite_user": {
+    "platform_user": "Platform Users can log in and explore the list of Projects in the Landing Page but don't yet have membership in a Project.",
+    "platform_admin": "Platform Administrators maintain the platform and have full permissions across all Projects. WARNING: High Privilege Role - only assign to appropriately trained individuals."
+  }
+}

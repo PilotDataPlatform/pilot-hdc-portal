@@ -1,0 +1,219 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+.registration {
+  height: 100vh;
+  background-color: var(--primary-color-dark-1) !important;
+  position: relative;
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    padding: 0 4.8rem;
+    justify-content: space-between;
+    line-height: normal !important;
+    align-items: center;
+    background: transparent !important;
+    height: auto !important;
+    padding: 24px 50px !important;
+    img {
+      width: 80px;
+    }
+
+    p {
+      margin: 0;
+      font-size: 1.4rem;
+      color: var(--white);
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--white);
+    }
+  }
+
+  &__footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: transparent !important;
+    color: var(--white) !important;
+    text-align: right;
+
+    p {
+      font-style: italic;
+      font-size: 1rem;
+      margin-bottom: 0;
+    }
+  }
+
+  &__pilot-logo {
+    width: 88rem;
+    height: 88rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      position: absolute;
+      right: -47%;
+      transform: translate(0, 15%);
+    }
+  }
+
+  &__card {
+    background-color: #25486e !important;
+    border: none !important;
+    width: 60rem;
+    min-height: 45rem;
+    margin: 90px auto 0 auto !important;
+    box-shadow: 0px 3px 6px #0000001a;
+    border-radius: 8px !important;
+    z-index: 1;
+
+    :global {
+      .ant-card-head {
+        border-color: #425a74 !important;
+      }
+
+      .ant-card-body {
+        padding: 40px 24px !important;
+      }
+
+      .ant-card-head-title {
+        color: var(--white);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+      }
+
+      .ant-form-item {
+        align-items: center;
+
+        &:nth-child(odd) {
+          margin-bottom: 12px;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        &.ant-form-item-has-error {
+          .ant-input,
+          .ant-input:hover {
+            background-color: transparent;
+          }
+        }
+
+        .ant-form-item-children-icon {
+          display: none;
+        }
+      }
+
+      .ant-input {
+        background: transparent;
+        border-radius: 6px;
+        font-size: 1.2rem;
+        color: var(--white);
+        padding: 4px 7px 4px 12px;
+
+        &#user-email {
+          background: transparent;
+          opacity: 0.17;
+          border-color: var(--font-color-lightest);
+          pointer-events: none;
+        }
+
+        &::placeholder {
+          color: #9a9b9b;
+          font-style: italic;
+        }
+      }
+
+      .ant-form-item-label {
+        margin-right: 0.8rem;
+
+        label {
+          color: var(--white);
+          font-size: 1.2rem;
+
+          &.ant-form-item-required {
+            &::before {
+              display: none !important;
+            }
+
+            &::after {
+              content: '*';
+              color: var(--white);
+              top: 0;
+              right: 1px;
+              margin-right: 0;
+            }
+          }
+        }
+      }
+    }
+
+    .card__register-button {
+      width: 115px;
+      box-shadow: unset;
+      border: none;
+      border-radius: 6px;
+      background-color: var(--primary-color-light-1);
+      color: var(--white) !important;
+
+      &:hover,
+      &:active,
+      &:focus,
+      &:disabled {
+        background-color: var(--primary-color-light-1) !important;
+      }
+
+      &:disabled {
+        opacity: 0.6;
+      }
+    }
+  }
+
+  &__password {
+    margin-bottom: 6px !important;
+  }
+
+  &__confirm-password {
+    label {
+      visibility: hidden;
+    }
+  }
+
+  &__message {
+    font-size: 1.4rem;
+    margin-bottom: 4rem;
+    text-align: center;
+    color: var(--white);
+    font-weight: 300;
+
+    strong {
+      font-weight: 600;
+    }
+  }
+
+  &__message-successful {
+    padding-top: 12rem;
+
+    p {
+      font-size: 1.2rem;
+      color: var(--white);
+      text-align: center;
+      margin-bottom: 0;
+
+      &:first-child {
+        color: var(--primary-color-light-2);
+        font-weight: 500;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}

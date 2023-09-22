@@ -1,0 +1,215 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+.formItem {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+.range {
+  padding-right: 20px !important;
+}
+.card {
+  margin-bottom: 10px;
+  background: white;
+  padding: 20px !important;
+  overflow: auto;
+}
+
+.buttonMargin {
+  margin-right: 10px;
+}
+
+.wrapper {
+  width: 100%;
+  padding: 30px 45px 20px 30px !important;
+}
+
+.paragraph {
+  max-width: calc(100% - 54px);
+  font-size: 20px;
+  margin-bottom: 4px;
+  overflow-wrap: break-word;
+}
+
+.tab {
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.tab {
+  :global {
+    .ant-tabs {
+      color: rgba(0, 0, 0, 0.65);
+    }
+
+    .ant-tabs-nav-wrap {
+      padding: 0 3.7rem;
+      .ant-tabs-tab {
+        font-size: 16px;
+        padding: 1.4rem 0;
+      }
+    }
+
+    .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+      font-weight: 500;
+      text-shadow: none;
+    }
+
+    .ant-dropdown-trigger > .anticon.anticon-down,
+    .ant-dropdown-link > .anticon.anticon-down {
+      font-size: 16px;
+    }
+    .ant-tabs-nav-wrap {
+      .ant-tabs-tab {
+        margin: 0px 80px 0px 0px !important;
+      }
+    }
+    .ant-tabs-extra-content {
+      font-size: 16px;
+      padding-right: 10px;
+    }
+  }
+}
+
+:global {
+  .ant-tabs-extra-content {
+    .ant-btn {
+      border-radius: 6px;
+      margin-right: 10px;
+      margin-left: 10px;
+    }
+  }
+}
+
+.createNewProjectCard {
+  :global {
+    .ant-card {
+      margin: 10px 75px 0px 75px !important;
+      border-radius: 8px;
+      box-shadow: 0px 1px 7px #0000001a;
+      opacity: 1;
+      padding-top: 10px;
+    }
+    .ant-card-body {
+      width: 100%;
+      padding-left: 10px;
+      padding-right: 35px;
+      padding-top: 25px;
+      padding-bottom: 45px;
+    }
+  }
+}
+
+.searchCard {
+  :global {
+    .ant-card {
+      border-radius: 0px 0px 6px 6px;
+      box-shadow: 0px 1px 7px #0000001a;
+      opacity: 1;
+      position: absolute !important;
+      top: 57px;
+      right: 45px;
+      left: 45px;
+      .ant-card-body {
+        padding: 35px 30px;
+      }
+    }
+  }
+
+  .firstInputLine {
+    width: 100%;
+    font-size: 15px;
+    display: flex;
+    > div {
+      display: inline-block;
+      margin-right: 1%;
+    }
+    > div:last-child {
+      margin-right: 0;
+      flex: 1;
+    }
+    :global {
+      p {
+        margin-bottom: 5px;
+      }
+      .ant-input {
+        border-radius: 6px;
+        height: 38px;
+      }
+      .ant-picker {
+        border-radius: 6px;
+        height: 38px;
+      }
+      .ant-select {
+        border-radius: 6px;
+      }
+      .ant-select-selector {
+        border-radius: 6px !important;
+        height: 38px;
+      }
+    }
+  }
+  .secondInputLine {
+    display: flex;
+    font-size: 15px;
+    align-items: flex-end;
+    :global {
+      p {
+        margin-bottom: 5px;
+      }
+      .ant-input {
+        border-radius: 6px;
+        height: 38px;
+      }
+      .ant-btn {
+        border-radius: 6px !important;
+        margin-right: 2%;
+      }
+    }
+  }
+}
+
+.newProjectForm {
+  :global {
+    p {
+      margin-bottom: 0;
+    }
+    .form-line {
+      display: flex;
+      margin-bottom: 10px;
+      align-items: center;
+    }
+    .ant-form-item {
+      margin-bottom: 0;
+    }
+    .ant-input {
+      border-radius: 6px;
+      height: 38px;
+    }
+    .ant-select-selector {
+      height: 38px;
+      border-radius: 6px !important;
+    }
+  }
+}
+
+.buttonItem {
+  margin-top: -48px;
+  :global {
+    .ant-btn-loading {
+      width: 130px !important;
+    }
+  }
+}
+.create-project-btn {
+  border: 0 !important;
+  margin-left: 30px !important;
+  color: var(--primary-color-light-1) !important;
+}
+.cancel-btn {
+  color: var(--primary-color-light-1) !important;
+}

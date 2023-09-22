@@ -1,0 +1,47 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+$textSize: 12px;
+$inputHeight: 36px;
+$labelHeight: 36px;
+
+.form {
+  .property-value {
+    color: #595959;
+    font-weight: 500;
+    font-size: 12px;
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+
+  :global {
+    .ant-form-item {
+      margin-bottom: 0px;
+
+      input {
+        border: 1px solid #818181;
+        border-radius: 6px;
+        font-size: $textSize;
+        height: 28px;
+        padding: 0 10px;
+      }
+      label {
+        color: #818181;
+        font-size: $textSize;
+        height: $labelHeight;
+        margin-right: 1em;
+      }
+      .ant-select-selector {
+        border: 1px solid #818181;
+        border-radius: 6px;
+        font-size: $textSize;
+        input {
+          padding: 0;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+
+.vfolder-rename__tooltip {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 33px;
+  top: -3px;
+  position: absolute;
+  z-index: 100;
+  background: white;
+  margin-top: 3px;
+  border-bottom: 1px solid var(--background-color-1);
+
+  :global {
+    span.anticon {
+      margin-right: 8px;
+    }
+  }
+
+  > span {
+    display: inline-block;
+    margin-left: 17px;
+  }
+
+  span {
+    color: var(--primary-color-light-1);
+  }
+}

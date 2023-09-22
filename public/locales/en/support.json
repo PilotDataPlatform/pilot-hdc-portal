@@ -1,0 +1,135 @@
+{
+  "userguide": "User Guide",
+  "userguide_content": "Click the link below to access the User Guide on the wiki.",
+  "download_guide_button_text": "User Guide",
+  "faq_title": "Frequently Asked Questions",
+
+  "drawers": [
+    {
+      "title": "Account Information",
+      "panel": [
+        {
+          "question": "I forgot my username or password. What should I do?",
+          "answer": "HealthDataCloud is accessed with your EBRAINS login credentials. You may enter either your email address or username at the EBRAINS login prompt. If you forgot your password, click the Forgot Password link from any EBRAINS login prompt window. To view your EBRAINS username and other account details, visit the <a target='_blank' href='https://wiki.ebrains.eu/bin/view/Identity/'>EBRAINS Collaboratory</a>, click the profile icon in the upper right, and select Basic Profile."
+        },
+        {
+          "question": "How can I change my password?",
+          "answer": "HealthDataCloud is accessed with your EBRAINS login credentials. You may view your EBRAINS account details and change your password in the <a target='_blank' href='https://wiki.ebrains.eu/bin/view/Identity/'>EBRAINS Collaboratory</a> by clicking the profile icon in the upper right and selecting Basic Profile. From there, click the Password tab to change the password of your EBRAINS account."
+        },
+        {
+          "question": "How do I register for an account?",
+          "answer": "The HealthDataCloud is accessible to all EBRAINS users.  Simply log in with your EBRAINS account.  If it's your first time logging in, you'll need to verify your account and accept the HealthDataCloud Terms of Use.  If you don’t yet have an EBRAINS account, you can register <a target='_blank' href='https://ebrains.eu/register/'>here</a>."
+        }
+      ]
+    },
+    {
+      "title": "Projects",
+      "panel": [
+        {
+          "question": "What is a Project?",
+          "answer": "A Project is a data storage and processing container that holds all the data files for a research project.  Only people who are members of the Project can view and work on the Project files."
+        },
+        {
+          "question": "What is my Project user role and what is the difference between the various Project roles?",
+          "answer": "Your Project user role is displayed in the Project Information card of the Project canvas.  User roles are Project-specific - you may hold different roles different Projects. The available user roles are as follows:<br/><br/>Project Administrator: The Project Administrator is a Principal Investigator or delegate who has overall responsibility for the processing of Project data and has the authority to invite other members to the Project and assign their Project roles. Project Administrators can view all Project data in the Green Room and Core, modify Project information, and manage Project users.<br/><br/>Collaborator: The Project Collaborator is a member of the Project whose primary role is data analyst. Members with this role can upload data to the Project and view or download the files that they uploaded. Project Collaborators cannot view or download data uploaded to the Green Room by any other Project member, but can view and download all Project data that has been approved and copied to the Core, and can access the Workspace tools.<br/><br/>Contributor: The Project Contributor is a member of the Project whose primary role is to contribute data to the Project. Members with this role can upload data to the Project Green Room and view or download the files that they uploaded, but they cannot view or download data contributed by any other member of the Project and cannot view or access any data in the Core or access Workspace tools."
+        },
+        {
+          "question": "What is the difference between Project Code and Project Name?",
+          "answer": "The Project Code is a persistent character-based code created by the Platform administrator that uniquely identifies the Project in the Platform. Once created, it cannot be changed. The Project Name is a user-friendly, descriptive title that makes it easier for logged in users to find the Project. The Project Name can be changed by the Project Administrator."
+        },
+        {
+          "question": "What is Project Visibility and how can I change it?",
+          "answer": "Visibility is a Project attribute that controls whether or not logged in users can see the Project’s basic information in the Landing Page. This can be helpful if you wish non-members to discover that your Project is part of the platform. Visibility does not affect which users can be added to the Project.<br/><br/>Project Administrators can edit the Visibility in the Project Settings page. If set to ON - Discoverable by all platform users, any logged in user can see the Project Title, Project Code, and description on the platform Landing Page, but only invited Project Members can click and enter the Project. If Visibility is set to OFF, only Project Members will be able to see the Project information in the Landing Page."
+        },
+        {
+          "question": "Who can initiate a Project?",
+          "answer": "Projects are initiated by a Platform Administrator.  EBRAINS members interested in creating a HealthDataCloud Project to process personal health research data are encouraged to contact the HealthDataCloud administrative team to initiate the process.  To submit an inquiry directly from the portal, scroll down this sidebar menu to the \"Still need help?\" section and complete the inquiry fields.  Support contact information is also available on the HealthDataCloud and EBRAINS websites."
+        }
+      ]
+    },
+    {
+      "title": "Site Security",
+      "panel": [
+        {
+          "question": "Why do I receive warnings that my session will expire?",
+          "answer": "For optimal security and performance, the platform detects and terminates idle user sessions.  Before the session is about to expire, a popup message will be displayed prompting you to confirm and continue the active session.  If the platform detects no user action after the prompt, the session will expire and you will need to log back in with your username and password."
+        }
+      ]
+    },
+    {
+      "title": "File Upload",
+      "panel": [
+        {
+          "question": "Who can upload a data file to the platform?",
+          "answer": "Any member of a Project can upload data files to their Project. By inviting you to the Project and assigning your Project role, the Project Administrator has authorized you to contribute data to the Project.  Project members are responsible for abiding by the Platform Terms of Use and must ensure that they only upload data that they are authorized to contribute to the Project."
+        },
+        {
+          "question": "How do I upload a file?",
+          "answer": "After logging in to the Portal, click \"Projects\" to navigate to the Project Landing Page, then select your Project.  Locate the Green Room File Explorer, click the Upload button, and follow the prompts to select one or more files or folders from your local drive to upload to the Project Green Room."
+        },
+        {
+          "question": "How do I know my file uploaded successfully?",
+          "answer": "The Files Status icon in the Project Canvas page displays the status of your file uploads for the current session. \"In Progress\" displays the most recent upload for the current session.  Choose from one of the other File Status categories (Uploaded, Downloaded, Approved, Trash Bin) to see other file actions in the current session. If any uploads or downloads failed, the File Status icon will turn red and a list of the failed files will appear in the \"In Progress\" tab."
+        },
+        {
+          "question": "Who can access the files I upload?",
+          "answer": "Uploaded Project files land in the Green Room and can only be accessed by the the Project Member that uploaded the file and the Project Administrator. Project files copied to the Core are accessible to all Project Members with Core access in that Project (Collaborator or Project Administrator role)."
+        }
+      ]
+    },
+    {
+      "title": "File Organization",
+      "panel": [
+        {
+          "question": "What is the difference between the Green Room and the Core zones?",
+          "answer": "The Green Room is the landing zone for all files uploaded to the Platform by Project members. It provides highly restricted access controls to isolate data that could contain highly sensitive personal information, such as direct identifiers, that may not be suitable for viewing by other Project members. In the Green Room, Project Administrators can perform preparatory operations to pseudonymize, transform, or otherwise prepare the data in the Green Room for broader access and research use by other Project members, then approve which data files are copied from the Green Room to the Core zone.  The Core Zone is the secure data storage and analysis zone where Project members can see each others files and work collaboratively on them using the Workspace tools. "
+        },
+        {
+          "question": "How do I transfer a file from the Green Room to the Core?",
+          "answer": "Project Administrators can copy files from the Green Room to the Core either by selecting file(s) in the Project Canvas File Explorer Green Room folder and using the copy to Core feature, or by accessing the Requests page and approving file copy requests by Project members that don’t hold the Project Administrator role.  Regular (non-Administrator) Project members cannot directly copy their files from the Green Room to the Core but they can mark files in the Green Room File Explorer and submit a request for the Project Administrator to copy the selected files to the Core.  The Project Administrator will receive a notification and can execute or deny the request in the Requests page."
+        },
+        {
+          "question": "What is a Collection?",
+          "answer": "A Collection is a virtual group of files that gives Project members the flexibility to create their own  organized views of Core zone files and folders. Similar to a music playlist, a Collection establishes a reference to the files without moving or copying the actual files themselves.  A file can be added to one or more Collections, and adding or removing files in a Collection does not change the file's storage location or data lineage. Collections can be created by Project Members who have access to the Core zone by selecting one or more file(s) in the Core File Explorer and clicking \"Add to Collection\"."
+        },
+        {
+          "question": "What are File Attributes?",
+          "answer": "File Attributes are structured metadata values that Project Members can add to files during or after upload to provide additional meaning or context to a file - for example, the research site from which the file was uploaded, or an anatomical region relevant to the file.  File Attributes differ from regular tags because the Project Administrator can constrain the values to predefined standards and formats. Project Administrators can set up custom mandatory or optional File Attributes using a File Attribute Template on the Project Settings page. Once a File Attribute template has been created, Project Members are prompted to provide the attributes during file upload.  Attributes can also be added to files after upload using the File Properties menu in the File Explorer."
+        },
+        {
+          "question": "What happens when I delete a file?",
+          "answer": "When you delete a file, it will be moved to a Trash Bin but won’t be permanently deleted from the platform.  A Platform Administrator can restore a file from the Trash Bin if it was deleted by accident, or permanently delete the file."
+        }
+      ]
+    },
+    {
+      "title": "Workspace and Pilot Command Line Interface",
+      "panel": [
+        {
+          "question": "What are Workspace tools and which tools are available?",
+          "answer": "Workspace tools are external open-source applications integrated into the platform that allow users to work collaboratively on their Project data from directly within the web portal.  Workspace tools include Jupyterhub, Guacamole, XWiki and Superset. Workspace tools are configured by a Platform Administrator when the Project’s computing resources are set up.  Thereafter, a Project Member can request access to the Workspace tools by clicking a Workspace tool icon in the Project Canvas. Talk to your Project Administrator about setting up these tools if they are not yet configured for your Project."
+        },
+        {
+          "question": "What is XWiki?",
+          "answer": "XWiki is a content management wiki application that Project members can use for documentation, knowledge sharing, and collaboration."
+        },
+        {
+          "question": "What is Guacamole?",
+          "answer": "Apache Guacamole is a clientless remote desktop gateway that supports standard protocols like VNC, RDP, and SSH. Contact a Platform Administrator for more information about deploying Guacamole for your Project."
+        },
+        {
+          "question": "What is JupyterHub?",
+          "answer": "JupyterHub is an open-source, multi-user version of Jupyter Notebook integrated for performing analysis of data in the Core zone. Contact a Platform Administrator for more information about deploying JupyterHub for your Project."
+        },
+        {
+          "question": "What is Superset?",
+          "answer": "Apache Superset is an open-source software cloud-native application designed for the exploration and visualization of big data. Contact a Platform Administrator for more information about deploying Superset for your Project."
+        },
+        {
+          "question": "What is the Pilot Command Line Interface?",
+          "answer": "The Pilot Command Line Interface (pilotcli) offers a customized set of commands to perform a variety of operations such as file upload, folder upload, Project query, File Manifest functions, and more, from a Linux or Mac command line."
+        }
+      ]
+    }
+  ]
+}

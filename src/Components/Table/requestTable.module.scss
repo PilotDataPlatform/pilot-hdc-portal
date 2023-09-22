@@ -1,0 +1,122 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+.ant-table-content {
+  position: relative;
+  z-index: 0;
+}
+
+.message {
+  text-decoration: underline;
+}
+
+.vm-container {
+  z-index: 1;
+  cursor: pointer;
+  width: fit-content;
+
+  &__text {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    border: 1px solid #d9d9d9;
+    border-radius: 0.6rem;
+    padding: 0.3rem 0.8rem;
+
+    :global {
+      .anticon-down,
+      .anticon-up {
+        margin-left: 1rem;
+      }
+    }
+  }
+}
+
+.vm-selection {
+  position: absolute;
+  z-index: 2;
+  top: calc(100% - 16px);
+  left: 16px;
+  border-radius: 0.6rem;
+  box-shadow: 0 1px 7px #0000001a;
+  background-color: #fff;
+  width: 25.5rem;
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  :global {
+    .ant-spin-nested-loading {
+      margin: 0 auto 0.8rem auto;
+    }
+
+    .ant-empty.ant-empty-normal {
+      margin: 0;
+    }
+
+    .ant-checkbox-group {
+      padding: 0 2rem;
+    }
+
+    .ant-btn-primary {
+      width: auto !important;
+      padding: 0 12px !important;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0.5rem 0;
+    padding: 0.4rem 1.6rem 0 1.6rem;
+    border-top: 1px solid var(--background-color-2);
+  }
+
+  button {
+    min-width: 100px;
+    border-radius: 0.6rem;
+    font-size: 14px;
+    line-height: 1.6rem;
+  }
+}
+
+.request-table__status-pending {
+  :global {
+    .ant-btn {
+      border-radius: 6px;
+      width: 100% !important;
+      max-width: 110px;
+
+      &:disabled {
+        background-color: var(--primary-color-light-1);
+        border-color: var(--primary-color-light-1);
+        color: var(--white);
+        opacity: 50%;
+
+        &:hover {
+          background-color: var(--primary-color-light-1);
+          border-color: var(--primary-color-light-1);
+          color: var(--white);
+          opacity: 50%;
+        }
+      }
+    }
+  }
+}
+
+.request-table__status-approved {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.5rem;
+  }
+}

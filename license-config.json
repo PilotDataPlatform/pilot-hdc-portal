@@ -1,0 +1,15 @@
+{
+  "ignore": ["!(src|tests)/**", "src/Images/*"],
+  "ignoreFile": ".gitignore",
+  "license": "COPYRIGHT",
+  "licenseFormats": {
+    "js|jsx|scss|less": {
+      "prepend": "/*",
+      "append": " */",
+      "eachLine": {
+        "prepend": " * "
+      }
+    }
+  },
+  "trailingWhitespace": "TRIM"
+}

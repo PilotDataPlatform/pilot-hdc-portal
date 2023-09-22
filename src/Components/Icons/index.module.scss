@@ -1,0 +1,115 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+.base-button {
+  border: 0;
+  background: none;
+  padding: 0 2px;
+  cursor: pointer;
+}
+
+.star-button {
+  composes: base-button;
+
+  :global {
+    .anticon-star {
+      color: var(--primary-color-5);
+      font-size: 1.4rem;
+      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
+    }
+  }
+
+  &:hover {
+    :global {
+      .anticon-star {
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  &:disabled {
+    :global {
+      .anticon-star {
+        opacity: 0.2;
+      }
+    }
+
+    &:hover {
+      :global {
+        .anticon-star {
+          transform: unset;
+        }
+      }
+    }
+  }
+}
+
+.star-button--outline {
+  composes: star-button;
+
+  :global {
+    .anticon-star {
+      color: var(--font-color-primary);
+    }
+  }
+}
+
+.list-item__star-button {
+  composes: star-button;
+
+  &--outline {
+    composes: list-item__star-button;
+
+    :global {
+      .anticon-star {
+        color: var(--font-color-primary);
+      }
+    }
+  }
+}
+
+.pin-button {
+  composes: base-button;
+  margin-right: 2px;
+
+  &:disabled {
+    :global {
+      .anticon-pushpin {
+        opacity: 0.2;
+      }
+    }
+  }
+
+  :global {
+    .anticon-pushpin {
+      color: var(--font-color-primary);
+      transform: translateY(-1px);
+      font-size: 1.4rem;
+    }
+  }
+
+  &--pinned {
+    composes: pin-button;
+
+    :global {
+      .anticon-pushpin {
+        color: var(--primary-color-4);
+      }
+    }
+
+    &:disabled :global {
+      .anticon-pushpin {
+        opacity: unset;
+      }
+    }
+  }
+
+  &--hide {
+    composes: pin-button;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}

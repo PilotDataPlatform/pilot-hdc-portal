@@ -1,0 +1,148 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+.card {
+  :global {
+    .ant-card {
+      box-shadow: 0px 1px 7px #0000001a;
+      border-radius: 8px;
+      margin: 10px 75px;
+    }
+    .ant-card-body {
+      position: relative;
+      padding-left: 15px;
+    }
+  }
+  .button-group {
+    position: absolute;
+    right: 0px;
+    top: -70px;
+    :global {
+      .ant-btn-primary {
+        border-radius: 6px;
+      }
+      button {
+        font-size: 16px;
+        line-height: 20px;
+      }
+    }
+  }
+  .form {
+    :global {
+      h2 {
+        font-size: 20px;
+        letter-spacing: 0px;
+        color: var(--primary-color-dark-1);
+        margin-left: 35px;
+        margin-bottom: 10px;
+      }
+
+      .ant-select-selector {
+        border: 1px solid #d4d4d4;
+        border-radius: 6px !important;
+        height: 38px !important;
+      }
+      .ant-form-item {
+        margin-bottom: 16px;
+        .ant-form-item-label {
+          width: 180px;
+          label {
+            color: rgba(0, 0, 0, 0.65);
+          }
+        }
+        .ant-form-item-control {
+          .ant-form-item-control-input {
+            .ant-form-item-control-input-content {
+              display: flex;
+              align-items: center;
+              .anticon {
+                margin-right: 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+    .input {
+      border: 1px solid #d4d4d4;
+      border-radius: 6px;
+      overflow: hidden;
+      height: 38px;
+    }
+    .select {
+      border-radius: 6px;
+      height: 38px;
+    }
+    .spacing {
+      height: 35px;
+    }
+
+    .collection-method {
+      div:first-child {
+        overflow: visible;
+        label {
+          span {
+            position: relative;
+            bottom: 8px;
+          }
+        }
+      }
+    }
+  }
+
+  .tooltip {
+    margin-left: 10px;
+    margin-right: -3px;
+  }
+}
+
+.description_form_item {
+  :global {
+    .ant-form-item-label {
+      .ant-form-item-required {
+        p {
+          margin-bottom: 0px;
+          margin-top: 0;
+        }
+        &::before {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 1432px) {
+  .description_form_item {
+    :global {
+      .ant-form-item-label {
+        .ant-form-item-required {
+          p {
+            br {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .description_form_item {
+    :global {
+      .ant-form-item-label {
+        .ant-form-item-required {
+          p {
+            br {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}

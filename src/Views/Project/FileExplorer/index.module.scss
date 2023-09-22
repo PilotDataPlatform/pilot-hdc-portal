@@ -1,0 +1,23 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+.fileExplorer {
+  &__container {
+    margin: 20px 20px 20px 35px;
+  }
+
+  &__card {
+    margin-top: 1.8rem;
+
+    :global {
+      .ant-card-body {
+        padding-left: 0 !important;
+        padding-top: 0 !important;
+        padding-right: 0 !important;
+      }
+    }
+  }
+}

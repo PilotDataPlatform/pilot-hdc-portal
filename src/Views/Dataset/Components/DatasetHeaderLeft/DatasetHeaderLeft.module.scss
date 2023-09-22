@@ -1,0 +1,115 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+.pageHeader {
+  padding: 0 !important;
+  display: inline-block;
+  font-weight: bold;
+  max-width: 100%;
+}
+
+.dropdown {
+  font-size: 12px;
+  color: #595959;
+  font-weight: 600;
+}
+
+.last-updated {
+  font-size: 12px;
+  color: #818181;
+  font-style: italic;
+}
+
+.project {
+  font-size: 12px;
+  color: #595959;
+  margin-top: -3px;
+  margin-bottom: 0px;
+  span {
+    margin-left: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--primary-color-1);
+  }
+}
+
+.createdTime {
+  font-size: 12px;
+  font-weight: 300;
+  color: #595959;
+  margin-top: -8px;
+  margin-left: 4px;
+}
+
+.editor {
+  font-size: 12px;
+  font-weight: 200;
+}
+
+.download-button {
+  color: #595959 !important;
+  font-size: 12px !important;
+  margin-top: -3px;
+  margin-left: -14px;
+  font-family: 300;
+}
+
+.toolTip-div {
+  margin-top: -4px;
+  :global {
+    span {
+      font-weight: 600;
+      max-width: 100%;
+      display: inline-block;
+      vertical-align: bottom;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--primary-color-1);
+      font-size: 24px;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.no-toolTip-div {
+  margin-top: -2px;
+  margin-left: 2px;
+  :global {
+    span {
+      font-weight: 600;
+      max-width: 100%;
+      display: inline-block;
+      vertical-align: bottom;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--primary-color-1);
+      font-size: 24px;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+@media only screen and (min-width: 1366px) {
+  .createdTime {
+    font-size: 15px;
+  }
+
+  .editor {
+    font-size: 15px;
+  }
+
+  .download-button {
+    margin-top: -3px;
+  }
+
+  .no-toolTip-div {
+    :global {
+      span {
+        font-size: 26px;
+      }
+    }
+  }
+}

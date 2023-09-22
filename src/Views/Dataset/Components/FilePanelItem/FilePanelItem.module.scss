@@ -1,0 +1,72 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+.not-error {
+  border: none !important;
+  padding: 0 !important;
+  margin: 5px 13px 0px 13px !important;
+  .title {
+    position: relative;
+    svg {
+      color: var(--primary-color-1);
+    }
+    .file-name {
+      color: #595959;
+      font-weight: 600;
+      font-size: 14px;
+      margin-left: 10px;
+      position: relative;
+      display: inline-block;
+      div {
+        max-width: 300px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        position: relative;
+        top: 5px;
+        height: 22px;
+        white-space: nowrap;
+      }
+    }
+    .status {
+      color: #818181;
+      font-weight: normal;
+    }
+  }
+}
+
+.error {
+  border: none !important;
+  padding: 0 !important;
+  margin: 5px 13px 0px 13px !important;
+  .title {
+    .file-name {
+      color: #ff6d72;
+      font-weight: 600;
+      font-size: 14px;
+      margin-left: 10px;
+
+      position: relative;
+      display: inline-block;
+      div {
+        max-width: 300px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        direction: rtl;
+        position: relative;
+        top: 5px;
+        height: 22px;
+      }
+    }
+    .status {
+      color: #ff6d72;
+      font-weight: normal;
+    }
+
+    .icon {
+      color: #ff6d72;
+    }
+  }
+}

@@ -1,0 +1,22 @@
+/*
+Copyright (C) 2022-2023 Indoc Systems
+
+Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+You may not use this file except in compliance with the License.
+*/
+.bellNotifiction {
+  --news-item-delete-icon: var(--primary-color-light-3);
+  --news-item-check-icon: var(--primary-color-2);
+  --news-item-role-icon: var(--primary-color-light-1);
+  --news-item-action-text-copy: var(--primary-color-4);
+  --news-item-action-text-delete: var(--primary-color-3);
+  --news-item-action-text-role-change: var(--primary-color-light-1);
+  --news-loading-more-text: var(--primary-color-light-1);
+  --news-smile-icon: var(--primary-color-light-1);
+  --news-source-text: var(--primary-color-light-1);
+  --news-destination-text: var(--primary-color-light-1);
+  --news-files-borader: var(--primary-color-2);
+  --project-announcement-title: var(--primary-color-1);
+  --project-announcement-num: var(--primary-color-1);
+  --project-announcement-link: var(--primary-color-light-1);
+}

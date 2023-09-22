@@ -1,0 +1,349 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+
+.stats {
+  padding-bottom: 22px;
+  display: flex;
+}
+
+.userStats {
+  display: flex;
+  justify-content: center;
+}
+
+.antStatistic {
+  width: 100%;
+}
+
+.card {
+  width: 188px;
+  background-color: #ffffff;
+  box-shadow: 0px 1px 6px #00000020;
+  border-radius: 6px !important;
+  opacity: 1;
+  margin: 6px 8px !important;
+  padding: 6px 10px !important;
+  :global {
+    .ant-row {
+      flex-wrap: nowrap;
+    }
+    .ant-card-body {
+      padding: 6px 10px !important;
+    }
+  }
+}
+
+.shortcut--greenhome,
+.shortcut--core,
+.shortcut--collections {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.8rem;
+}
+
+.shortcut--greenhome:hover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: var(--greenroom-icon-hover-colour);
+  border-radius: 0.3rem;
+}
+
+.shortcut--core:hover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: var(--core-icon-hover-colour);
+  border-radius: 0.3rem;
+}
+
+.shortcut--collections:hover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: var(--collection-icon-hover-colour);
+  border-radius: 0.3rem;
+}
+
+.icon--greenhome,
+.icon--core,
+.icon--collection {
+  font-size: 2.4rem;
+  opacity: 1;
+}
+
+.icon--greenhome {
+  color: var(--greenroom-icon-colour) !important;
+  cursor: pointer;
+}
+
+.icon--core {
+  color: var(--core-icon-colour) !important;
+  cursor: pointer;
+}
+
+.icon--collection {
+  color: var(--collection-icon-colour) !important;
+  cursor: pointer;
+}
+
+.file-number {
+  font-size: 1rem;
+  color: #a5b0b6;
+  font-weight: 500;
+  margin-top: -0.3rem;
+}
+
+.file-font {
+  color: var(--font-color-primary) !important;
+  font-size: 1.2rem;
+  font-weight: 500;
+  white-space: nowrap;
+  margin-top: 0.1rem;
+}
+
+.collections-num {
+  color: var(--collection-icon-colour) !important;
+}
+
+.icon-column {
+  margin-top: 0.8rem;
+}
+
+.file {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.1rem;
+}
+
+.file-stream--icon {
+  height: 11.56px;
+  width: 17.82px;
+  font-size: 1.4rem;
+  margin-left: 1.1rem;
+  margin-top: -0.1rem;
+  :global {
+    .anticon-download {
+      color: var(--download-icon-colour);
+    }
+    .anticon-delete {
+      color: var(--delete-icon-colour);
+    }
+    .anticon-cloud-upload {
+      color: var(--upload-icon-colour);
+    }
+    .anticon-copy {
+      color: var(--copy-icon-colour);
+    }
+  }
+}
+
+.connect-line {
+  background-color: var(--background-color-2) !important;
+  width: 1px;
+  height: 1.3rem;
+  margin-left: 1.7rem;
+  margin-top: 0.3rem;
+}
+
+.file-name {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--font-color-primary) !important;
+  margin-left: 1.3rem;
+  overflow: hidden;
+  max-width: 500px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media only screen and (min-width: 1286px) {
+  .file-name {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--font-color-primary);
+    margin-left: 1.3rem;
+    overflow: hidden;
+    max-width: 20rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.file-descr {
+  max-width: 24rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-name {
+  font-size: 1.2rem;
+  color: #a5b0b6;
+  font-style: italic;
+  margin-top: -0.4rem;
+  margin-left: 2.3rem;
+}
+
+.time {
+  font-size: 1.2rem;
+  color: #a5b0b6;
+  font-style: italic;
+  margin-top: -0.4rem;
+}
+
+.pagination {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border-top: 1px solid var(--background-color-2);
+
+  :global {
+    .ant-pagination-item-active {
+      color: var(--font-color-light) !important;
+      border-color: #fff !important;
+    }
+
+    .ant-pagination-item-active a {
+      color: var(--font-color-light) !important;
+    }
+
+    .ant-pagination-prev .ant-pagination-item-link,
+    .ant-pagination-next .ant-pagination-item-link {
+      color: var(--font-color-light) !important;
+    }
+
+    .ant-pagination {
+      max-width: 6.92rem !important;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .ant-pagination.mini .ant-pagination-options-size-changer {
+      border-radius: 6px !important;
+      height: 22px !important;
+      display: float !important;
+      position: absolute !important;
+      bottom: 0 !important;
+      right: 10rem !important;
+      margin-top: 0.7rem;
+    }
+
+    .ant-select:not(.ant-select-disabeld):hover .ant-select-selector {
+      border-radius: 6px !important;
+      height: 22px !important;
+      font-size: 1.2rem;
+    }
+    .ant-select-single.ant-select-sm:not(.ant-select-customize-input)
+      .ant-select-selector {
+      border-radius: 6px !important;
+      height: 22px !important;
+      font-size: 1.2rem;
+    }
+  }
+}
+.card_inner {
+  min-width: 280px;
+  padding-bottom: 30px;
+}
+
+.pageText {
+  color: var(--font-color-light) !important;
+  font-size: 1.2rem;
+  padding-top: 2rem;
+  margin-left: 8rem;
+}
+
+.charts {
+  margin-bottom: -18px;
+  min-width: 750px;
+  &__meta {
+    min-height: 70px;
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    padding: 0 1.2rem 0.8rem 1.2rem;
+    margin: 0 -12px;
+    border-bottom: 1px solid var(--background-color-1);
+
+    :global {
+      .ant-spin.ant-spin-spinning {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    li {
+      font-size: 1.2rem;
+
+      span:first-of-type {
+        margin-bottom: -0.4rem;
+      }
+    }
+
+    .meta-stat {
+      font-size: 2rem;
+      font-weight: 600;
+      line-height: 3rem;
+      span[role='img'] {
+        margin-right: 0.8rem;
+      }
+    }
+  }
+
+  .meta {
+    &__file-total {
+      .meta-stat {
+        color: var(--chart-meta-files-colour);
+      }
+    }
+
+    &__file-size {
+      .meta-stat {
+        color: var(--chart-meta-file-size-colour);
+      }
+    }
+
+    &__users-total {
+      .meta-stat {
+        color: var(--chart-meta-members-colour);
+      }
+    }
+
+    &__uploaded {
+      .meta-stat {
+        color: var(--chart-meta-upload-colour);
+      }
+    }
+
+    &__downloaded {
+      .meta-stat {
+        color: var(--chart-meta-download-colour);
+      }
+    }
+  }
+
+  &__graphs {
+    padding-top: 1.2rem;
+
+    .graphs__container {
+      margin-bottom: 1rem;
+      padding: 0 1.5rem;
+    }
+
+    .graphs__title {
+      color: var(--primary-color-1);
+      margin-bottom: 1.2rem;
+      font-size: 1.4rem;
+    }
+  }
+}

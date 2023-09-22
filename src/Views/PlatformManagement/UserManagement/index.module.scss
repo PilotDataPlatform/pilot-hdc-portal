@@ -1,0 +1,187 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+.upperMenu {
+  :global {
+    background-color: var(--primary-color-1) !important;
+    position: fixed !important;
+    top: 120px;
+    width: 51px;
+    max-width: 51px;
+    min-width: 51px;
+    margin-top: 22px;
+
+    .ant-menu-item {
+      .anticon {
+        color: #f0f0f0 !important;
+      }
+      &.ant-menu-item-selected {
+        background-color: transparent !important;
+        .anticon {
+          color: #ffffff !important;
+        }
+      }
+    }
+  }
+}
+
+.pageHeader {
+  :global {
+    .ant-page-header-heading {
+      align-items: flex-start;
+      margin-top: -7px;
+    }
+  }
+}
+
+.tab {
+  :global {
+    .ant-tabs-ink-bar {
+      color: transparent;
+      background-color: transparent;
+    }
+
+    .ant-tabs-nav-wrap {
+      position: relative;
+      padding: 0 !important;
+      margin-left: 1rem;
+      margin-right: 1rem;
+    }
+
+    .ant-tabs-tab {
+      margin-top: 0 !important;
+      height: 4.8rem;
+    }
+
+    .ant-tabs-tab:nth-child(1) {
+      margin: 1rem 0rem 0 0 !important;
+    }
+
+    .ant-tabs-tab-active {
+      margin-top: 0 !important;
+      border-radius: 0.9rem;
+      background-color: #d8ebf2;
+    }
+
+    .ant-tabs-nav {
+      margin-left: 0px;
+      width: 250px;
+      @media (max-width: 1366px) {
+        width: 180px;
+      }
+    }
+
+    .ant-tabs-tab-btn {
+      line-height: 3.4rem;
+      margin-left: 3.4rem;
+      @media (max-width: 1600px) {
+        margin-left: 1.7rem;
+      }
+      @media (max-width: 1480px) {
+        margin-left: 1.2rem;
+      }
+    }
+
+    .extra-content__divider {
+      border-top: 1px solid black;
+    }
+
+    .ant-tabs-extra-content {
+      position: absolute;
+      margin-top: 15rem;
+      padding-right: 0 !important;
+
+      .ant-btn {
+        font-size: 1.4rem;
+        line-height: 1.8rem;
+        padding: 0rem 3rem;
+        margin-left: 2.7rem;
+      }
+    }
+
+    .ant-table-wrapper {
+      margin-top: 0px !important;
+      padding: 0px 0px;
+
+      .ant-table-thead > tr > th {
+        color: rgba(0, 0, 0, 0.55);
+        font-weight: 400;
+        padding: 0px 10px;
+        background: white;
+        border-top: 1px solid #f0f0f0;
+        border-bottom: 1px solid #f0f0f0;
+
+        .ant-table-filter-column .ant-table-column-sorters > span:first-child {
+          margin-top: 0;
+        }
+
+        .ant-table-column-sorters {
+          padding: 16px 0 16px 16px;
+          display: block;
+          .ant-table-column-title {
+            vertical-align: middle;
+          }
+          .ant-table-column-sorter-inner {
+            margin-left: 1px;
+          }
+        }
+      }
+
+      .ant-table-tbody > tr > td {
+        padding: 16px 26px;
+      }
+    }
+  }
+}
+
+.ant-card-bordered {
+  :global {
+    .ant-card-body {
+      padding: 5px 0px !important;
+    }
+  }
+}
+
+.ant-layout {
+  margin-left: 0px !important;
+}
+
+.tablePanel {
+  :global {
+    .ant-collapse-content {
+      .ant-collapse-content-box {
+        padding: 0px !important;
+      }
+    }
+  }
+}
+
+.red_dot {
+  :global {
+    .ant-badge {
+      .ant-badge-status-error {
+        left: 5px;
+        height: 8px;
+        width: 8px;
+      }
+    }
+  }
+}
+
+.warning-modal {
+  :global {
+    .ant-modal-content {
+      width: 480px !important;
+      box-shadow: 0px 3px 6px #00000029 !important;
+      border-radius: 6px !important;
+      overflow: hidden !important;
+      button {
+        height: 30px;
+        border-radius: 6px;
+      }
+    }
+  }
+}

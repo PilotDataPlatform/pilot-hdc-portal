@@ -1,0 +1,81 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+.tags-container {
+  position: absolute;
+  bottom: 30px;
+  right: 0px;
+  width: max-content;
+  :global {
+    .ant-tag {
+      margin-left: 8px;
+      margin-right: 0 !important;
+    }
+  }
+}
+
+.statistics-container {
+  .statistics {
+    margin-left: 26px;
+    line-height: 32px;
+    .statistics-title {
+      color: #818181;
+      font-size: 12px;
+      font-weight: 300;
+    }
+
+    .statistics-value {
+      color: var(--primary-color-1);
+      font-weight: bold;
+      margin-left: 9px;
+      font-size: 16px;
+    }
+  }
+}
+.header-btns-wrap {
+  position: absolute;
+  bottom: -2.2rem;
+  display: flex;
+  right: 1rem;
+  align-items: center;
+  justify-content: flex-end;
+  @media only screen and (min-width: 1366px) {
+    bottom: -2.6rem;
+  }
+  .kg-association {
+    white-space: nowrap;
+    flex: 1;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #595959;
+  }
+  :global {
+    .ant-btn-primary {
+      border-radius: 6px;
+      padding: 2px 0px;
+      height: 2.7rem;
+      width: 17.3rem;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-left: 2rem;
+    }
+  }
+}
+
+@media only screen and (min-width: 1366px) {
+  .statistics-container {
+    .statistics {
+      line-height: 32px;
+      .statistics-title {
+        font-size: 15px;
+      }
+
+      .statistics-value {
+        font-size: 20px;
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "versions": [
+    {
+      "version": "1.0.0",
+      "date": "26.04.2023",
+      "note": "<h3>What’s New</h3> <ul> <li>HealthDataCloud initial production version customized from Indoc Pilot Version 2.2.0</li> <li>The Portal and Command Line Interface now provide the ability to resume a large file upload already in progress so if the upload fails, you don’t have to restart the upload from the beginning.</li><li>Command Line Interface now supports multi-threading upload for single files for faster uploading performance.</li><li>Platform users can receive platform and pipeline execution notifications in the Newsfeed on the Portal Dashboard right after login.</li></ul> <h3>Improvements</h3> <ul><li>Extended Portal zip contents previewer to support additional zip file types.</li><li>Integrated Server Sent Event (SSE) strategy to stream Project & Dataset file status for more lightweight Backend services.</li><li>Improved data uploading process by implementing metadata pre-registration workflow to support resumable file uploads.</li></ul> <h3>Bug Fixes</h3><ul><li>Fixed a bug that caused failure when simultaneously importing a file and folder into a Dataset.</li><li>Fixed a bug that caused downloaded Dataset to contain the wrong file structure.</li></ul>"
+    }
+  ]
+}

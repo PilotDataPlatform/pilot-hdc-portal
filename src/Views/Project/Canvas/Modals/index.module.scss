@@ -1,0 +1,49 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+@import '../../../../Styles/includeMedia.scss';
+.filterWrapper {
+  @include media('>999px') {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 6px;
+  }
+  :global {
+    .ant-tabs.ant-tabs-card
+      .ant-tabs-card-bar
+      .ant-tabs-tab-active
+      .ant-tabs-extra-content {
+      border-radius: 6px !important;
+    }
+
+    .ant-form {
+      border-radius: 6px !important;
+    }
+    .ant-select-selector {
+      border-radius: 6px !important;
+    }
+  }
+}
+
+.fieldGroup {
+  margin-right: 12px;
+  border-radius: 6px;
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.formItem {
+  @include media('>999px') {
+    margin-bottom: 0 !important;
+  }
+}
+
+.buttons {
+  @include media('>999px') {
+    padding-top: 30px;
+  }
+}

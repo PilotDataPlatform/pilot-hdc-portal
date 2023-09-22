@@ -1,0 +1,171 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+.request_wrapper {
+}
+.request_to_core_content {
+  .radio_section {
+    height: 40px;
+    width: 100%;
+    border-bottom: 1px solid #f0f0f0;
+    .radio {
+      padding-left: 1.6rem;
+      padding-bottom: 8px;
+
+      .radio_options {
+        display: flex;
+        color: #595959;
+        font-weight: 500;
+        .requests {
+          width: 150px;
+          border: 0px solid #d9d9d9;
+          border-left-width: 2px;
+          border-top-width: 2px;
+          border-bottom-width: 2px;
+          border-top-left-radius: 6px;
+          border-bottom-left-radius: 6px;
+          text-align: center;
+          cursor: pointer;
+        }
+        .completed {
+          width: 150px;
+          text-align: center;
+          border: 2px solid #d9d9d9;
+          border-top-right-radius: 6px;
+          border-bottom-right-radius: 6px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .request_content {
+    display: flex;
+    min-height: 660px;
+    .left_content {
+      width: 395px;
+      border-right: 1px solid #f0f0f0;
+      position: relative;
+      :global {
+        .ant-list-items {
+          padding: 10px;
+        }
+        .ant-list {
+          position: unset !important;
+        }
+        .ant-list-pagination {
+          position: absolute;
+          bottom: 20px;
+          right: 40px;
+        }
+      }
+    }
+    .right_content {
+      flex: 1;
+    }
+  }
+  :global {
+    .ant-card {
+      border-radius: 8px;
+      height: 100%;
+      box-shadow: 0px 3px 6px #0000001a;
+      .ant-card-head {
+        height: 40px;
+        .ant-card-head-wrapper {
+          .ant-card-head-title {
+            padding: 12px 0px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-color-1);
+          }
+        }
+      }
+      .ant-card-body {
+        min-height: 700px;
+        height: 100%;
+        padding: 0px;
+      }
+    }
+  }
+}
+
+.radio_option_backgroundColor {
+  background-color: var(--primary-color-light-1);
+  color: #ffffff;
+}
+
+.right_content_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background-color: #edf1f4;
+  .header_left_part {
+    p {
+      margin-bottom: 2px;
+      color: #595959;
+      b {
+        font-weight: 600;
+        margin-right: 15px;
+      }
+    }
+  }
+  button {
+    padding: 0px 20px;
+    border-radius: 6px;
+    height: 26px;
+  }
+}
+
+.complete_modal_content {
+  padding: 0px 24px;
+  .complete_note {
+    margin-bottom: 4px;
+  }
+  .review_note_section {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    p {
+      margin-bottom: 5px;
+    }
+    .review_note {
+      float: right;
+    }
+    :global {
+      .ant-input {
+        border-radius: 6px;
+        height: 82px;
+        width: 488px;
+      }
+      .ant-form-item {
+        margin-bottom: 0px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1250px) {
+  .left_content {
+    width: 250px !important;
+  }
+  .request_content {
+    min-height: 830px !important;
+  }
+}
+
+.completed_on {
+  margin-right: 50px;
+  min-width: 170px;
+  p {
+    margin: 0;
+    color: var(--primary-color-1);
+    text-align: right;
+  }
+  h4 {
+    margin: 0;
+    color: var(--primary-color-1);
+    text-align: right;
+  }
+}

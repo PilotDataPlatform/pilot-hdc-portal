@@ -1,0 +1,83 @@
+{
+  "admin": {
+    "label": "Project Administrator",
+    "value": "admin",
+    "inviteUser": true,
+    "CORE": {
+      "upload": true,
+      "download": {
+        "isEnable": true,
+        "all": true
+      },
+      "view": {
+        "isEnable": false,
+        "all": false
+      }
+    },
+    "GREEN-ROOM": {
+      "upload": true,
+      "download": {
+        "isEnable": true,
+        "all": true
+      },
+      "view": {
+        "isEnable": true,
+        "all": true
+      }
+    }
+  },
+  "contributor": {
+    "label": "Project Contributor",
+    "value": "contributor",
+    "inviteUser": false,
+    "CORE": {
+      "upload": false,
+      "download": {
+        "isEnable": false,
+        "all": false
+      },
+      "view": {
+        "isEnable": false,
+        "all": false
+      }
+    },
+    "GREEN-ROOM": {
+      "upload": true,
+      "download": {
+        "isEnable": true,
+        "all": false
+      },
+      "view": {
+        "isEnable": true,
+        "all": false
+      }
+    }
+  },
+  "collaborator": {
+    "label": "Project Collaborator",
+    "value": "collaborator",
+    "inviteUser": false,
+    "CORE": {
+      "upload": false,
+      "download": {
+        "isEnable": true,
+        "all": true
+      },
+      "view": {
+        "isEnable": true,
+        "all": true
+      }
+    },
+    "GREEN-ROOM": {
+      "upload": true,
+      "download": {
+        "isEnable": true,
+        "all": false
+      },
+      "view": {
+        "isEnable": true,
+        "all": false
+      }
+    }
+  }
+}

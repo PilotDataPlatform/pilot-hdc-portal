@@ -1,0 +1,23 @@
+/*
+Copyright (C) 2022-2023 Indoc Systems
+
+Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+You may not use this file except in compliance with the License.
+*/
+.project_data_file_tree {
+  --greenroom-selected-bg: var(--primary-color-lightest-1);
+  --greenroom-selected-text: var(--primary-color-2);
+  --greenroom-hover-text: var(--primary-color-2);
+
+  --core-home-selected-bg: var(--primary-color-lightest-2);
+  --core-home-selected-text: var(--primary-color-1);
+  --core-home-hover-text: var(--primary-color-1);
+
+  --collection-selected-bg: var(--primary-color-lightest-4);
+  --collection-selected-text: var(--primary-color-4);
+  --collection-hover-text: var(--primary-color-4);
+
+  --trash-selected-bg: var(--primary-color-lightest-3);
+  --trash-selected-text: var(--primary-color-light-3);
+  --trash-hover-text: var(--primary-color-3);
+}

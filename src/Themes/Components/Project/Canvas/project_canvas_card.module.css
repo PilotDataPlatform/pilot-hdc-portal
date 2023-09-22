@@ -1,0 +1,28 @@
+/*
+Copyright (C) 2022-2023 Indoc Systems
+
+Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+You may not use this file except in compliance with the License.
+*/
+.project-canvas-card {
+  --card-title-colour: var(--primary-color-1);
+  --drag-icon-colour: var(--primary-color-light-1);
+
+  --greenroom-icon-colour: var(--primary-color-light-1);
+  --greenroom-icon-hover-colour: var(--primary-color-lightest-2);
+  --core-icon-colour: #00c959;
+  --core-icon-hover-colour: var(--primary-color-lightest-2);
+  --collection-icon-colour: var(--primary-color-4);
+  --collection-icon-hover-colour: var(--primary-color-lightest-4);
+
+  --chart-meta-files-colour: var(--primary-color-1);
+  --chart-meta-file-size-colour: var(--primary-color-1);
+  --chart-meta-members-colour: var(--primary-color-1);
+  --chart-meta-upload-colour: var(--primary-color-light-1);
+  --chart-meta-download-colour: var(--primary-color-2);
+
+  --upload-icon-colour: var(--primary-color-1);
+  --download-icon-colour: var(--primary-color-2);
+  --copy-icon-colour: var(--primary-color-4);
+  --delete-icon-colour: var(--primary-color-3);
+}

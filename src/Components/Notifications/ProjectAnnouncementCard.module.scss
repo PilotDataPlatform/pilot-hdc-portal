@@ -1,0 +1,97 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+.announcement-item {
+  &__info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    a {
+      color: var(--project-announcement-title);
+    }
+    .card-open {
+      transform: rotate(90deg);
+      transition: all ease-in-out 0.2s;
+    }
+  }
+  &__detail {
+    ul {
+      list-style: none;
+      padding-left: 0;
+      li {
+        border-top: 1px solid #f0f0f0;
+        list-style: none;
+        padding: 1.5rem 3rem;
+        p {
+          font-size: 1.3rem;
+          line-height: 1.8rem;
+          color: #707070;
+          width: 90%;
+          margin-bottom: 0;
+          white-space: pre-line;
+        }
+        p.detail-item__note {
+          color: #a5b0b6;
+          font-style: italic;
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}
+.access-item {
+  border-radius: 0.6rem;
+  box-shadow: 0 1px 4px #00000029;
+  width: 57.4rem;
+  margin-bottom: 1.2rem;
+
+  &__img {
+    margin: 1.6rem 0.8rem 1.7rem 0.8rem;
+  }
+  &__img-text {
+    font-size: 1.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--project-announcement-num);
+  }
+
+  &__right {
+    display: flex;
+    flex-direction: column;
+    word-break: keep-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: auto;
+
+    &-title {
+      color: var(--project-announcement-title);
+      font-size: 1.2rem;
+      font-weight: bold;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &-info {
+      color: #595959;
+      font-weight: 400;
+      font-size: 1rem;
+      margin-top: -0.2rem;
+    }
+
+    &-role {
+      color: #a5b0b6;
+      font-size: 1rem;
+    }
+
+    &-link {
+      margin-right: 2rem;
+      color: var(--project-announcement-link);
+      font-size: 1.5rem;
+    }
+  }
+}

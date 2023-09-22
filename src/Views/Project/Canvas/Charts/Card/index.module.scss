@@ -1,0 +1,60 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+
+.heatmap-container {
+  position: relative;
+}
+
+.heatmap-legend {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  position: absolute;
+  right: 0;
+  top: -3.5rem;
+
+  li {
+    font-size: 12px;
+    color: var(--font-color-primary);
+    margin-left: 1.1rem;
+
+    &:first-child {
+      margin-right: 0.4rem;
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-left: 1.5rem;
+    }
+
+    &.heatmap-legend__color {
+      width: 1.4rem;
+      height: 1.4rem;
+      border-radius: 2px;
+    }
+  }
+}
+
+.grouped-column-line__legend {
+  composes: heatmap-legend;
+  position: static;
+  margin-bottom: 0.4rem;
+  margin-left: 3rem;
+
+  .grouped-column-line__legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .grouped-column-line__legend-label {
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+}

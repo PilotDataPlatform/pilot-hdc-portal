@@ -1,0 +1,31 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+.tab {
+  :global {
+    .ant-tabs {
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding-bottom: 50px;
+      margin: 25px 30px 0 30px;
+    }
+    .ant-tabs-nav-wrap {
+      padding: 0px 45px;
+      line-height: 35px;
+      font-size: 16px;
+    }
+    .ant-tabs-extra-content {
+      line-height: 56px;
+      font-size: 16px;
+      padding-right: 10px;
+    }
+    .ant-tabs-nav-wrap  {
+      .ant-tabs-tab {
+        margin: 0px 80px 0px 0px !important;
+      }
+    }
+  }
+}

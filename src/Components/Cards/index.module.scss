@@ -1,0 +1,274 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+
+.basic {
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.05);
+  transition: 0.3s;
+  height: 100%;
+  overflow-y: hidden;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 9px !important;
+
+  &:hover {
+    box-shadow: 0 6px 9px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .extra {
+    padding: -16px 0px;
+  }
+
+  :global {
+    .ant-card-head {
+      padding: 0 16px !important;
+    }
+    .ant-card-head-title {
+      padding-top: 10px !important;
+    }
+    .ant-card-extra {
+      .anticon-drag {
+        color: var(--drag-icon-colour);
+      }
+    }
+    .ant-card-body {
+      flex: 1;
+      max-height: 100%;
+      overflow: auto;
+      margin-bottom: 0px;
+      margin-top: 0px;
+      margin-right: 2px;
+      .ant-skeleton {
+        padding: 5rem;
+      }
+    }
+  }
+}
+
+.basic--project_canvas {
+  composes: basic;
+  :global {
+    .ant-card-head-title {
+      padding-top: 3px !important;
+      padding-bottom: 0 !important;
+    }
+    .ant-card-extra {
+      padding: 3px 0 0 0 !important;
+      margin-bottom: 3.5px;
+
+      .ant-btn.dragarea {
+        transform: translateY(2px);
+      }
+    }
+  }
+}
+
+.query {
+  height: 100%;
+  z-index: 99;
+  position: static;
+  margin: 0px 8px -8px 0px !important;
+}
+
+.query .fullPenal {
+  height: 100%;
+}
+
+.sider {
+  overflow: auto;
+  height: 100vh;
+  position: fixed !important;
+  left: 0;
+  z-index: 10;
+  box-shadow: 10px -5px 39px -24px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s !important;
+}
+.infocard {
+  text-align: center;
+  min-height: 255px;
+}
+
+.infocard img {
+  width: 65px;
+  height: 60px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.infocard h4 {
+  color: #143863;
+  font-size: 22px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.infocard p {
+  font-size: 17px;
+  margin-bottom: 0;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  color: var(--card-title-colour);
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+.go-to_title {
+  font-size: 1.2rem;
+  color: var(--card-title-colour);
+  font-weight: 500;
+  margin-left: 3px;
+}
+
+.fileStreamTitle {
+  font-size: 1.2rem;
+  color: var(--card-title-colour);
+  font-weight: 500;
+  margin-left: 6px;
+}
+
+.file-stream-subtitle {
+  margin-left: 0.5rem;
+  font-size: 13px;
+  color: #fff;
+}
+
+.file-stream-title {
+  display: flex;
+  flex-direction: row;
+}
+
+.file-stream__division {
+  color: #707070;
+  font-weight: '200';
+  font-size: '22px';
+  position: 'absolute';
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+@media only screen and (min-width: 1700px) {
+  .file-stream-subtitle {
+    margin-left: 1rem;
+    color: #595959;
+  }
+}
+
+.mySpace {
+  @extend .basic;
+  overflow: auto;
+
+  :global {
+    .ant-card-head {
+      padding: 0 1.1rem !important;
+      .ant-card-head-title {
+        color: var(--primary-color-1);
+      }
+      .anticon-star {
+        font-size: 1.4rem;
+      }
+      .anticon-edit {
+        font-size: 1.3rem;
+      }
+    }
+
+    .ant-card-extra {
+      padding: 0 !important;
+      .ant-btn {
+        padding: 4px;
+        color: var(--font-color-primary);
+
+        &:not(:last-of-type) {
+          margin-right: 4px;
+        }
+      }
+      .ant-btn:not(.dragarea) {
+        display: none;
+      }
+    }
+
+    .ant-card-body {
+      padding: 1.2rem 1.4rem !important;
+    }
+  }
+
+  &-editMode {
+    position: relative;
+
+    :global {
+      .ant-card-body {
+        position: relative;
+
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 1px;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: white;
+          opacity: 0.75;
+        }
+      }
+    }
+  }
+}
+
+.mySpace-favourite {
+  composes: mySpace;
+
+  :global {
+    .ant-spin-nested-loading {
+      min-height: 220px;
+    }
+
+    .ant-card-head-title {
+      .anticon-star {
+        margin-right: 4px;
+      }
+    }
+
+    .ant-card-extra {
+      button {
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        padding: 0 4px;
+        font-size: 13px;
+        color: var(--font-color-primary);
+      }
+    }
+
+    .ant-card-body {
+      min-width: 300px;
+      height: 100%;
+    }
+  }
+
+  &-editMode {
+    composes: mySpace-editMode;
+  }
+
+  &__list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  &__load-more {
+    display: block;
+    margin: 0 auto;
+    padding: 4px 8px;
+    border: none;
+    background: transparent;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--font-color-primary);
+    cursor: pointer;
+  }
+}

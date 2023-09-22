@@ -1,0 +1,47 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+.csv-table-wrapper {
+  max-height: 550px;
+  overflow: auto;
+
+  :global {
+    .ant-pagination {
+      margin-top: 10px;
+    }
+    table {
+      width: 100%;
+      font-size: 14px;
+      tr {
+        font-weight: normal;
+        position: relative;
+        border-top: 0;
+        border-bottom: 1px solid #f1f1f1;
+        th {
+          height: 50px;
+          line-height: 24px;
+          padding: 13px 24px;
+          border: 0;
+          color: rgba(0, 0, 0, 0.3);
+        }
+        td {
+          padding: 0 24px;
+          height: 34px;
+          line-height: 34px;
+          border: 0;
+          color: #595959;
+        }
+      }
+    }
+  }
+}
+.enlarged_csv_model {
+  :global {
+    .ant-modal-body {
+      padding: 0;
+    }
+  }
+}

@@ -1,0 +1,142 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+@import './Styles/BootstrapPostion.css';
+@import './Styles/links.css';
+@import '~animate.css/animate.css';
+@import './Themes/constants.scss';
+
+html {
+  font-size: 62.5%;
+
+  @media (min-width: 1440px) {
+    font-size: 75%;
+  }
+}
+
+.toggle {
+  background-color: #1b9cd0;
+  padding: 10px 5px;
+  border-radius: 5px;
+  color: white !important;
+  position: fixed;
+  margin-left: -40px;
+  z-index: 9;
+  top: 50vh;
+  transform: translateY(-50%);
+}
+.global-modal-wrapper {
+  .ant-modal-content {
+    border-radius: 10px;
+  }
+  .ant-modal-header {
+    border-radius: 10px;
+  }
+  .ant-modal-footer {
+    .ant-btn {
+      border-radius: 6px;
+    }
+  }
+}
+.content {
+  padding: 20px 20px 20px 35px;
+  margin-left: 0;
+  transition: all 0.4s ease;
+  min-height: 80vh !important;
+}
+.contentOpen {
+  padding: 20px 20px 20px 18px;
+  margin-left: 400px;
+  transition: all 0.4s ease;
+  min-height: 87vh !important;
+}
+
+.ant-tabs-vertical.ant-tabs-card
+  .ant-tabs-card-bar.ant-tabs-left-bar
+  .ant-tabs-tab-active,
+.ant-tabs-vertical.ant-tabs-card
+  .ant-tabs-card-bar.ant-tabs-right-bar
+  .ant-tabs-tab-active {
+  padding-bottom: 8px;
+}
+
+.ant-collapse-content-box p:last-child {
+  margin-bottom: 0;
+}
+
+.ant-tooltip-inner {
+  span[role='img'] {
+    margin-right: 6px;
+  }
+  .tooltip-dashboard {
+    margin-left: 0 !important;
+    width: 14px !important;
+    transform: translateY(-2px);
+  }
+}
+
+.font600 {
+  font-weight: 600;
+}
+
+.ant-table-row.selected {
+  background-color: rgba(145, 213, 255, 0.2);
+}
+
+.ant-table-row.disabled {
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.ant-table-row.disabled .ant-badge-status-error {
+  background-color: rgba(255, 77, 79, 0.3);
+}
+
+.ant-table-row.selected:hover > td {
+  background-color: rgba(145, 213, 255, 0.3) !important;
+}
+
+.g6-toolbar-ul {
+  position: absolute;
+  top: 60px;
+  list-style: none;
+  padding: 0px 10px;
+  border: 1px solid rgb(217, 217, 217);
+  border-radius: 12px;
+  cursor: pointer;
+  background: white;
+}
+
+.g6-component-tooltip {
+  z-index: 9;
+}
+
+#files_table .ant-table-placeholder {
+  height: 550px;
+}
+
+.ant-tree {
+  background: none;
+}
+.ant-select-multiple .ant-select-selection-search-input {
+  min-width: 5px;
+}
+
+.ant-picker-now {
+  display: none !important;
+}
+
+.ant-tooltip-inner span.icon-dashboard > svg > rect {
+  fill: #ffffff;
+}
+
+.ant-input-status-error:not(.ant-input-disabled):not(
+    .ant-input-borderless
+  ).ant-input,
+.ant-input-status-error:not(.ant-input-disabled):not(
+    .ant-input-borderless
+  ).ant-input:hover {
+  background-color: transparent;
+}

@@ -1,0 +1,106 @@
+/*
+ * Copyright (C) 2022-2023 Indoc Systems
+ *
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * You may not use this file except in compliance with the License.
+ */
+
+.favourite__list-item {
+  padding: 0.2rem 0.4rem 0.4rem 1.4rem;
+  border-radius: 6px;
+  box-shadow: 0px 1px 4px #00000029;
+  cursor: pointer;
+  position: relative;
+
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+
+  :global {
+    .ant-row {
+      width: 100%;
+      padding-top: 0.4rem;
+      flex-wrap: nowrap;
+
+      .ant-col {
+        &:first-child {
+          align-self: center;
+          .anticon {
+            font-size: 2rem;
+            transition: color 0.3s ease;
+            margin-right: 0.4rem;
+          }
+        }
+
+        &:nth-child(2) {
+          flex: 1;
+          min-width: 0;
+        }
+      }
+    }
+  }
+
+  p {
+    margin: 0;
+    transition: color 0.3s ease;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &.list-item__name {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--font-color-primary);
+      padding-top: 0.4rem;
+      line-height: 1;
+    }
+
+    &.list-item__displayPath {
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--font-color-light);
+      line-height: 1.1;
+      margin-bottom: 0.8rem;
+    }
+
+    &.list-item__name--edit-mode {
+      @extend .list-item__name;
+    }
+
+    &.list-item__displayPath--edit-mode {
+      @extend .list-item__displayPath;
+    }
+  }
+  &:hover {
+    p {
+      transform: scale(1.1);
+      transform-origin: 0% 50%;
+    }
+
+    :global {
+      .ant-col:first-child .anticon {
+        transform: scale(1.1);
+        transform-origin: 0% 50%;
+      }
+    }
+  }
+}
+
+.favourite__list-item--collection {
+  composes: favourite__list-item;
+}
+.list-item__button-wrap {
+  position: relative;
+  z-index: 100;
+}
+button.favourite__save-button {
+  background-color: var(--primary-color-light-1) !important;
+  color: #ffffff !important;
+  border-radius: 6px;
+  padding: 2px 15px !important;
+}
+
+button.favourite__cancel-button {
+  padding: 2px 12px !important;
+  margin-right: 4px;
+}
