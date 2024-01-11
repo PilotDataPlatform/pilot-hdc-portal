@@ -21,7 +21,7 @@
     "animate.css": "^4.1.0",
     "antd": "^4.2.0",
     "antd-img-crop": "^3.13.2",
-    "axios": "^0.19.2",
+    "axios": "^1.6.5",
     "bizcharts": "^3.5.8",
     "broadcast-channel": "^3.1.0",
     "camelcase-keys": "^6.2.2",
