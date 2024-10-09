@@ -1,17 +1,19 @@
 /*
- * Copyright (C) 2022-2023 Indoc Systems
+ * Copyright (C) 2022-Present Indoc Systems
  *
- * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE,
+ * Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
  * You may not use this file except in compliance with the License.
  */
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, Select, Tooltip, Form, message } from 'antd';
+import { Modal, Button, Select, Tooltip, Form, message, Checkbox } from 'antd';
 import {
   ArrowRightOutlined,
   ExclamationCircleOutlined,
   FileOutlined,
   FolderOutlined,
 } from '@ant-design/icons';
+import { useKeycloak } from '@react-keycloak/web';
 import { capitalize } from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import { datasetFileOperationsCreators } from '../../../../../../../Redux/actions';
@@ -22,6 +24,7 @@ import i18n from '../../../../../../../i18n';
 import variables from '../../../../../../../Themes/constants.scss';
 import { tokenManager } from '../../../../../../../Service/tokenManager';
 import { JOB_STATUS } from '../../../../../../../Components/Layout/FilePanel/jobStatus';
+import { getProjectsWithAdminRole } from '../../../../../../../Utility/userProjects';
 
 const { Option } = Select;
 
@@ -30,9 +33,11 @@ const DatasetsModal = (props) => {
   const [BtnLoading, setBtnLoading] = useState(false);
   const [selectedDataset, setSelectedDataset] = useState({});
   const [validateSelect, setValidateSelect] = useState(true);
+  let [showOnlyMineDatasets, setShowOnlyMineDatasets] = useState(true);
   const [skippedFiles, setSkippedFiles] = useState([]);
   const [modalContentStep, setModalContentStep] = useState(1);
   const [form] = Form.useForm();
+  const { keycloak } = useKeycloak();
   const userName = useSelector((state) => state.username);
   const currentProject = useSelector((state) => state.project);
   const { datasetList, datasetLoading } = useSelector((state) => ({
@@ -51,7 +56,10 @@ const DatasetsModal = (props) => {
   };
 
   useEffect(() => {
-    if (visible) fetchMyDatasets(userName, 1, 10000);
+    if (visible) {
+      const creator = showOnlyMineDatasets ? userName : null;
+      fetchMyDatasets(creator, 1, 10000);
+    }
   }, [visible]);
 
   const addToDatasets = async () => {
@@ -141,6 +149,10 @@ const DatasetsModal = (props) => {
         );
     }
   };
+
+  const userProjectsWithAdminRole = getProjectsWithAdminRole(keycloak?.tokenParsed);
+  const isShowOnlyMineCheckboxAvailable = userProjectsWithAdminRole.length > 0;
+
   return (
     <Modal
       className={styles.dataset_modal}
@@ -158,7 +170,7 @@ const DatasetsModal = (props) => {
       {modalContentStep === 1 && (
         <div>
           <p style={{ margin: '0px 0px 5px 0px', fontWeight: 'bold' }}>
-            Select Dataset{' '}
+            Select Dataset:
             {!validateSelect ? (
               <span
                 style={{
@@ -171,6 +183,21 @@ const DatasetsModal = (props) => {
               </span>
             ) : null}
           </p>
+          {isShowOnlyMineCheckboxAvailable ? (
+            <p>
+              <Checkbox
+                defaultChecked={showOnlyMineDatasets}
+                onChange={(e) => {
+                  showOnlyMineDatasets = e.target.checked;
+                  setShowOnlyMineDatasets(showOnlyMineDatasets);
+                  const creator = showOnlyMineDatasets ? userName : null;
+                  fetchMyDatasets(creator, 1, 10000);
+                }}
+              >
+                Show only the Datasets I've created
+              </Checkbox>
+            </p>
+          ) : null}
           <Form form={form}>
             <Form.Item name="datasetsSelection">
               <Select

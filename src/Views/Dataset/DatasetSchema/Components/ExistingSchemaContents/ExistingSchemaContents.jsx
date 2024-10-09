@@ -1,7 +1,8 @@
 /*
- * Copyright (C) 2022-2023 Indoc Systems
+ * Copyright (C) 2022-Present Indoc Systems
  *
- * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE,
+ * Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
  * You may not use this file except in compliance with the License.
  */
 import React, { useState, useEffect } from 'react';
@@ -11,29 +12,35 @@ import styles from './index.module.scss';
 import SchemasTabContents from './SchemasTabContents';
 import OpenMindsSchemaTabContents from './openMindsSchemasTabContents';
 import UploadSchemaModal from './UploadSchemaModal/UploadSchemaModal';
+import DownloadSchemaModal from './DownloadSchemaModal/DownloadSchemaModal';
+import DeleteSchemaModal from './DeleteSchemaModal/DeleteSchemaModal';
 import {
   deleteDatasetSchemaData,
   getDatasetSchemaListAPI,
   getKGMetaListAPI,
   transferMetaToKG,
+  refreshMetaFromKG,
 } from '../../../../../APIs';
 import {
   DeleteOutlined,
-  FileOutlined,
   EyeOutlined,
   ToTopOutlined,
+  DownloadOutlined,
 } from '@ant-design/icons';
 import { ESSENTIAL_SCHEMA_NAME } from '../../GlobalDefinition';
 import { schemaTemplatesActions } from '../../../../../Redux/actions';
 import { useTranslation } from 'react-i18next';
-import { PLATFORM } from '../../../../../config';
 import { isJson } from '../../../../../Utility/common';
 
 const { TabPane } = Tabs;
 
 export function ExistingSchemaContents(props) {
   const [schemaGeid, setSchemaGeid] = useState('');
-  const [modalVisibility, setModalVisibility] = useState(false);
+  const [currentItem, setCurrentItem] = useState(null);
+  const [currentMetaItem, setCurrentMetaItem] = useState(null);
+  const [modalUploadVisibility, setModalUploadVisibility] = useState(false);
+  const [modalDownloadVisibility, setModalDownloadVisibility] = useState(false);
+  const [modalDeleteVisibility, setModalDeleteVisibility] = useState(false);
   const [delLoading, setDelLoading] = useState(false);
   const datasetInfo = useSelector((state) => state.datasetInfo.basicInfo);
   const schemas = useSelector((state) => state.schemaTemplatesInfo.schemas);
@@ -54,11 +61,21 @@ export function ExistingSchemaContents(props) {
     (state) => state.schemaTemplatesInfo.templateManagerMode,
   );
   const dispatch = useDispatch();
+  const { username } = useSelector((state) => state);
   const { t } = useTranslation(['errormessages', 'success']);
 
   useEffect(() => {
     setSchemaGeid(defaultSchemaActiveKey);
   }, [defaultSchemaActiveKey]);
+
+  const openMindsSchema = schemas.filter(
+        (v) => v.standard === 'open_minds',
+      );
+  const schemaIds = openMindsSchema.map((v) => {
+        return {
+          id: v.geid,
+        };
+      });
 
   const handleTransferKG = async (item) => {
     try {
@@ -69,7 +86,7 @@ export function ExistingSchemaContents(props) {
           message.error(t('errormessages:transferToKG.type.0'));
           return;
         }
-        await transferMetaToKG(spaceId, item.geid, selSchema.content);
+        await transferMetaToKG(spaceId, item.geid, datasetInfo.geid, username, item.name, selSchema.content);
       }
     } catch (e) {
       if (e.response?.data?.error?.details) {
@@ -91,14 +108,6 @@ export function ExistingSchemaContents(props) {
       return;
     }
     try {
-      const openMindsSchema = schemas.filter(
-        (v) => v.standard === 'open_minds',
-      );
-      const schemaIds = openMindsSchema.map((v) => {
-        return {
-          id: v.geid,
-        };
-      });
       const resMeta = await getKGMetaListAPI(schemaIds);
       dispatch(
         schemaTemplatesActions.updateKgSchemaMetaList(resMeta.data.metadata),
@@ -107,6 +116,20 @@ export function ExistingSchemaContents(props) {
       message.error(t('errormessages:kgSchemaMetaList.default.0'));
     }
   };
+
+  const handleRefreshSchema = async (item) => {
+    try {
+      await refreshMetaFromKG(item.geid, username);
+      message.success(t('success:refreshFromKG.default.0'));
+      const resMeta = await getKGMetaListAPI(schemaIds);
+      dispatch(
+        schemaTemplatesActions.updateKgSchemaMetaList(resMeta.data.metadata),
+      );
+    } catch (error) {
+      message.error(t('errormessages:refreshFromKG.default.0'));
+    }
+  };
+
   const handleEditSchema = (item) => {
     if (item.standard === 'open_minds') {
       dispatch(schemaTemplatesActions.setPreviewSchemaGeid(item.geid));
@@ -142,11 +165,11 @@ export function ExistingSchemaContents(props) {
     }
   };
 
-  const deleteSchema = async (item) => {
+  const deleteSchema = async (item, datasetGeid) => {
     setDelLoading(true);
     try {
-      const res = await deleteDatasetSchemaData(
-        datasetInfo.geid,
+      await deleteDatasetSchemaData(
+        datasetGeid,
         item.geid,
         item.name,
       );
@@ -165,8 +188,28 @@ export function ExistingSchemaContents(props) {
     setDelLoading(false);
   };
 
+    const deleteSchemaChoice = async (item) => {
+      const kgMetaItem = kgSchemaMeta
+                  .sort((a, b) => {
+                    return new Date(b.uploadedAt) - new Date(a.uploadedAt);
+                  })
+                  .find((v) => v.metadataId === item.geid);
+      setCurrentMetaItem(kgMetaItem);
+      setCurrentItem(item);
+      kgMetaItem ? setModalDeleteVisibility(true) : await deleteSchema(item, datasetInfo.geid);
+  };
+
   const schemaActionButtons = (item) => (
     <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+      {spaceBind ? (
+        <Tooltip title="Update from KG Space">
+          <Button
+            icon={<DownloadOutlined />}
+            style={{ border: '0px', backgroundColor: '#E6F5FF' }}
+            onClick={() => handleRefreshSchema(item)}
+          />
+        </Tooltip>
+      ) : null}
       {spaceBind ? (
         <Tooltip title="Transfer To KG Space">
           <Button
@@ -192,7 +235,7 @@ export function ExistingSchemaContents(props) {
             icon={<DeleteOutlined />}
             loading={delLoading}
             onClick={(e) => {
-              deleteSchema(item);
+              deleteSchemaChoice(item);
             }}
             style={{
               border: '0px',
@@ -251,7 +294,8 @@ export function ExistingSchemaContents(props) {
         </TabPane>
         <TabPane tab={openMindsSchemasTabTitle} key="OpenMinds">
           <OpenMindsSchemaTabContents
-            setModalVisibility={setModalVisibility}
+            setModalUploadVisibility={setModalUploadVisibility}
+            setModalDownloadVisibility={setModalDownloadVisibility}
             schemaGeid={schemaGeid}
             schemas={schemas}
             kgSchemaMeta={kgSchemaMeta}
@@ -262,8 +306,22 @@ export function ExistingSchemaContents(props) {
         </TabPane>
       </Tabs>
       <UploadSchemaModal
-        visibility={modalVisibility}
-        setModalVisibility={setModalVisibility}
+        visibility={modalUploadVisibility}
+        setModalUploadVisibility={setModalUploadVisibility}
+      />
+      <DownloadSchemaModal
+        visibility={modalDownloadVisibility}
+        setModalDownloadVisibility={setModalDownloadVisibility}
+        schemaIds={schemaIds}
+      />
+      <DeleteSchemaModal
+        visibility={modalDeleteVisibility}
+        setModalDeleteVisibility={setModalDeleteVisibility}
+        schemaIds={schemaIds}
+        datasetGeid={datasetInfo.geid}
+        item={currentItem}
+        metaItem={currentMetaItem}
+        deleteSchema={deleteSchema}
       />
     </div>
   );

@@ -89,5 +89,11 @@
   },
   "createKGSpace": {
     "default": ["KG Space is created successfully."]
+  },
+  "downloadFromKG": {
+    "default": ["Successfully downloaded metadata from KG."]
+  },
+  "refreshFromKG": {
+    "default": ["Successfully updated metadata from KG."]
   }
 }

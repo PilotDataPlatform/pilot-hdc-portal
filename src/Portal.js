@@ -1,7 +1,8 @@
 /*
- * Copyright (C) 2022-2023 Indoc Systems
+ * Copyright (C) 2022-Present Indoc Systems
  *
- * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE,
+ * Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
  * You may not use this file except in compliance with the License.
  */
 import React, { useEffect, useState, Suspense, useContext } from 'react';
@@ -110,7 +111,6 @@ function Portal(props) {
   useEffect(() => {
     const username = keycloak?.tokenParsed.preferred_username;
     async function initUser() {
-      console.log('keycloak token', keycloak?.tokenParsed);
       setUsernameDispatcher(username);
       if (userStatus === 'active') {
         try {
@@ -324,7 +324,7 @@ function Portal(props) {
     const versionNumLocal = localStorage.getItem('version');
     const isLatest =
       semver.valid(versionNumLocal) &&
-      semver.eq(packageInfo.version, versionNumLocal);
+      semver.eq(packageInfo.displayVersion, versionNumLocal);
 
     if (!isLatest && keycloak.authenticated) {
       const args = {
@@ -335,7 +335,7 @@ function Portal(props) {
               width={30}
               src={PORTAL_PREFIX + '/Rocket.svg'}
             ></img>{' '}
-            <b>{' Release ' + packageInfo.version}</b>
+            <b>{' Release ' + packageInfo.displayVersion}</b>
           </>
         ),
         description: (
@@ -343,7 +343,7 @@ function Portal(props) {
             onClick={() => {
               setIsReleaseNoteShownDispatcher(true);
               notification.close('releaseNote');
-              localStorage.setItem('version', packageInfo.version);
+              localStorage.setItem('version', packageInfo.displayVersion);
             }}
             style={{ cursor: 'pointer' }}
           >
@@ -354,7 +354,7 @@ function Portal(props) {
         ),
         duration: 0,
         onClose: () => {
-          localStorage.setItem('version', packageInfo.version);
+          localStorage.setItem('version', packageInfo.displayVersion);
         },
         key: 'releaseNote',
       };

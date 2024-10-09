@@ -31,6 +31,11 @@
       "Something went wrong while trying to reset your password, please try again later."
     ]
   },
+  "resetVMPassword": {
+    "default": [
+      "Something went wrong while trying to reset your password, please try again later."
+    ]
+  },
   "forgotPassword": {
     "403": [
       "This reset password link is invalid or expired. Please contact an administrator to receive a new link."
@@ -698,7 +703,7 @@
   "projectMetaData": {
     "statistics": ["Something went wrong while retrieving project statistics"],
     "size": ["Something went wrong while retrieving project file sizes"],
-    "activity": ["Something went wrong while retreiving project file activity"]
+    "activity": ["Something went wrong while retrieving project file activity"]
   },
   "favourites": {
     "get": [
@@ -734,7 +739,7 @@
   },
   "taskStream": {
     "default": [
-      "An error occured while attempting to connect to the task-stream SSE"
+      "An error occurred while attempting to connect to the task-stream SSE"
     ]
   },
   "bidsValidateButton": {
@@ -765,11 +770,19 @@
       "JSON must have @type field with metadata type, otherwise it will be rejected by KG API"
     ],
     "default": [
-      "An error occured while attempting to transfer metadata to KG Space"
+      "An error occurred while attempting to transfer metadata to KG Space"
     ]
   },
   "createKGSpace": {
-    "default": ["An error occured while attempting to create KG Space"],
+    "default": ["An error occurred while attempting to create KG Space"],
     "noProjectAssociation": ["There is no project associated with this dataset"]
+  },
+  "downloadFromKG": {
+    "default": ["An error occurred while attempting to download metadata from KG"],
+    "notFound": ["Metadata with selected UUID does not exist in KG"]
+  },
+  "refreshFromKG": {
+    "default": ["An error occurred while attempting to refresh metadata from KG"],
+    "notFound": ["Metadata with selected UUID was not uploaded to KG"]
   }
 }

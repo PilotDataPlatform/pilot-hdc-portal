@@ -1,7 +1,8 @@
 /*
- * Copyright (C) 2022-2023 Indoc Systems
+ * Copyright (C) 2022-Present Indoc Systems
  *
- * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE,
+ * Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
  * You may not use this file except in compliance with the License.
  */
 import React from 'react';
@@ -12,7 +13,7 @@ import {
   CloseOutlined,
   DownloadOutlined,
   ImportOutlined,
-  EditOutlined,
+  EditOutlined, CloudUploadOutlined, CloudDownloadOutlined,
 } from '@ant-design/icons';
 import variables from '../../../Themes/constants.scss';
 
@@ -76,6 +77,17 @@ const datasetCreateInfoDisplay = () => {
         style={{ color: variables.primaryColor1, marginRight: '10px' }}
       />
       <p style={{ margin: '0px' }}>Created a Dataset</p>
+    </div>
+  );
+};
+
+const spaceCreateInfoDisplay = () => {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      <PlusOutlined
+        style={{ color: variables.primaryColor1, marginRight: '10px' }}
+      />
+      <p style={{ margin: '0px' }}>Created a KG space</p>
     </div>
   );
 };
@@ -284,7 +296,7 @@ const schemaInfoDisplay = {
           style={{ color: variables.primaryColor1, marginRight: '10px' }}
         />
         <p style={{ margin: '0px' }}>
-          Created a schema:{' '}
+          Created a schema in HDC:{' '}
           <span style={{ fontWeight: 600 }}>
             {details.targetName.length > 40 ? (
               <Tooltip title={details.targetName}>{`${details.targetName.slice(
@@ -306,7 +318,7 @@ const schemaInfoDisplay = {
           style={{ color: variables.primaryColorLight3, marginRight: '10px' }}
         />
         <p style={{ margin: '0px' }}>
-          Deleted a schema:{' '}
+          Deleted a schema in HDC:{' '}
           <span style={{ fontWeight: 600 }}>
             {details.targetName.length > 40 ? (
               <Tooltip title={details.targetName}>{`${details.targetName.slice(
@@ -327,27 +339,106 @@ const schemaInfoDisplay = {
     return (
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <SyncOutlined
-          style={{ color: variables.primaryColor1, marginRight: '10px' }}
+          style={{ color: variables.primaryColorLight1, marginRight: '10px' }}
         />
         <p style={{ margin: '0px' }}>
-          {`Updated a schema (${
-            details.targetName.length > 40 ? (
+          Updated a schema in HDC:{' '}
+          <span style={{ fontWeight: 600 }}>
+            {details.targetName.length > 40 ? (
               <Tooltip title={details.targetName}>{`${details.targetName.slice(
                 0,
                 40,
               )}...`}</Tooltip>
             ) : (
               details.targetName
-            )
-          })`}
-          {properties && properties.length ? ': ' : ''}
+            )}
+          </span>
+        </p>
+      </div>
+    );
+  },
+  schemaUploadKGInfoDisplay: (details) => {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <CloudUploadOutlined
+          style={{ color: variables.primaryColor1, marginRight: '10px' }}
+        />
+        <p style={{ margin: '0px' }}>
+          Uploaded a schema to KG:{' '}
           <span style={{ fontWeight: 600 }}>
-            {properties.join(', ').length > 80 ? (
-              <Tooltip title={properties.join(', ')}>{`${properties
-                .join(', ')
-                .slice(0, 80)}...`}</Tooltip>
+            {details.targetName.length > 40 ? (
+              <Tooltip title={details.targetName}>{`${details.targetName.slice(
+                0,
+                40,
+              )}...`}</Tooltip>
             ) : (
-              properties.join(', ')
+              details.targetName
+            )}
+          </span>
+        </p>
+      </div>
+    );
+  },
+  schemaDownloadKGInfoDisplay: (details) => {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <CloudDownloadOutlined
+          style={{ color: variables.primaryColor1, marginRight: '10px' }}
+        />
+        <p style={{ margin: '0px' }}>
+          Downloaded a schema from KG:{' '}
+          <span style={{ fontWeight: 600 }}>
+            {details.targetName.length > 40 ? (
+              <Tooltip title={details.targetName}>{`${details.targetName.slice(
+                0,
+                40,
+              )}...`}</Tooltip>
+            ) : (
+              details.targetName
+            )}
+          </span>
+        </p>
+      </div>
+    );
+  },
+  schemaDeleteKGInfoDisplay: (details) => {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <CloseOutlined
+          style={{ color: variables.primaryColorLight3, marginRight: '10px' }}
+        />
+        <p style={{ margin: '0px' }}>
+          Deleted a schema in KG:{' '}
+          <span style={{ fontWeight: 600 }}>
+            {details.targetName.length > 40 ? (
+              <Tooltip title={details.targetName}>{`${details.targetName.slice(
+                0,
+                40,
+              )}...`}</Tooltip>
+            ) : (
+              details.targetName
+            )}
+          </span>
+        </p>
+      </div>
+    );
+  },
+  schemaRefreshKGInfoDisplay: (details) => {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <SyncOutlined
+          style={{ color: variables.primaryColorLight1, marginRight: '10px' }}
+        />
+        <p style={{ margin: '0px' }}>
+          Updated a schema from KG:{' '}
+          <span style={{ fontWeight: 600 }}>
+            {details.targetName.length > 40 ? (
+              <Tooltip title={details.targetName}>{`${details.targetName.slice(
+                0,
+                40,
+              )}...`}</Tooltip>
+            ) : (
+              details.targetName
             )}
           </span>
         </p>
@@ -524,6 +615,8 @@ const logsInfo = (activityType, detail) => {
         case 'release': {
           return datasetVersionInfoDisplay(detail);
         }
+        case 'kg_create':
+          return spaceCreateInfoDisplay();
         case 'schema_create':
           return schemaInfoDisplay.schemaCreateInfoDisplay(detail);
         case 'schema_delete':
@@ -534,6 +627,14 @@ const logsInfo = (activityType, detail) => {
           return schemaTemplateInfoDisplay.schemaTemplateCreateInfoDisplay(
             detail,
           );
+        case 'kg_metadata_delete':
+          return schemaInfoDisplay.schemaDeleteKGInfoDisplay(detail);
+        case 'kg_metadata_upload':
+          return schemaInfoDisplay.schemaUploadKGInfoDisplay(detail);
+        case 'kg_metadata_refresh':
+          return schemaInfoDisplay.schemaRefreshKGInfoDisplay(detail);
+        case 'kg_metadata_download':
+          return schemaInfoDisplay.schemaDownloadKGInfoDisplay(detail);
       }
     case 'file':
       switch (activityType) {

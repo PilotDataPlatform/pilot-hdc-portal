@@ -1,7 +1,8 @@
 /*
- * Copyright (C) 2022-2023 Indoc Systems
+ * Copyright (C) 2022-Present Indoc Systems
  *
- * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE,
+ * Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
  * You may not use this file except in compliance with the License.
  */
 import React, { useState } from 'react';
@@ -23,7 +24,7 @@ import variables from '../../../../../../Themes/constants.scss';
 const MAX_UPLOAD = 20;
 
 const UploadSchemaModal = (props) => {
-  const { visibility, setModalVisibility } = props;
+  const { visibility, setModalUploadVisibility } = props;
   const [fileList, setFileList] = useState([]);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation(['errormessages', 'success']);
@@ -62,7 +63,7 @@ const UploadSchemaModal = (props) => {
 
   const closeModal = () => {
     setFileList([]);
-    setModalVisibility(false);
+    setModalUploadVisibility(false);
   };
 
   const onSubmit = async () => {

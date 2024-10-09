@@ -1,7 +1,8 @@
 /*
- * Copyright (C) 2022-2023 Indoc Systems
+ * Copyright (C) 2022-Present Indoc Systems
  *
- * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE,
+ * Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
  * You may not use this file except in compliance with the License.
  */
 import React, { useEffect } from 'react';
@@ -18,19 +19,22 @@ function MyDatasetsList() {
     (state) => state.myDatasetList,
   );
   const { username } = useSelector((state) => state);
-  const { page = 1, pageSize = 10 } = useQueryParams(['pageSize', 'page']);
+  const { page = 1, pageSize = 10, showOnlyMine = 'true' } = useQueryParams(['pageSize', 'page', 'showOnlyMine']);
+  const creator = (showOnlyMine.toLowerCase() === 'true') ? username : null;
   const history = useHistory();
 
   useEffect(() => {
-    username && fetchMyDatasets(username, parseInt(page), parseInt(pageSize));
-  }, [username, page, pageSize]);
+    fetchMyDatasets(creator, parseInt(page), parseInt(pageSize));
+  }, [creator, page, pageSize]);
 
   const onPageChange = (page, pageSize) => {
-    history.push(`/datasets?page=${page}&pageSize=${pageSize}`);
+    const showOnlyMineValue = !!creator;
+    history.push(`/datasets?showOnlyMine=${showOnlyMineValue}&page=${page}&pageSize=${pageSize}`);
   };
 
   const onShowSizeChange = (page, pageSize) => {
-    history.push(`/datasets?page=${page}&pageSize=${pageSize}`);
+    const showOnlyMineValue = !!creator;
+    history.push(`/datasets?showOnlyMine=${showOnlyMineValue}&page=${page}&pageSize=${pageSize}`);
   };
 
   const paginationProps = {

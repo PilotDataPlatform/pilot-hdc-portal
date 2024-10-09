@@ -1,7 +1,8 @@
 /*
- * Copyright (C) 2022-2023 Indoc Systems
+ * Copyright (C) 2022-Present Indoc Systems
  *
- * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE,
+ * Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
  * You may not use this file except in compliance with the License.
  */
 import { serverAxios, axios, serverAxiosNoIntercept } from './config';
@@ -536,14 +537,11 @@ function addToDatasetsAPI(datasetGeid, payLoad, sessionId) {
   });
 }
 
-async function getDatasetsListingAPI(username, payload) {
+async function getDatasetsListingAPI(params) {
   const res = await serverAxios({
     url: `/v1/datasets/`,
     method: 'GET',
-    params: {
-      creator: username,
-      ...payload,
-    },
+    params: params,
   });
   if (res.data.result && res.data.result.length) {
     res.data.result = res.data.result.map((v) => {

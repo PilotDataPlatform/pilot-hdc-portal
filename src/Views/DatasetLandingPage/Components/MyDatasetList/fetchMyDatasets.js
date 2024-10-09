@@ -1,7 +1,8 @@
 /*
- * Copyright (C) 2022-2023 Indoc Systems
+ * Copyright (C) 2022-Present Indoc Systems
  *
- * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE,
+ * Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
  * You may not use this file except in compliance with the License.
  */
 import { getDatasetsListingAPI } from '../../../../APIs';
@@ -13,21 +14,27 @@ import _ from 'lodash';
 
 const dispatch = store.dispatch;
 
-export const fetchMyDatasets = (username, page = 1, pageSize) => {
+export const fetchMyDatasets = (creator, page = 1, pageSize) => {
   if (!_.isNumber(page)) {
     throw new TypeError('page should be a number');
   }
   if (!_.isNumber(pageSize)) {
     throw new TypeError('pageSize should be a number');
   }
-  dispatch(myDatasetListCreators.setLoading(true));
-  getDatasetsListingAPI(username, {
-    filter: {},
+  let params = {
     sort_by: 'created_at',
     sort_order: 'desc',
     page: page - 1,
     page_size: pageSize,
-  })
+  };
+
+  if (creator) {
+    params['creator'] = creator;
+  }
+
+  dispatch(myDatasetListCreators.setLoading(true));
+
+  getDatasetsListingAPI(params)
     .then((res) => {
       dispatch(myDatasetListCreators.setDatasets(res.data.result));
       dispatch(myDatasetListCreators.setTotal(res.data.total));

@@ -1,19 +1,21 @@
 /*
- * Copyright (C) 2022-2023 Indoc Systems
+ * Copyright (C) 2022-Present Indoc Systems
  *
- * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE,
+ * Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
  * You may not use this file except in compliance with the License.
  */
 import React from 'react';
 import { Button } from 'antd';
-import { CloudUploadOutlined } from '@ant-design/icons';
+import { CloudUploadOutlined, CloudDownloadOutlined } from '@ant-design/icons';
 import { FileOutlined } from '@ant-design/icons';
 import styles from './index.module.scss';
 import { timeConvertWithOffestValue } from '../../../../../Utility';
 
 const OpenMindsSchemaTabContents = (props) => {
   const {
-    setModalVisibility,
+    setModalUploadVisibility,
+    setModalDownloadVisibility,
     schemaGeid,
     schemas,
     handleOnClick,
@@ -28,9 +30,16 @@ const OpenMindsSchemaTabContents = (props) => {
         <Button
           type="primary"
           icon={<CloudUploadOutlined />}
-          onClick={() => setModalVisibility(true)}
+          onClick={() => setModalUploadVisibility(true)}
         >
           Upload Schemas
+        </Button>
+        <Button
+          type="primary"
+          icon={<CloudDownloadOutlined />}
+          onClick={() => setModalDownloadVisibility(true)}
+        >
+          Download Instances
         </Button>
       </div>
       <div
@@ -92,9 +101,13 @@ const OpenMindsSchemaTabContents = (props) => {
                           flexDirection: 'column',
                         }}
                       >
-                        <p style={{ fontSize: '10px', margin: 0 }}>
+                        {kgMetaItem.direction === 'KG' ?
+                          <p style={{ fontSize: '10px', margin: 0 }}>
                           Transferred to KG Space on{' '}
-                        </p>
+                        </p> :
+                        <p style={{ fontSize: '10px', margin: 0 }}>
+                          Transferred from KG Space on{' '}
+                        </p> }
                         <p style={{ fontSize: '10px', margin: 0 }}>
                           {timeConvertWithOffestValue(
                             kgMetaItem.uploadedAt,

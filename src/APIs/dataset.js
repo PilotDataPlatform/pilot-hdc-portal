@@ -1,7 +1,8 @@
 /*
- * Copyright (C) 2022-2023 Indoc Systems
+ * Copyright (C) 2022-Present Indoc Systems
  *
- * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE,
+ * Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
  * You may not use this file except in compliance with the License.
  */
 import { serverAxios, serverAxiosNoIntercept } from './config';
@@ -497,10 +498,49 @@ export function getKGSpace(spaceName) {
   });
 }
 
-export function transferMetaToKG(space, metadataId, jsonBody) {
+export function transferMetaToKG(space, metadataId, datasetId, uploader, filename, jsonBody) {
   return serverAxios({
-    url: `/v1/kg/metadata/update/${metadataId}?space=${space}&metadata_id=${metadataId}`,
+    url: `/v1/kg/metadata/update/${metadataId}`,
     method: 'PUT',
     data: jsonBody,
+    params: {
+      uploader: uploader,
+      filename: filename,
+      space: space,
+      dataset_id: datasetId,
+    }
   });
+}
+
+export function deleteMetaFromKG(metadataId, username, filename) {
+  return serverAxios({
+    url: `/v1/kg/metadata/delete/${metadataId}`,
+    method: 'DELETE',
+    params: {
+      username: username,
+    }
+  });
+}
+
+export function downloadMetaFromKG(metadataId, datasetId, uploader, filename) {
+  return serverAxios({
+    url: `/v1/kg/metadata/upload/${metadataId}/${datasetId}`,
+    method: `GET`,
+    params: {
+      uploader: uploader,
+      filename: filename,
+    },
+    }
+  )
+}
+
+export function refreshMetaFromKG(metadataId, username) {
+  return serverAxios({
+    url: `/v1/kg/metadata/refresh/${metadataId}`,
+    method: `GET`,
+    params: {
+      username: username,
+    },
+    }
+  )
 }

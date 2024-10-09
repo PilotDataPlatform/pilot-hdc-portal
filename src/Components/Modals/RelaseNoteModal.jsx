@@ -1,7 +1,8 @@
 /*
- * Copyright (C) 2022-2023 Indoc Systems
+ * Copyright (C) 2022-Present Indoc Systems
  *
- * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE,
+ * Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
  * You may not use this file except in compliance with the License.
  */
 import React, { useState } from 'react';
@@ -35,13 +36,13 @@ function ReleaseNoteModal({ currentVersion, visible }) {
               setVersion(value);
             }}
             defaultValue={currentVersion}
-            style={{ width: 160, textAlign: 'left' }}
+            style={{ width: 180, textAlign: 'left' }}
           >
             {versionsArr.map &&
               versionsArr.map((item) => {
                 return (
                   <Option value={item.version} key={item.version}>
-                    <b>{`${item.version}(${item.date})`}</b>
+                    <b>{`${item.version} (${item.date})`}</b>
                   </Option>
                 );
               })}

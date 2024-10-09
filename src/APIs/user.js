@@ -1,7 +1,8 @@
 /*
- * Copyright (C) 2022-2023 Indoc Systems
+ * Copyright (C) 2022-Present Indoc Systems
  *
- * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE,
+ * Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
  * You may not use this file except in compliance with the License.
  */
 import { serverAxios as axios } from './config';
@@ -85,6 +86,26 @@ function contactUsApi(data) {
     method: 'post',
     data,
     timeout: 100 * 1000,
+  });
+}
+
+function resetVMPasswordApi(username) {
+  return axios({
+    url: '/v1/vm/user/reset',
+    method: 'post',
+    data: {
+      username: username,
+    }
+  });
+}
+
+function checkVMAccountApi(username) {
+  return axios({
+    url: '/v1/vm/user',
+    method: 'get',
+    params: {
+      username: username,
+    }
   });
 }
 
@@ -224,4 +245,6 @@ export {
   getUsersCountOnProjectAPI,
   getProjectVMs,
   updateUserVM,
+  resetVMPasswordApi,
+  checkVMAccountApi,
 };

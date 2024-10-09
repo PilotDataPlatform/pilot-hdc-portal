@@ -1,7 +1,8 @@
 /*
- * Copyright (C) 2022-2023 Indoc Systems
+ * Copyright (C) 2022-Present Indoc Systems
  *
- * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
+ * Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE,
+ * Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
  * You may not use this file except in compliance with the License.
  */
 .search_conditions {
@@ -343,7 +344,6 @@
   :global {
     .ant-modal-content {
       width: 450px;
-      height: 205px;
       border-radius: 6px;
       box-shadow: 0px 1px 7px #0000001a;
     }
@@ -351,7 +351,7 @@
       margin-top: -10px;
     }
     .ant-modal-body {
-      height: 120px;
+      padding-bottom: 0;
     }
     .ant-modal-close {
       margin-top: -10px;
