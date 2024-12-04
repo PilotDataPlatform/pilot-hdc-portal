@@ -14,6 +14,7 @@ export function createDatasetApi(
   creator,
   title,
   code,
+  projectCode,
   authors,
   type = 'GENERAL',
   modality,
@@ -30,6 +31,7 @@ export function createDatasetApi(
       creator,
       title,
       code,
+      project_code: projectCode,
       authors,
       type,
       modality,
@@ -60,6 +62,7 @@ export async function listDatasetFiles(datasetGeid, folderGeid, query) {
     }
     return labels;
   }
+
   const params = {
     folder_id: folderGeid,
     query: query,
@@ -205,6 +208,7 @@ export function checkDatasetDownloadStatusAPI(hashCode) {
     method: 'GET',
   });
 }
+
 export function downloadDatasetFiles(datasetCode, files, operator, sessionId) {
   const options = {
     url: `/v2/download/pre`,
@@ -368,6 +372,7 @@ export function createSchemaData(
     },
   });
 }
+
 export function deleteDatasetSchemaData(datasetGeid, schemaGeid, schemaName) {
   return serverAxios({
     url: `/v1/dataset/${datasetGeid}/schema/${schemaGeid}`,
@@ -385,6 +390,7 @@ export function deleteDatasetSchemaData(datasetGeid, schemaGeid, schemaName) {
     },
   });
 }
+
 export function getDatasetSchemaListAPI(datasetGeid) {
   return serverAxios({
     url: `/v1/dataset/${datasetGeid}/schema/list`,
@@ -392,6 +398,7 @@ export function getDatasetSchemaListAPI(datasetGeid) {
     data: {},
   });
 }
+
 export function getKGMetaListAPI(ids) {
   return serverAxios({
     url: `/v1/kg/metadata`,
@@ -409,6 +416,7 @@ export function getDatasetDefaultSchemaTemplateListAPI() {
     data: {},
   });
 }
+
 export function getDatasetCustomSchemaTemplateListAPI(datasetGeid) {
   return serverAxios({
     url: `/v1/dataset/${datasetGeid}/schemaTPL/list`,
@@ -416,6 +424,7 @@ export function getDatasetCustomSchemaTemplateListAPI(datasetGeid) {
     data: {},
   });
 }
+
 export function createDatasetSchemaTPL(
   datasetGeid,
   tplName,
@@ -508,7 +517,7 @@ export function transferMetaToKG(space, metadataId, datasetId, uploader, filenam
       filename: filename,
       space: space,
       dataset_id: datasetId,
-    }
+    },
   });
 }
 
@@ -518,29 +527,29 @@ export function deleteMetaFromKG(metadataId, username, filename) {
     method: 'DELETE',
     params: {
       username: username,
-    }
+    },
   });
 }
 
 export function downloadMetaFromKG(metadataId, datasetId, uploader, filename) {
   return serverAxios({
-    url: `/v1/kg/metadata/upload/${metadataId}/${datasetId}`,
-    method: `GET`,
-    params: {
-      uploader: uploader,
-      filename: filename,
+      url: `/v1/kg/metadata/upload/${metadataId}/${datasetId}`,
+      method: `GET`,
+      params: {
+        uploader: uploader,
+        filename: filename,
+      },
     },
-    }
-  )
+  );
 }
 
 export function refreshMetaFromKG(metadataId, username) {
   return serverAxios({
-    url: `/v1/kg/metadata/refresh/${metadataId}`,
-    method: `GET`,
-    params: {
-      username: username,
+      url: `/v1/kg/metadata/refresh/${metadataId}`,
+      method: `GET`,
+      params: {
+        username: username,
+      },
     },
-    }
-  )
+  );
 }

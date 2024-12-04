@@ -45,6 +45,7 @@ const DatasetsModal = (props) => {
     datasetLoading: state.myDatasetList.loading,
   }));
   const dispatch = useDispatch();
+  const currentProjectCode = currentProject.profile.code;
 
   const closeModal = () => {
     setVisible(false);
@@ -58,9 +59,9 @@ const DatasetsModal = (props) => {
   useEffect(() => {
     if (visible) {
       const creator = showOnlyMineDatasets ? userName : null;
-      fetchMyDatasets(creator, 1, 10000);
+      fetchMyDatasets(creator, currentProjectCode, 1, 10000);
     }
-  }, [visible]);
+  }, [visible, showOnlyMineDatasets, userName, currentProjectCode]);
 
   const addToDatasets = async () => {
     if (!Object.keys(selectedDataset).length) {
@@ -127,7 +128,7 @@ const DatasetsModal = (props) => {
       case 1:
         return (
           <Button
-            type="primary"
+            type='primary'
             loading={BtnLoading}
             style={{ width: '180px', height: '30px', borderRadius: '6px' }}
             onClick={addToDatasets}
@@ -139,7 +140,7 @@ const DatasetsModal = (props) => {
         return (
           <div>
             <Button
-              type="primary"
+              type='primary'
               style={{ borderRadius: '6px' }}
               onClick={closeModal}
             >
@@ -191,7 +192,7 @@ const DatasetsModal = (props) => {
                   showOnlyMineDatasets = e.target.checked;
                   setShowOnlyMineDatasets(showOnlyMineDatasets);
                   const creator = showOnlyMineDatasets ? userName : null;
-                  fetchMyDatasets(creator, 1, 10000);
+                  fetchMyDatasets(creator, currentProjectCode, 1, 10000);
                 }}
               >
                 Show only the Datasets I've created
@@ -199,10 +200,10 @@ const DatasetsModal = (props) => {
             </p>
           ) : null}
           <Form form={form}>
-            <Form.Item name="datasetsSelection">
+            <Form.Item name='datasetsSelection'>
               <Select
                 className={styles.dateset_select}
-                placeholder="Select Dataset"
+                placeholder='Select Dataset'
                 onChange={handleSelectChange}
                 loading={datasetLoading}
               >

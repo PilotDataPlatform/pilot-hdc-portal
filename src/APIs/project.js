@@ -158,6 +158,21 @@ function addUserToProjectAPI(username, projectGeid, role) {
   });
 }
 
+function addUserToStartingProjectAPI(username, email) {
+  return serverAxios({
+    url: `/v1/users/default`,
+    data: {username: username, email: email},
+    method: 'POST',
+  });
+}
+
+function checkUserStartingProjectAPI(username) {
+  return serverAxios({
+    url: `/v1/users/default?username=${username}`,
+    method: 'GET',
+  });
+}
+
 function removeUserFromDatasetApi(username, projectGeid) {
   return serverAxios({
     url: `/v1/containers/${projectGeid}/users/${username}`,
@@ -635,6 +650,8 @@ export {
   changeUserRoleInDatasetAPI,
   broadcastChangeRole,
   addUserToProjectAPI,
+  addUserToStartingProjectAPI,
+  checkUserStartingProjectAPI,
   broadcastAddUser,
   getChildrenAPI,
   getPersonalDatasetAPI,

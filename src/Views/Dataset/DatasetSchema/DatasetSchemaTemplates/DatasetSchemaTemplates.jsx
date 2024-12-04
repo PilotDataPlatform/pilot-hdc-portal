@@ -12,7 +12,7 @@ import styles from './DatasetSchemaTemplates.module.scss';
 
 export default function DatasetSchemaTemplates(props) {
     return (
-      <Card className={styles.card} title="Schemas">
+      <Card className={styles.card} title={props.title}>
         <SchemaTemplates />
       </Card>
     );

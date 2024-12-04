@@ -18,11 +18,10 @@ CMD npm run start:serve
 # Install app dependencies, changes infrequently
 USER root
 
-COPY .npmrc ./
 COPY package.json ./
 COPY package-lock.json  ./
 
-RUN chown app:app /portal/.npmrc /portal/package.json /portal/package-lock.json
+RUN chown app:app /portal/package.json /portal/package-lock.json
 
 USER app
 
@@ -32,6 +31,9 @@ RUN npm install
 USER root
 
 COPY .  ./
+
+# Verify that the `.env` file was copied to the docker image
+RUN test -s .env || (echo "Error! .env file is missing or empty" && exit 1)
 
 RUN chown -R app:app /portal
 

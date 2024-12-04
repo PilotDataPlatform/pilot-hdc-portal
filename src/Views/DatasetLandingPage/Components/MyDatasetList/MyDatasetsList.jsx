@@ -13,37 +13,40 @@ import { useSelector } from 'react-redux';
 import { fetchMyDatasets } from './fetchMyDatasets';
 import { useHistory } from 'react-router-dom';
 import { useQueryParams } from '../../../../Utility';
+import updateDatasetListHistory from '../DatasetListHistory';
 
 function MyDatasetsList() {
   const { loading, datasets, total } = useSelector(
     (state) => state.myDatasetList,
   );
   const { username } = useSelector((state) => state);
-  const { page = 1, pageSize = 10, showOnlyMine = 'true' } = useQueryParams(['pageSize', 'page', 'showOnlyMine']);
+  const {
+    showOnlyMine = 'true',
+    projectCode = null,
+    page = 1,
+    pageSize = 10,
+    sortBy = 'created_at',
+    sortOrder = 'desc',
+  } = useQueryParams(['showOnlyMine', 'projectCode', 'pageSize', 'page', 'sortBy', 'sortOrder']);
   const creator = (showOnlyMine.toLowerCase() === 'true') ? username : null;
   const history = useHistory();
 
   useEffect(() => {
-    fetchMyDatasets(creator, parseInt(page), parseInt(pageSize));
-  }, [creator, page, pageSize]);
+    fetchMyDatasets(creator, projectCode, parseInt(page), parseInt(pageSize), sortBy, sortOrder);
+  }, [creator, projectCode, page, pageSize, sortBy, sortOrder]);
 
-  const onPageChange = (page, pageSize) => {
+  const onPaginationChange = (page, pageSize) => {
     const showOnlyMineValue = !!creator;
-    history.push(`/datasets?showOnlyMine=${showOnlyMineValue}&page=${page}&pageSize=${pageSize}`);
-  };
-
-  const onShowSizeChange = (page, pageSize) => {
-    const showOnlyMineValue = !!creator;
-    history.push(`/datasets?showOnlyMine=${showOnlyMineValue}&page=${page}&pageSize=${pageSize}`);
+    updateDatasetListHistory(history, showOnlyMineValue, projectCode, page, pageSize, sortBy, sortOrder);
   };
 
   const paginationProps = {
     showSizeChanger: true,
     current: parseInt(page),
     pageSize: parseInt(pageSize),
-    onChange: onPageChange,
+    onChange: onPaginationChange,
     total,
-    onShowSizeChange: onShowSizeChange,
+    onShowSizeChange: onPaginationChange,
   };
 
   return (

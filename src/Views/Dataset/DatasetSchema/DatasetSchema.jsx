@@ -23,6 +23,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function DatasetData(props) {
   const datasetInfo = useSelector((state) => state.datasetInfo.basicInfo);
+  const templatesTitle = useSelector((state) => state.schemaTemplatesInfo.schemaTypes) === "Default" ? "Schemas" : "Preview";
   const dispatch = useDispatch();
   const { t } = useTranslation(['errormessages', 'success']);
 
@@ -118,7 +119,7 @@ export default function DatasetData(props) {
         <DatasetSchemaExisting />
       </div>
       <div className={styles['blank-templates']}>
-        <DatasetSchemaTemplates />
+        <DatasetSchemaTemplates title={ templatesTitle }/>
       </div>
     </div>
   );

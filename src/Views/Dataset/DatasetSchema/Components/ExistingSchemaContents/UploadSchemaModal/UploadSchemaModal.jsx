@@ -156,7 +156,7 @@ const UploadSchemaModal = (props) => {
         className={styles.upload_schema_modal}
         title={
           <p style={{ color: variables.primaryColor1, margin: '0px' }}>
-            Upload openMINDS Schemas
+            Upload openMINDS Instances
           </p>
         }
         width={600}
@@ -210,7 +210,7 @@ const UploadSchemaModal = (props) => {
 
           <div>
             <span className={styles['description']}>
-              Selected schemas will be uploaded
+              Selected instances will be uploaded
             </span>
             <br />
             <span className={styles['annotation']}>

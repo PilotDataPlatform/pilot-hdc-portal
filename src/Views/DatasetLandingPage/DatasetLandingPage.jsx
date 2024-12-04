@@ -11,7 +11,7 @@ import DatasetLandingContent from './DatasetLandingContent/DatasetLandingContent
 
 function DatasetLandingPage(props) {
   return (
-    <StandardLayout leftMargin={false}>
+    <StandardLayout>
       <DatasetLandingContent />
     </StandardLayout>
   );

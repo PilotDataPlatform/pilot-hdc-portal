@@ -50,7 +50,7 @@ const DeleteSchemaModal = (props) => {
         className={styles.delete_schema_modal}
         title={
           <p style={{ color: variables.primaryColor1, margin: '0px' }}>
-            Delete openMINDS Schema
+            Delete openMINDS Instance
           </p>
         }
         width={600}

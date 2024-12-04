@@ -156,7 +156,7 @@ function Search(props) {
     };
     try {
       let zoneResponse;
-      if (grAccess) {
+      if (grAccess && filters?.zone === 'greenroom') {
         const greenroomResponse = await searchProjectFilesAPI(
           { ...greenroomQueryParams, ...pagination },
           props.currentProject.code,
@@ -164,7 +164,7 @@ function Search(props) {
         zoneResponse = greenroomResponse;
         setGreenRoomTotal(greenroomResponse.data.total);
       }
-      if (coreAccess) {
+      if (coreAccess && filters?.zone === 'core') {
         const coreResponse = await searchProjectFilesAPI(
           { ...coreQueryParams, ...pagination },
           props.currentProject.code,

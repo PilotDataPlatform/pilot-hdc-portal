@@ -6,34 +6,18 @@
  * You may not use this file except in compliance with the License.
  */
 import React, { Component } from 'react';
-import { listUsersContainersPermission, getDatasetsAPI } from '../../../APIs';
+import {
+  addUserToStartingProjectAPI,
+  checkUserStartingProjectAPI,
+  getDatasetsAPI,
+  getUserProfileAPI,
+  listUsersContainersPermission,
+} from '../../../APIs';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import {
-  List,
-  Tabs,
-  Button,
-  Dropdown,
-  Menu,
-  Card,
-  Form,
-  Input,
-  Select,
-  DatePicker,
-  message,
-} from 'antd';
-import {
-  UpOutlined,
-  DownOutlined,
-  SortAscendingOutlined,
-  SearchOutlined,
-  PlusOutlined,
-} from '@ant-design/icons';
-import {
-  AddDatasetCreator,
-  setDatasetCreator,
-  setCurrentProjectProfile,
-} from '../../../Redux/actions';
+import { Button, Card, DatePicker, Dropdown, Form, Input, List, Menu, message, Modal, Select, Tabs } from 'antd';
+import { DownOutlined, PlusOutlined, SearchOutlined, SortAscendingOutlined, UpOutlined } from '@ant-design/icons';
+import { AddDatasetCreator, setCurrentProjectProfile, setDatasetCreator } from '../../../Redux/actions';
 import NewProjectPanel from './newProjectPanel';
 import styles from './index.module.scss';
 import _ from 'lodash';
@@ -52,6 +36,8 @@ class LandingPageContent extends Component {
     this.state = {
       currentDataset: null,
       addContainerModal: false,
+      startingProjectModalShown: false,
+      startingProject: null,
       rawDatsets: [],
       filteredDatasets: [],
       isLoading: true,
@@ -74,7 +60,17 @@ class LandingPageContent extends Component {
     };
   }
 
+  checkTestProjectAvailability = () => {
+    let response = checkUserStartingProjectAPI(this.props.username);
+    response.catch((error) => {
+      if (error.response.status === 404) {
+        this.setState({ startingProject: error.response.data, });
+      }
+    });
+  };
+
   getProjectList = (params, filters, selectedTab = null) => {
+    this.checkTestProjectAvailability();
     if (selectedTab === 'My Projects') {
       this.setState({
         myProjectsLoading: true,
@@ -620,18 +616,89 @@ class LandingPageContent extends Component {
         </Card>
       </div>
     );
-
+    const addUserToStartingProject = () => {
+      let user = getUserProfileAPI(this.props.username);
+      user.then(res =>
+        {
+          addUserToStartingProjectAPI(res.data.result?.name, res.data.result?.email);
+          this.setState(
+            { startingProjectModalShown: true }
+          );
+        }
+      );
+    }
+    const closeStartingProjectModal = () => {
+      this.getProjectList({page: this.state.page, page_size: this.state.pageSize}, {});
+      this.setState(
+            {
+              startingProjectModalShown: false,
+              startingProject: null,
+            }
+          )
+    }
+    const createStartingProjectButton = () => {
+      return <>
+        <Button
+            type="primary"
+            onClick={ addUserToStartingProject }
+            icon={<PlusOutlined />}
+            style={{
+              borderRadius: '6px',
+              height: '36px',
+              fontSize: '16px',
+              verticalAlign: 'middle',
+            }}
+          >
+            <span
+              style={{
+                fontWeight: '500',
+                fontSize: '16px',
+              }}
+            >
+              Join Starting Project
+            </span>
+        </Button>
+      </>
+    }
     const extraContent1 = (
       <div>
-        <p
-          style={{
-            display: 'inline-block',
-            marginRight: '10px',
-            marginBottom: '0',
-          }}
+        {this.state.startingProject ? createStartingProjectButton() : null}
+        <Modal
+        className={styles['add-user-modal']}
+        title="You've successfully joined the Test Project"
+        open={this.state.startingProjectModalShown}
+        maskClosable={false}
+        closable={false}
+        onCancel={closeStartingProjectModal}
+        footer={[
+          <Button
+            id="starting-project-cancel-button"
+            key="back"
+            onClick={closeStartingProjectModal}
+          >
+            Close
+          </Button>,
+          <a
+            type="primary"
+            className="ant-btn ant-btn-primary"
+            href={`/project/${this.state.startingProject?.code}/canvas`}
+          >
+            Go to Project
+          </a>,
+        ]}
         >
-          Sort by
-        </p>
+          <div style={{ alignContent: 'center' }}>
+            <p>
+              You have been added to the {this.state.startingProject?.name} as a Project Collaborator.
+            </p>
+            <p>
+              You can check it out right now by clicking on "Go to Project", or return to the list of Projects by clicking "Close".
+            </p>
+            <p>
+              <b>Please note:</b> You are not allowed to upload any sensitive information or data to this project!
+            </p>
+          </div>
+        </Modal>
         <Dropdown overlay={sortPanel} placement="bottomRight">
           <Button
             id="uploadercontent_dropdown"
@@ -643,7 +710,7 @@ class LandingPageContent extends Component {
             }}
           >
             <SortAscendingOutlined />
-            Sort {`${sortby && sortby.slice(0, 4)} : ${order}`}
+            Sort by {`${sortby && sortby.split('_').shift()} : ${order}`}
             <DownOutlined />
           </Button>
         </Dropdown>
@@ -656,16 +723,16 @@ class LandingPageContent extends Component {
               verticalAlign: 'middle',
             }}
           >
-            <SearchOutlined style={{ fontSize: '20px' }} />
-            <DownOutlined style={{ fontSize: '16px' }} />
+            <SearchOutlined style={{ fontSize: '16px' }} />
+            <DownOutlined style={{ fontSize: '10px' }} />
           </Button>
         ) : (
           <Button
             onClick={this.onToggleSearchPanel}
             style={{ height: '34px', verticalAlign: 'middle' }}
           >
-            <SearchOutlined style={{ fontSize: '20px' }} />
-            <UpOutlined style={{ fontSize: '16px' }} />
+            <SearchOutlined style={{ fontSize: '16px' }} />
+            <UpOutlined style={{ fontSize: '10px' }} />
           </Button>
         )}
         {this.props.role === 'admin' ? (

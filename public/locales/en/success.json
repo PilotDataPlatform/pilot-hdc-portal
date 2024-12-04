@@ -12,7 +12,8 @@
   },
   "addUser": {
     "invitation": "Invitation email sent",
-    "addUserToDataset": ["User", "has been added to"]
+    "addUserToDataset": ["User", "has been added to"],
+    "addUserToStartingProject": ["User added to the starting project, please refresh the page for access."]
   },
 
   "selfRegistration": "Signup completed successfully.",
@@ -63,7 +64,7 @@
     ]
   },
   "uploadOpenMindsSchema": {
-    "default": ["Schema uploaded successfully"]
+    "default": ["Instance uploaded successfully"]
   },
   "requestToCore": {
     "default": ["Request has been successfully sent"]

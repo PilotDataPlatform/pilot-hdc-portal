@@ -14,7 +14,9 @@ import _ from 'lodash';
 
 const dispatch = store.dispatch;
 
-export const fetchMyDatasets = (creator, page = 1, pageSize) => {
+export const fetchMyDatasets = (
+  creator, projectCode, page, pageSize, sortBy = 'created_at', sortOrder = 'desc',
+) => {
   if (!_.isNumber(page)) {
     throw new TypeError('page should be a number');
   }
@@ -22,14 +24,18 @@ export const fetchMyDatasets = (creator, page = 1, pageSize) => {
     throw new TypeError('pageSize should be a number');
   }
   let params = {
-    sort_by: 'created_at',
-    sort_order: 'desc',
+    sort_by: sortBy,
+    sort_order: sortOrder,
     page: page - 1,
     page_size: pageSize,
   };
 
   if (creator) {
     params['creator'] = creator;
+  }
+
+  if (projectCode) {
+    params['project_code'] = projectCode;
   }
 
   dispatch(myDatasetListCreators.setLoading(true));

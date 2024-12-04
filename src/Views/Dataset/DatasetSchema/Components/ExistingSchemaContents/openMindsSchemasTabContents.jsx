@@ -32,7 +32,7 @@ const OpenMindsSchemaTabContents = (props) => {
           icon={<CloudUploadOutlined />}
           onClick={() => setModalUploadVisibility(true)}
         >
-          Upload Schemas
+          Upload Instances
         </Button>
         <Button
           type="primary"
@@ -88,7 +88,7 @@ const OpenMindsSchemaTabContents = (props) => {
                             fontWeight: '700',
                           }}
                         >{`${el.name}`}</span>
-                        <span style={{ fontSize: '10px' }}>OpenMINDs</span>
+                        <span style={{ fontSize: '10px' }}>openMINDS</span>
                       </div>
                     </div>
                     {kgMetaItem ? (

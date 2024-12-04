@@ -8,6 +8,7 @@
   "create_dataset": {
     "dataset_name": "A short name for the Dataset.  Maximum 100 characters, can be changed later.",
     "dataset_code": "A unique code to identify the Dataset. This code cannot be changed later. Contains 3-32 lower case letters and numbers (no spaces or symbols).",
+    "dataset_project_code": "Select an existing Project to which the Dataset should belong.",
     "authors": "One or several authors of the Dataset. 10 maximum authors, each author maximum length 50 characters.",
     "dataset_type": "A term to describe the structure of the dataset. Select the default type \"GENERAL\" (no specific structure), or BIDS if using the BIDS (Brain Imaging Data Structure) validator.",
     "description": "A textual narrative statement describing the Dataset. Maximum length 5000 characters.",

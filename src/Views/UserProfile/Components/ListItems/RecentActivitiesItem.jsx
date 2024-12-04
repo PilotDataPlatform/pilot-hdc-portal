@@ -13,6 +13,7 @@ import {
   RetweetOutlined,
   CheckOutlined,
   ExclamationOutlined,
+  PlusCircleOutlined,
 } from '@ant-design/icons';
 
 import { timeConvert } from '../../../../Utility/timeCovert';
@@ -95,6 +96,17 @@ const RecentActivitiesItem = ({ activity }) => {
       case 'ACCOUNT_ACTIVATED':
         return (
           <Action description="Account Activated" icon={<CheckOutlined />} />
+        );
+      case 'ADDED_TO_TEST_PROJECT':
+        return (
+          <Action
+            icon={<PlusCircleOutlined />}
+            detail={
+            <>
+              { `You joined the platform's starting project as Project Collaborator` }
+            </>
+            }
+          />
         );
       default:
         return (

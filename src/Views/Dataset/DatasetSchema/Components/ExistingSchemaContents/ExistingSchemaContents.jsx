@@ -201,7 +201,7 @@ export function ExistingSchemaContents(props) {
 
   const schemaActionButtons = (item) => (
     <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-      {spaceBind ? (
+      {spaceBind && item.standard === 'open_minds' ? (
         <Tooltip title="Update from KG Space">
           <Button
             icon={<DownloadOutlined />}
@@ -210,7 +210,7 @@ export function ExistingSchemaContents(props) {
           />
         </Tooltip>
       ) : null}
-      {spaceBind ? (
+      {spaceBind && item.standard === 'open_minds' ? (
         <Tooltip title="Transfer To KG Space">
           <Button
             icon={<ToTopOutlined />}
@@ -268,7 +268,7 @@ export function ExistingSchemaContents(props) {
   const openMindsSchemasTabTitle = (
     <div>
       <p style={{ fontWeight: '600', color: '#222222', margin: '0px' }}>
-        openMINDS Schemas
+        openMINDS Instances
       </p>
     </div>
   );

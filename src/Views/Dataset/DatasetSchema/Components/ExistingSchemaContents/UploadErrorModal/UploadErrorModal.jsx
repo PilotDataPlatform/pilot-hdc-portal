@@ -21,7 +21,7 @@ export default function UploadErrorModal(props) {
   return (
     <Modal
       className={styles['error-modal']}
-      title="Upload openMINDS Schemas"
+      title="Upload openMINDS Instances"
       visible={errorModalVisible}
       onCancel={() => {
         setErrorFileList([]);

@@ -18,6 +18,7 @@ import {
   message,
   Tooltip,
 } from 'antd';
+import { useKeycloak } from '@react-keycloak/web';
 import { useSelector } from 'react-redux';
 import styles from './CreateDatasetPanel.module.scss';
 import { createDatasetApi } from '../../../../APIs';
@@ -27,6 +28,8 @@ import { fetchMyDatasets } from '../../Components/MyDatasetList/fetchMyDatasets'
 import { useTranslation } from 'react-i18next';
 import { useQueryParams } from '../../../../Utility';
 import { FileAddOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { getProjectsAndRoles } from '../../../../Utility/userProjects';
+
 const { Option } = Select;
 
 export default function CreateDatasetPanel(props) {
@@ -36,6 +39,7 @@ export default function CreateDatasetPanel(props) {
   const { username } = useSelector((state) => state);
   const { t } = useTranslation(['tooltips', 'errormessages', 'success']);
   const { page = 1, pageSize = 10 } = useQueryParams(['pageSize', 'page']);
+  const { keycloak } = useKeycloak();
 
   const onCancel = () => {
     setAction(ACTIONS.default);
@@ -48,6 +52,7 @@ export default function CreateDatasetPanel(props) {
       const {
         title,
         code,
+        projectCode,
         authors,
         type,
         modality,
@@ -61,6 +66,7 @@ export default function CreateDatasetPanel(props) {
         username,
         title,
         code,
+        projectCode,
         authors,
         type,
         modality,
@@ -71,7 +77,7 @@ export default function CreateDatasetPanel(props) {
       );
       setAction(ACTIONS.default);
       message.success(t('success:createDataset'));
-      fetchMyDatasets(username, parseInt(page), parseInt(pageSize));
+      fetchMyDatasets(username, null, parseInt(page), parseInt(pageSize));
     } catch (error) {
       console.log(error);
       if (error.hasOwnProperty('errorFields')) return;
@@ -94,6 +100,8 @@ export default function CreateDatasetPanel(props) {
     </>
   );
 
+  const userProjectsAndRoles = getProjectsAndRoles(keycloak?.tokenParsed);
+
   return (
     <div className={styles['card']}>
       <Card>
@@ -101,7 +109,7 @@ export default function CreateDatasetPanel(props) {
           <h2>Define Dataset</h2>
           <Form.Item
             rules={validators.title}
-            name="title"
+            name='title'
             label={
               <>
                 Title{' '}
@@ -116,19 +124,18 @@ export default function CreateDatasetPanel(props) {
           >
             <Input
               className={styles['input']}
-              placeholder="Enter title"
+              placeholder='Enter title'
             ></Input>
           </Form.Item>
           <Row>
-            {' '}
             <Col span={12}>
               <Form.Item
                 required
-                name="code"
+                name='code'
                 rules={validators.datasetCode}
                 label={
                   <>
-                    Dataset Code
+                    Dataset Code{' '}
                     <div className={styles['tooltip']}>
                       <Tooltip
                         title={t('tooltips:create_dataset.dataset_code')}
@@ -139,12 +146,63 @@ export default function CreateDatasetPanel(props) {
                   </>
                 }
               >
-                <Input className={styles['input']}></Input>
+                <Input
+                  className={styles['input']}
+                  placeholder='Enter code'
+                ></Input>
               </Form.Item>
-            </Col>{' '}
+            </Col>
             <Col span={12}>
               <Form.Item
-                name="authors"
+                required
+                valuePropName='checked'
+                name='projectCode'
+                label={
+                  <>
+                    Project Code{' '}
+                    <div className={styles['tooltip']}>
+                      <Tooltip title={t('tooltips:create_dataset.dataset_project_code')}>
+                        <InfoCircleOutlined />
+                      </Tooltip>
+                    </div>
+                  </>
+                }
+              >
+                <Select>
+                  {Object.keys(userProjectsAndRoles).map((project) => (
+                    <Select.Option value={project}>{project}</Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col span={12}>
+              <Form.Item
+                required
+                valuePropName='checked'
+                name='type'
+                label={
+                  <>
+                    Dataset Type{' '}
+                    <div className={styles['tooltip']}>
+                      <Tooltip title={t('tooltips:create_dataset.dataset_type')}>
+                        <InfoCircleOutlined />
+                      </Tooltip>
+                    </div>
+                  </>
+                }
+              >
+                <Select defaultValue='GENERAL'>
+                  <Select.Option value='GENERAL'>GENERAL</Select.Option>
+                  <Select.Option value='BIDS'>BIDS</Select.Option>
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                name='authors'
                 required
                 rules={validators.authors}
                 allowClear
@@ -159,30 +217,10 @@ export default function CreateDatasetPanel(props) {
                   </>
                 }
               >
-                <Select placeholder="Enter authors" mode="tags" />
+                <Select placeholder='Enter authors' mode='tags' />
               </Form.Item>
-            </Col>{' '}
+            </Col>
           </Row>
-
-          <Form.Item
-            valuePropName="checked"
-            name="type"
-            label={
-              <>
-                Dataset Type{' '}
-                <div className={styles['tooltip']}>
-                  <Tooltip title={t('tooltips:create_dataset.dataset_type')}>
-                    <InfoCircleOutlined />
-                  </Tooltip>
-                </div>
-              </>
-            }
-          >
-            <Select defaultValue="GENERAL">
-              <Select.Option value="GENERAL">GENERAL</Select.Option>
-              <Select.Option value="BIDS">BIDS</Select.Option>
-            </Select>
-          </Form.Item>
 
           <div className={styles['spacing']}></div>
 
@@ -190,7 +228,7 @@ export default function CreateDatasetPanel(props) {
           <Form.Item
             className={styles.description_form_item}
             rules={validators.description}
-            name="description"
+            name='description'
             label={
               <>
                 <p>Dataset Description</p>
@@ -205,12 +243,12 @@ export default function CreateDatasetPanel(props) {
           >
             <Input.TextArea
               className={styles['input']}
-              placeholder="Enter description"
+              placeholder='Enter description'
             ></Input.TextArea>
           </Form.Item>
           <Form.Item
             rules={validators.modality}
-            name="modality"
+            name='modality'
             label={
               <>
                 Modality
@@ -223,9 +261,9 @@ export default function CreateDatasetPanel(props) {
             }
           >
             <Select
-              mode="multiple"
+              mode='multiple'
               className={styles['select']}
-              placeholder="Select Modality"
+              placeholder='Select Modality'
               allowClear
             >
               {modalityOptions.sort().map((value) => (
@@ -237,7 +275,7 @@ export default function CreateDatasetPanel(props) {
           </Form.Item>
           <Form.Item
             className={styles['collection-method']}
-            name="collectionMethod"
+            name='collectionMethod'
             rules={validators.collectionMethod}
             label={
               <>
@@ -254,14 +292,14 @@ export default function CreateDatasetPanel(props) {
           >
             <Select
               className={styles['select']}
-              placeholder="Enter Collection Method"
-              mode="tags"
+              placeholder='Enter Collection Method'
+              mode='tags'
               allowClear
             ></Select>
           </Form.Item>
           <Form.Item
             rules={validators.license}
-            name="license"
+            name='license'
             label={
               <>
                 License
@@ -283,13 +321,13 @@ export default function CreateDatasetPanel(props) {
           >
             <Input
               className={styles['input']}
-              placeholder="Enter License"
+              placeholder='Enter License'
             ></Input>
           </Form.Item>
 
           <Form.Item
             rules={validators.tags}
-            name="tags"
+            name='tags'
             label={
               <>
                 Tags
@@ -301,7 +339,7 @@ export default function CreateDatasetPanel(props) {
               </>
             }
           >
-            <Select placeholder="Enter tag" mode="tags"></Select>
+            <Select placeholder='Enter tag' mode='tags'></Select>
           </Form.Item>
         </Form>
 
@@ -311,11 +349,11 @@ export default function CreateDatasetPanel(props) {
               icon={<FileAddOutlined />}
               loading={submitting}
               onClick={onSubmit}
-              type="primary"
+              type='primary'
             >
               Create
             </Button>
-            <Button disabled={submitting} onClick={onCancel} type="link">
+            <Button disabled={submitting} onClick={onCancel} type='link'>
               {' '}
               Cancel
             </Button>

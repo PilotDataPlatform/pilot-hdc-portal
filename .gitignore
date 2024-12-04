@@ -33,5 +33,3 @@ src/**/*.log
 src/**/log
 src/Test/TestFiles
 /image.png
-
-.npmrc
