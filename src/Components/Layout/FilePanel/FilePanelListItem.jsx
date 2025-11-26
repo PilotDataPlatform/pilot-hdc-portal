@@ -24,11 +24,11 @@ import _ from 'lodash';
 import { validateChunkHash } from '../../../Utility/fileUpload/utils';
 
 export const displayName = (fileName) => {
-  if (fileName.length > 40) {
-    return <Tooltip title={fileName}>{`${fileName.slice(0, 32)}...`}</Tooltip>;
-  } else {
-    return fileName;
+  let shortFileName = fileName.split('/').at(-1);
+  if (shortFileName.length > 40) {
+    shortFileName = `...${shortFileName.slice(-32)}`;
   }
+  return <Tooltip title={fileName}>{shortFileName}</Tooltip>;
 };
 
 const getToolTipTitle = (actionType) => {

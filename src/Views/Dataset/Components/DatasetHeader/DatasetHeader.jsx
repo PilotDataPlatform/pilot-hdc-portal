@@ -57,6 +57,7 @@ export default function DatasetHeader(props) {
       const res = await getProjectInfoAPI(projectGeid);
       const projectInfo = res.data.result;
       dispatch(datasetInfoCreators.setProjectName(projectInfo.name));
+      dispatch(datasetInfoCreators.setProjectCode(projectInfo.code));
     } catch (error) {
       message.error(t('errormessages:getDatasetInfo.projectNameErr.0'));
     }

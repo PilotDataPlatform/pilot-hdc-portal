@@ -48,7 +48,6 @@ export default function BidsValidator(props) {
   useEffect(() => {
     const socket = io(`${socketIoUrl}/${basicInfo.code}`);
     socket.on('BIDS_VALIDATE_NOTIFICATION', (data) => {
-      console.log(data);
       if (data.payload.dataset === basicInfo.code) {
         if (data.payload.status === 'success') {
           basicInfo['bidsResult'] = data.payload.payload;

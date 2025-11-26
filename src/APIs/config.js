@@ -18,7 +18,7 @@ function successHandler(response) {
   if (url && url !== '/users/refresh') {
     activeManager.activate();
   }
-  return camelcaseKeys(response, { deep: true });
+  return camelcaseKeys(response, { deep: true, stopPaths: ['data.result.content'] });  // I despise whoever came up with this
 }
 
 const setRequestHeaders = (item) => {

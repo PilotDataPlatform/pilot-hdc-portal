@@ -14,19 +14,15 @@
     margin: 20px 20px 20px 35px !important;
 
     :global {
-      .ant-tabs {
-        overflow: unset;
+      .ant-card-bordered {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 1px 7px #0000001a;
       }
 
-      .ant-tabs-nav {
-        padding-left: 24px;
-      }
-
-      .ant-card {
-        margin-top: 1rem !important;
-      }
-      .ant-card-body {
-        padding: 0 !important;
+      .ant-tabs-top {
+        margin-top: -20px;
       }
 
       .ant-tabs-nav-container {

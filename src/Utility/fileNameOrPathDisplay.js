@@ -16,5 +16,8 @@ export const fileNameOrPathDisplay = (str) => {
   }
 };
 
-export const truncateFileName = (str, lengthLimit = 27) =>
-  str.length > lengthLimit ? str.slice(0, lengthLimit) + '...' : str;
+export const truncateFileName = (str, lengthLimit = 27) => {
+  str = str.split('/').at(-1);
+  return str.length > lengthLimit ? `...${str.slice(-lengthLimit)}` : str;
+};
+

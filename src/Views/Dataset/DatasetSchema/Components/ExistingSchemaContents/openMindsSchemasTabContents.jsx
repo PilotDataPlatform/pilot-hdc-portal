@@ -7,15 +7,17 @@
  */
 import React from 'react';
 import { Button } from 'antd';
-import { CloudUploadOutlined, CloudDownloadOutlined } from '@ant-design/icons';
+import { CloudUploadOutlined, CloudDownloadOutlined, CloudSyncOutlined } from '@ant-design/icons';
 import { FileOutlined } from '@ant-design/icons';
 import styles from './index.module.scss';
 import { timeConvertWithOffestValue } from '../../../../../Utility';
+import { useSelector } from 'react-redux';
 
 const OpenMindsSchemaTabContents = (props) => {
   const {
     setModalUploadVisibility,
     setModalDownloadVisibility,
+    setModalSyncVisibility,
     schemaGeid,
     schemas,
     handleOnClick,
@@ -23,24 +25,33 @@ const OpenMindsSchemaTabContents = (props) => {
     tabContentStyle,
     kgSchemaMeta,
   } = props;
+  const { spaceBind } = useSelector((state) => state.kgSpaceList);
 
   return (
     <>
       <div className={styles.upload_btn}>
         <Button
-          type="primary"
+          type='primary'
           icon={<CloudUploadOutlined />}
           onClick={() => setModalUploadVisibility(true)}
         >
           Upload Instances
         </Button>
         <Button
-          type="primary"
+          type='primary'
           icon={<CloudDownloadOutlined />}
           onClick={() => setModalDownloadVisibility(true)}
         >
           Download Instances
         </Button>
+        {spaceBind ? (
+          <Button
+            type='primary'
+            icon={<CloudSyncOutlined />}
+            onClick={() => setModalSyncVisibility(true)}
+          >
+            Sync All Instances
+          </Button>) : null}
       </div>
       <div
         style={{
@@ -52,32 +63,32 @@ const OpenMindsSchemaTabContents = (props) => {
       >
         {schemas.length
           ? schemas
-              .filter((el) => !el.isDraft && el.standard === 'open_minds')
-              .map((el) => {
-                const kgMetaItem = kgSchemaMeta
-                  .sort((a, b) => {
-                    return new Date(b.uploadedAt) - new Date(a.uploadedAt);
-                  })
-                  .find((v) => v.metadataId === el.geid);
-                return (
+            .filter((el) => !el.isDraft && el.standard === 'open_minds')
+            .map((el) => {
+              const kgMetaItem = kgSchemaMeta
+                .sort((a, b) => {
+                  return new Date(b.uploadedAt) - new Date(a.uploadedAt);
+                })
+                .find((v) => v.metadataId === el.geid);
+              return (
+                <div
+                  style={
+                    schemaGeid === el.geid
+                      ? { ...tabContentStyle, backgroundColor: '#E6F5FF' }
+                      : tabContentStyle
+                  }
+                  onClick={() => handleOnClick(el)}
+                >
                   <div
-                    style={
-                      schemaGeid === el.geid
-                        ? { ...tabContentStyle, backgroundColor: '#E6F5FF' }
-                        : tabContentStyle
-                    }
-                    onClick={() => handleOnClick(el)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      marginLeft: '20px',
+                      width: 240,
+                    }}
                   >
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        marginLeft: '20px',
-                        width: 240,
-                      }}
-                    >
-                      <FileOutlined style={{ marginRight: '20px' }} />{' '}
-                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <FileOutlined style={{ marginRight: '20px' }} />{' '}
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <span
                           style={{
                             fontSize: '12px',
@@ -88,39 +99,39 @@ const OpenMindsSchemaTabContents = (props) => {
                             fontWeight: '700',
                           }}
                         >{`${el.name}`}</span>
-                        <span style={{ fontSize: '10px' }}>openMINDS</span>
-                      </div>
+                      <span style={{ fontSize: '10px' }}>openMINDS</span>
                     </div>
-                    {kgMetaItem ? (
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'flex-start',
-                          marginLeft: 20,
-                          flex: '1',
-                          flexDirection: 'column',
-                        }}
-                      >
-                        {kgMetaItem.direction === 'KG' ?
-                          <p style={{ fontSize: '10px', margin: 0 }}>
+                  </div>
+                  {kgMetaItem ? (
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        marginLeft: 20,
+                        flex: '1',
+                        flexDirection: 'column',
+                      }}
+                    >
+                      {kgMetaItem.direction === 'KG' ?
+                        <p style={{ fontSize: '10px', margin: 0 }}>
                           Transferred to KG Space on{' '}
                         </p> :
                         <p style={{ fontSize: '10px', margin: 0 }}>
                           Transferred from KG Space on{' '}
-                        </p> }
-                        <p style={{ fontSize: '10px', margin: 0 }}>
-                          {timeConvertWithOffestValue(
-                            kgMetaItem.uploadedAt,
-                            'datetime',
-                          )}
-                        </p>
-                      </div>
-                    ) : null}
+                        </p>}
+                      <p style={{ fontSize: '10px', margin: 0 }}>
+                        {timeConvertWithOffestValue(
+                          kgMetaItem.uploadedAt,
+                          'datetime',
+                        )}
+                      </p>
+                    </div>
+                  ) : null}
 
-                    {schemaGeid === el.geid && schemaActionButtons(el)}
-                  </div>
-                );
-              })
+                  {schemaGeid === el.geid && schemaActionButtons(el)}
+                </div>
+              );
+            })
           : null}
       </div>
     </>

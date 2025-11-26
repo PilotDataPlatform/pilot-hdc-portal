@@ -172,7 +172,6 @@ function KeyCloakMiddleware() {
   const onEvent = (event, error) => {
     switch (event) {
       case 'onReady': {
-        console.log('onReady');
         if (!keycloak.authenticated) {
           tokenManager.clearCookies();
         }

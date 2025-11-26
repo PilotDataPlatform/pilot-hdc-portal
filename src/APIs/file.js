@@ -388,6 +388,7 @@ function generateDownloadLinkAPI(
   updateDownloadItemDispatch,
   setSuccessNumDispatcher,
   successNum,
+  unSetDownloadCommittingDispatcher,
 ) {
   return downloadGRAxios({
     url: `/v1/download/status/${hashCode}`,
@@ -409,6 +410,7 @@ function generateDownloadLinkAPI(
       if (result.status === JOB_STATUS.SUCCEED) {
         window.open(url, '_blank');
 
+        unSetDownloadCommittingDispatcher(result.jobId);
         setSuccessNumDispatcher(successNum + 1);
         updateDownloadItemDispatch({
           ...result,
@@ -470,8 +472,8 @@ async function downloadFilesAPI(
       createdTime: Date.now(),
     };
 
+    dispatch.setDownloadCommitting(result.jobId);
     dispatch.appendDownloadListCreator(item);
-    dispatch.setDownloadCommitting(true);
   });
 }
 

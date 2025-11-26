@@ -42,7 +42,9 @@ export default function DatasetData(props) {
         schemaTemplatesActions.updateKgSchemaMetaList(resMeta.data.metadata),
       );
     } catch (error) {
-      message.error(t('errormessages:kgSchemaMetaList.default.0'));
+      if(error.response.status !== 404){
+        message.error(t('errormessages:kgSchemaMetaList.default.0'));
+      }
     }
   };
   const getDatasetSchemaList = async () => {
