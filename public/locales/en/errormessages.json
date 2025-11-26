@@ -784,5 +784,11 @@
   "refreshFromKG": {
     "default": ["An error occurred while attempting to refresh metadata from KG"],
     "notFound": ["Metadata with selected UUID was not uploaded to KG"]
+  },
+  "bulkUpdateToKG": {
+    "default": ["An error occurred while attempting to update metadata to KG"]
+  },
+  "bulkRefreshFromKG": {
+    "default": ["An error occurred while attempting to refresh metadata from KG"]
   }
 }

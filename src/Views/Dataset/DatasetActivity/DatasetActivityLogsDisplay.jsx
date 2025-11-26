@@ -13,7 +13,12 @@ import {
   CloseOutlined,
   DownloadOutlined,
   ImportOutlined,
-  EditOutlined, CloudUploadOutlined, CloudDownloadOutlined,
+  EditOutlined,
+  CloudUploadOutlined,
+  CloudDownloadOutlined,
+  CheckOutlined,
+  ExportOutlined,
+  ClusterOutlined,
 } from '@ant-design/icons';
 import variables from '../../../Themes/constants.scss';
 
@@ -39,16 +44,24 @@ const datasetUpdateInfoDisplay = (caseType) => {
   );
 };
 
+const networkOriginIcon = (networkOrigin) => {
+  return (
+    <Tooltip title={`Network: ${networkOrigin}`} overlayInnerStyle={{ textAlign: 'center' }}>
+      <ClusterOutlined style={{ borderBottom: '1px dotted #999' }} />
+    </Tooltip>
+  );
+};
+
 const datasetDownloadInfoDisplay = (details) => {
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <DownloadOutlined
         style={{ color: variables.primaryColor1, marginRight: '10px' }}
       />
-      {details.activityType === 'download' ? (
-        <p style={{ margin: '0px' }}>Downloaded a Dataset</p>
+      {details.version ? (
+        <p style={{ margin: '0px' }}>Version <span style={{ fontWeight: 600 }}>{details.version}</span> was downloaded ({networkOriginIcon(details.networkOrigin)})</p>
       ) : (
-        <p></p>
+        <p style={{ margin: '0px' }}>The current contents were downloaded ({networkOriginIcon(details.networkOrigin)})</p>
       )}
     </div>
   );
@@ -65,6 +78,35 @@ const datasetVersionInfoDisplay = (details) => {
         }}
       >
         Version {details.version}
+      </p>
+    </div>
+  );
+};
+
+const datasetSharingRequestUpdateInfoDisplay = (details) => {
+  const request = details.changes[0];
+
+  let icon;
+  if (request.status === 'sent') {
+    icon = (<ExportOutlined style={{ color: variables.primaryColor1, marginRight: '10px' }} />);
+  } else if (request.status === 'accepted') {
+    icon = (<CheckOutlined style={{ color: variables.primaryColor1, marginRight: '10px' }} />);
+  } else if (request.status === 'declined') {
+    icon = (<CloseOutlined style={{ color: variables.primaryColor1, marginRight: '10px' }} />);
+  }
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      {icon}
+      <p style={{ margin: '0px' }}>
+        <Tooltip title={`ID: ${request.sharingRequestId}`} overlayInnerStyle={{ width: '340px', textAlign: 'center' }}>
+          <span style={{ borderBottom: '1px dotted #999' }}>The sharing request</span>
+        </Tooltip>
+        {` of version `}
+        <span style={{ fontWeight: 600 }}>{details.version}</span>
+        {` with the project `}
+        <span style={{ fontWeight: 600 }}>{request.projectCode}</span>
+        {` was ${request.status}`}
       </p>
     </div>
   );
@@ -523,6 +565,7 @@ const fileInfoDisplay = (caseType, action, details) => {
             {details.itemName}
             {` from Project `}
             <span style={{ fontWeight: 600 }}>{details.importedFrom}</span>
+            {` `}({networkOriginIcon(details.networkOrigin)})
           </p>
         </div>
       );
@@ -545,8 +588,7 @@ const fileInfoDisplay = (caseType, action, details) => {
             style={{ color: variables.primaryColor1, marginRight: '10px' }}
           />
           <p style={{ margin: '0px' }}>
-            download a file/folder:{' '}
-            <span style={{ fontWeight: 600 }}>{details.itemName}</span>
+            File or folder <span style={{ fontWeight: 600 }}>{details.itemName}</span> was downloaded ({networkOriginIcon(details.networkOrigin)})
           </p>
         </div>
       );
@@ -614,6 +656,9 @@ const logsInfo = (activityType, detail) => {
           return datasetDownloadInfoDisplay(detail);
         case 'release': {
           return datasetVersionInfoDisplay(detail);
+        }
+        case 'sharing_request_update': {
+          return datasetSharingRequestUpdateInfoDisplay(detail);
         }
         case 'kg_create':
           return spaceCreateInfoDisplay();

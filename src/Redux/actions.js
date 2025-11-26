@@ -75,6 +75,7 @@ import {
   BELLNOTIFICATION,
   SET_UPLOAD_COMMITTING,
   SET_DOWNLOAD_COMMITTING,
+  UNSET_DOWNLOAD_COMMITTING,
   SET_RESUMABLE_LIST,
   ADD_RESUMABLE_LIST,
   ROLEPERMISSIONS,
@@ -450,6 +451,10 @@ export const datasetInfoCreators = {
     type: DATASET_INFO.SET_PROJECT_NAME,
     payload,
   }),
+  setProjectCode: (payload) => ({
+    type: DATASET_INFO.SET_PROJECT_CODE,
+    payload,
+  }),
   setLoading: (payload) => ({
     type: DATASET_INFO.SET_LOADING,
     payload,
@@ -735,6 +740,10 @@ export const fileActionSSEActions = {
   setUploadCommitting: (payload) => ({ type: SET_UPLOAD_COMMITTING, payload }),
   setDownloadCommitting: (payload) => ({
     type: SET_DOWNLOAD_COMMITTING,
+    payload
+  }),
+  unSetDownloadCommitting: (payload) => ({
+    type: UNSET_DOWNLOAD_COMMITTING,
     payload,
   }),
 };

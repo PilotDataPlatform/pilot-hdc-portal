@@ -14,6 +14,7 @@ import OpenMindsSchemaTabContents from './openMindsSchemasTabContents';
 import UploadSchemaModal from './UploadSchemaModal/UploadSchemaModal';
 import DownloadSchemaModal from './DownloadSchemaModal/DownloadSchemaModal';
 import DeleteSchemaModal from './DeleteSchemaModal/DeleteSchemaModal';
+import SyncSchemaModal from './SyncSchemaModal/SyncSchemaModal';
 import {
   deleteDatasetSchemaData,
   getDatasetSchemaListAPI,
@@ -41,6 +42,7 @@ export function ExistingSchemaContents(props) {
   const [modalUploadVisibility, setModalUploadVisibility] = useState(false);
   const [modalDownloadVisibility, setModalDownloadVisibility] = useState(false);
   const [modalDeleteVisibility, setModalDeleteVisibility] = useState(false);
+  const [modalSyncVisibility, setModalSyncVisibility] = useState(false);
   const [delLoading, setDelLoading] = useState(false);
   const datasetInfo = useSelector((state) => state.datasetInfo.basicInfo);
   const schemas = useSelector((state) => state.schemaTemplatesInfo.schemas);
@@ -296,6 +298,7 @@ export function ExistingSchemaContents(props) {
           <OpenMindsSchemaTabContents
             setModalUploadVisibility={setModalUploadVisibility}
             setModalDownloadVisibility={setModalDownloadVisibility}
+            setModalSyncVisibility={setModalSyncVisibility}
             schemaGeid={schemaGeid}
             schemas={schemas}
             kgSchemaMeta={kgSchemaMeta}
@@ -312,6 +315,11 @@ export function ExistingSchemaContents(props) {
       <DownloadSchemaModal
         visibility={modalDownloadVisibility}
         setModalDownloadVisibility={setModalDownloadVisibility}
+        schemaIds={schemaIds}
+      />
+      <SyncSchemaModal
+        visibility={modalSyncVisibility}
+        setModalSyncVisibility={setModalSyncVisibility}
         schemaIds={schemaIds}
       />
       <DeleteSchemaModal

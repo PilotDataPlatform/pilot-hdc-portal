@@ -79,6 +79,7 @@ const [
   setEmailDispatcher,
   setIsReleaseNoteShownDispatcher,
   setUploadCommittingDispatcher,
+  unSetDownloadCommittingDispatcher,
 ] = reduxActionWrapper([
   setContainersPermissionCreator,
   setUserRoleCreator,
@@ -89,6 +90,7 @@ const [
   setEmailCreator,
   setIsReleaseNoteShownCreator,
   fileActionSSEActions.setUploadCommitting,
+  fileActionSSEActions.unSetDownloadCommitting,
 ]);
 
 function Portal(props) {
@@ -299,8 +301,6 @@ function Portal(props) {
           const parsed = JSON.parse(e.data);
           const data = camelcaseKeys(parsed);
 
-          console.log(data);
-
           switch (data.containerType) {
             case 'project':
               fileActionRouter(data, handleFileAction, {
@@ -364,23 +364,26 @@ function Portal(props) {
 
   const debounceCheckPendingDownloads = _.debounce(
     async () => {
-      const runningDownloadList = downloadList.filter(
-        (el) => el.status === JOB_STATUS.RUNNING,
+      const succeededJobIds = new Set(
+        downloadList
+          .filter(download => download.status === JOB_STATUS.SUCCEED)
+          .map(download => download.jobId)
       );
+      console.log('Succeeded jobIds:', succeededJobIds);
 
-      if (fileActionSSE.isDownloadCommitting && runningDownloadList.length) {
-        const checkDownloadPromises = runningDownloadList.map((item) => {
-          if (item.payload?.hashCode) {
-            return generateDownloadLinkAPI(
-              item.jobId,
-              item.payload.hashCode,
-              item.namespace,
-              updateDownloadItemDispatch,
-              setSuccessNumDispatcher,
-              successNum,
-            );
-          }
-        });
+      const availableForDownloadJobIds = fileActionSSE.downloadCommitted.intersection(succeededJobIds);
+      if (availableForDownloadJobIds.size) {
+        const checkDownloadPromises = downloadList
+          .filter(download => availableForDownloadJobIds.has(download.jobId) && download.payload?.hashCode)
+          .map(download => generateDownloadLinkAPI(
+            download.jobId,
+            download.payload.hashCode,
+            download.namespace,
+            updateDownloadItemDispatch,
+            setSuccessNumDispatcher,
+            successNum,
+            unSetDownloadCommittingDispatcher,
+          ));
 
         await Promise.allSettled(checkDownloadPromises);
       }

@@ -96,5 +96,11 @@
   },
   "refreshFromKG": {
     "default": ["Successfully updated metadata from KG."]
+  },
+  "bulkUpdateToKG": {
+    "default": ["Successfully uploaded all dataset metadata to KG."]
+  },
+  "bulkRefreshFromKG": {
+    "default": ["Successfully updated all dataset metadata from KG."]
   }
 }

@@ -1,0 +1,189 @@
+name: HDC ci/cd pipeline
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  extract-branch-name:
+    runs-on: ubuntu-latest
+    outputs:
+      branch: ${{steps.extract-branch.outputs.branch}}
+    steps:
+      - name: Extract Branch Name
+        id: extract-branch
+        shell: bash
+        run: echo "branch=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
+        # TODO uncomment once tests are fixed
+        #run_tests:
+        #  runs-on: ubuntu-latest
+        #  environment:
+        #    name: 'hdc'
+        #  needs: [extract-branch-name]
+        #  steps:
+        #    - uses: actions/checkout@v3
+        #    - name: Use Node.js 16.x
+        #      uses: actions/setup-node@v3
+        #      with:
+        #        node-version: 16.x
+        #        cache: 'npm'
+        #    - name: Install dependencies
+        #      run: npm ci
+        #    - name: Create .env file
+        #      run: echo '${{ vars.ENV }}' > .env
+        #    - name: Set up QEMU
+        #      uses: docker/setup-qemu-action@v2
+        #    - name: Set up Docker Buildx
+        #      id: buildx
+        #      uses: docker/setup-buildx-action@v2
+        #    - name: Build and Run Docker Image
+        #      run: |
+        #        docker build -t web .
+        #        docker run -d -p 3000:3000 web
+        #        sleep 60s
+        #    - name: Create users.js
+        #      run: echo '${{ secrets.USER_CREDENTIALS }}' > tests/users.js
+        #    - run: npm run test:cicd
+
+  get-version:
+    runs-on: ubuntu-latest
+    outputs:
+      app_version: ${{steps.get-version.outputs.app_version}}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Get Version
+        id: get-version
+        shell: bash
+        run: |
+          BASE_VERSION=`sed -n 's/^ *"version":.*"\([^"]*\)".*/\1/p' package.json`
+          echo "app_version=$BASE_VERSION" >> $GITHUB_OUTPUT
+
+  build_and_publish:
+    needs: [extract-branch-name, get-version]
+    name: Build Docker image and push to repositories
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        environment: ["hdc-dev","hdc-prod","hdc-lite"]
+
+    environment: ${{ matrix.environment }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Set docker tag with environment
+        shell: bash
+        run: |
+          if [[ "${{ matrix.environment }}" == "hdc-dev" ]]; then
+            MATRIX_ENV="dev"
+          elif [[ "${{ matrix.environment }}" == "hdc-prod" ]]; then
+            MATRIX_ENV="prod"
+          elif [[ "${{ matrix.environment }}" == "hdc-lite" ]]; then
+            MATRIX_ENV="lite"
+          else
+            echo "Unsupported environment: ${{ matrix.environment }}"
+            exit 1
+          fi
+          echo "DOCKER_TAG_WITH_ENV=${{ needs.get-version.outputs.app_version }}-$MATRIX_ENV" >> $GITHUB_ENV
+
+      - name: Warm-up registry endpoint # needs to be done otherwise the tls handshake with Harbor fails in the docker login, for reasons yet unknown
+        run: |
+          timeout 10 openssl s_client -brief -connect docker-registry.ebrains.eu:443 -servername docker-registry.ebrains.eu </dev/null || true
+      - name: Login to Github Packages
+        uses: docker/login-action@v2
+        with:
+          registry: 'docker-registry.ebrains.eu'
+          username: ${{ secrets.HDC_ROBOT_USER }}
+          password: ${{ secrets.HDC_ROBOT_PASSWORD }}
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            docker-registry.ebrains.eu/hdc-services-image/portal
+          # generate Docker tags based on the following events/attributes
+          sep-tags: ','
+          tags: |
+            type=raw,prefix=,suffix=,value=${{ env.DOCKER_TAG_WITH_ENV }}
+      - name: Image digest
+        run: echo ${{ steps.meta.outputs.tags }}
+      - name: Check if Docker image tags exist
+        shell: bash
+        run: |
+          image_tag=$(echo "${{ steps.meta.outputs.tags }}")
+          if docker manifest inspect $image_tag >/dev/null; then
+            echo "Docker image with tag already exists. Please update the version."
+            exit 1
+          else
+            echo "Image tags do not exist, proceeding..."
+          fi
+      - name: Install dependencies
+        run: npm ci
+      - name: Create .env file
+        run: echo '${{ vars.ENV }}' > .env
+      - name: Build image and push to GitHub Container Registry
+        uses: docker/build-push-action@v4
+        with:
+          # relative path to the place where source code with Dockerfile is located
+          context: .
+          target: "portal-image"
+          # Note: tags has to be all lower-case
+          tags: ${{ steps.meta.outputs.tags }}
+          # build on feature branches, push only on main branch
+          push: ${{ github.event_name != 'pull_request' }}
+
+  create-git-tag:
+    needs: [get-version, build_and_publish]
+    name: Create and push new git tag
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.sha }}  # Ensures the workflow checks out the commit it was triggered on
+
+      - name: Push Git Tag
+        run: |
+          NEW_TAG=${{ needs.get-version.outputs.app_version }}
+          git tag $NEW_TAG
+          git push origin $NEW_TAG
+
+  trigger_dev_deployment:
+    needs: [build_and_publish, get-version, create-git-tag]
+    runs-on: pilot-dev-runners
+    steps:
+      - name: Checkout CSCS-INFRA repo
+        run: |
+          git clone https://robot_user:${{ secrets.HDC_CSCS_INFRA_READ_WRITE_TOKEN }}@github.com/Indoc-Research/cscs-infra.git
+
+      - name: Configure Git User
+        run: |
+          # navigate to the repo directory
+          cd $(basename github.com/Indoc-Research/cscs-infra.git .git)
+          git config user.name "GitHub Actions"
+          git config user.email "github-actions@users.noreply.indocresearch.org"
+
+      - name: Update service version in CSCS-Infra repo
+        run: |
+          cd $(basename github.com/Indoc-Research/cscs-infra.git .git)
+          BASE_FILE='./Intern-terr/config/base/base.tfvars'
+          sed -i 's/\(portal_app_version\s*=\s*"\)[0-9.]\+-hdc\("\)/\1${{needs.get-version.outputs.app_version}}\2/' $BASE_FILE
+          git add $BASE_FILE
+          git commit -m "Deploy portal ${{needs.get-version.outputs.app_version}} [target:helm_release.portal] "
+          git push origin main

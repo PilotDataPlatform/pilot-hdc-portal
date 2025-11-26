@@ -18,7 +18,6 @@ import {
   addUploadListCreator,
   updateUploadItemCreator,
   deleteUploadItemCreator,
-  fileActionSSEActions,
 } from '../../Redux/actions';
 import { JOB_STATUS } from '../../Components/Layout/FilePanel/jobStatus';
 import { keepAlive } from '../../Utility';
@@ -35,7 +34,6 @@ const [
   updateUploadItemCreatorDispatcher,
   deleteUploadItemCreatorDispatcher,
   setSuccessNumDispatcher,
-  setDownloadCommitting,
 ] = reduxActionWrapper([
   updateCopy2CoreList,
   addCopy2CoreList,
@@ -47,7 +45,6 @@ const [
   updateUploadItemCreator,
   deleteUploadItemCreator,
   setSuccessNum,
-  fileActionSSEActions.setDownloadCommitting,
 ]);
 
 class FileActionHandler {
@@ -139,10 +136,6 @@ class FileActionHandler {
 
     if (existingDownload) {
       updateDownloadItemDispatcher(currentDownload);
-
-      if (data.status === JOB_STATUS.SUCCEED) {
-        setDownloadCommitting(false);
-      }
     } else {
       appendDownloadListDispatcher(currentDownload);
     }

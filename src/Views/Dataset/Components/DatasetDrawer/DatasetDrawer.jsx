@@ -6,27 +6,33 @@
  * You may not use this file except in compliance with the License.
  */
 import React, { useState, useEffect } from 'react';
-import { Drawer, Table } from 'antd';
+import { Button, Drawer, Input, Modal, Table, Form, message } from 'antd';
 import {
   getDatasetVersionsAPI,
   datasetDownloadReturnURLAPI,
+  createDatasetSharingRequest,
 } from '../../../../APIs';
 import { useDispatch, useSelector } from 'react-redux';
-import { DownloadOutlined } from '@ant-design/icons';
-import moment from 'moment';
+import { DownloadOutlined, ExportOutlined } from '@ant-design/icons';
 import { timeConvert } from '../../../../Utility';
 import styles from './DatasetDrawer.module.scss';
 import { namespace, ErrorMessager } from '../../../../ErrorMessages';
 import variables from '../../../../Themes/constants.scss';
-const DatasetDrawer = (props) => {
-  const { datasetDrawerVisibility, setDatasetDrawerVisibility } = props;
+import _ from 'lodash';
+
+const DatasetDrawer = ({ datasetDrawerVisibility, setDatasetDrawerVisibility }) => {
+  const [isShareDatasetModalOpen, setIsShareDatasetModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalItem, setTotalItem] = useState(0);
   const [datasetVersions, setDatasetVersions] = useState(0);
-  const { basicInfo, currentVersion } = useSelector(
-    (state) => state.datasetInfo,
-  );
+  const [sharingVersion, setSharingVersion] = useState();
+  const { basicInfo, currentVersion, projectCode } = useSelector((state) => state.datasetInfo);
+  const { containersPermission } = useSelector((state) => state);
+  const currentProject = _.find(containersPermission, (item) => {
+    return item.code === projectCode;
+  });
+  const isProjectAdmin = currentProject && currentProject.permission === 'admin';
 
   const downloadDataset = async (version) => {
     try {
@@ -45,6 +51,40 @@ const DatasetDrawer = (props) => {
     }
   };
 
+  const showShareDatasetModal = (datasetVersionId) => {
+    setSharingVersion(datasetVersionId);
+    setIsShareDatasetModalOpen(true);
+  };
+
+  const [shareDatasetForm] = Form.useForm();
+
+  const submitShareDatasetModal = () => {
+    shareDatasetForm
+      .validateFields()
+      .then((values) => createDatasetSharingRequest(sharingVersion, values.projectCode))
+      .then(() => {
+        setIsShareDatasetModalOpen(false);
+        shareDatasetForm.resetFields();
+        message.success('Dataset Version Sharing Request has been created.');
+      })
+      .catch((err) => {
+        if (err.errorFields && err.errorFields.length > 0) return;
+
+        if (err.response) {
+          switch (err.response.status) {
+            case 403: return message.error('No access to the source project.')
+            case 404: return message.error('Project with such code is not found.')
+            case 409: return message.error('Sharing of dataset version is not permitted within the same project.')
+          }
+        }
+        return message.error('Unable to create a Dataset Version Sharing Request.');
+      });
+  };
+
+  const cancelShareDatasetModel = () => {
+    setIsShareDatasetModalOpen(false);
+  };
+
   const columns = [
     {
       title: '',
@@ -56,14 +96,14 @@ const DatasetDrawer = (props) => {
             style={
               Number(item.version) % 1 === 0
                 ? {
-                    display: 'flex',
-                    padding: '24px',
-                    backgroundColor: '#F0F0F0',
-                  }
+                  display: 'flex',
+                  padding: '24px',
+                  backgroundColor: '#F0F0F0',
+                }
                 : {
-                    display: 'flex',
-                    padding: '24px',
-                  }
+                  display: 'flex',
+                  padding: '24px',
+                }
             }
           >
             <div
@@ -90,12 +130,46 @@ const DatasetDrawer = (props) => {
               <p style={{ margin: '0px' }}>{item.notes}</p>
             </div>
             <div style={{ flex: '1', alignSelf: 'center' }}>
-              <DownloadOutlined
-                style={{ cursor: 'pointer' }}
-                onClick={(e) => {
+              <Button
+                icon={<DownloadOutlined />}
+                onClick={() => {
                   downloadDataset(item.version);
                 }}
-              />
+                block
+              >
+                Download
+              </Button>
+              {isProjectAdmin ? (
+                <>
+                  <Button
+                    icon={<ExportOutlined />}
+                    onClick={() => {
+                      showShareDatasetModal(item.id);
+                    }}
+                    block
+                  >
+                    Share
+                  </Button>
+                  <Modal
+                    title='Creating a Dataset Version Sharing Request'
+                    open={isShareDatasetModalOpen}
+                    okText='Send'
+                    cancelText='Cancel'
+                    onCancel={cancelShareDatasetModel}
+                    onOk={submitShareDatasetModal}
+                  >
+                    <Form form={shareDatasetForm} layout='vertical'>
+                      <Form.Item
+                        label='Project Code'
+                        name='projectCode'
+                        rules={[{ required: true, message: 'Please input the project code!' }]}
+                      >
+                        <Input placeholder='Enter a project code' />
+                      </Form.Item>
+                    </Form>
+                  </Modal>
+                </>
+              ) : null}
             </div>
           </div>
         );
@@ -165,7 +239,7 @@ const DatasetDrawer = (props) => {
           pageSizeOptions: [10, 20, 50],
           showSizeChanger: true,
         }}
-        size="middle"
+        size='middle'
       />
     </Drawer>
   );

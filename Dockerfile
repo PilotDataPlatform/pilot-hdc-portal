@@ -1,42 +1,26 @@
-FROM node:16
+FROM node:23-slim AS build-environment
 
-RUN addgroup --system app && \
-    useradd --gid app --system --shell /bin/bash --create-home app
-
-WORKDIR /portal
-
-RUN chown -R app:app /portal
-
-USER app
-
-# Set default exposed port and default CMD
-# This rarely changes if ever
-EXPOSE 3000
-CMD npm run start:serve
-
-
-# Install app dependencies, changes infrequently
-USER root
+WORKDIR /portal/src
 
 COPY package.json ./
 COPY package-lock.json  ./
 
-RUN chown app:app /portal/package.json /portal/package-lock.json
-
-USER app
-
 RUN npm install
 
-# Copy app code, changes frequently.
-USER root
+COPY public  ./public
+COPY src  ./src
+COPY craco.config.js  ./
+COPY .env ./
 
-COPY .  ./
-
-# Verify that the `.env` file was copied to the docker image
-RUN test -s .env || (echo "Error! .env file is missing or empty" && exit 1)
-
-RUN chown -R app:app /portal
-
-USER app
-
+# Make sure that the `.env` file is present before running the `build` command.
+RUN test -s .env || (echo "Error! .env file is missing or empty." && exit 1)
 RUN npm run build
+RUN mv ./build/ /portal/build
+RUN rm -rf /portal/src
+
+
+FROM nginx:1.27.3 AS portal-image
+
+COPY --from=build-environment --chmod=755 /portal/build /etc/nginx/html
+
+COPY portal.conf /etc/nginx/conf.d/

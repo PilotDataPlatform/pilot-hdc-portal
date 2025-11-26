@@ -249,7 +249,7 @@ const FileStatModal = (props) => {
         <Timeline style={{ marginTop: 40 }}>
           {filterData &&
             filterData.map((i) => {
-              let { activityType, activityTime, itemName, user, changes } = i;
+              let { activityType, activityTime, itemName, user, changes, networkOrigin } = i;
               let localTime = timeConvertWithOffestValue(
                 activityTime,
                 'datetime',
@@ -292,14 +292,14 @@ const FileStatModal = (props) => {
               } else if (operate === 'uploaded') {
                 return (
                   <Timeline.Item color="green">
-                    {user} {operate} {itemName} at {localTime}
+                    {user} {operate} {itemName} at {localTime} from {networkOrigin} location
                   </Timeline.Item>
                 );
               }
 
               return (
                 <Timeline.Item color="green">
-                  {user} {operate} {itemName} at {localTime}
+                  {user} {operate} {itemName} at {localTime} from {networkOrigin} location
                 </Timeline.Item>
               );
             })}

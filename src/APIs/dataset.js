@@ -279,6 +279,43 @@ export function publishNewVersionAPI(datasetGeid, operator, notes, version) {
   });
 }
 
+export function getDatasetSharingRequests(projectCode, page = 0, pageSize = 100) {
+  return serverAxios({
+    url: '/v1/dataset-version-sharing-requests/',
+    method: 'GET',
+    params: {
+      project_code: projectCode,
+      sort_by: 'created_at',
+      sort_order: 'desc',
+      page: page,
+      page_size: pageSize,
+    },
+  });
+}
+
+export function createDatasetSharingRequest(datasetVersionId, projectCode) {
+  return serverAxios({
+    url: `/v1/dataset-version-sharing-requests/`,
+    method: 'POST',
+    data: {
+      version_id: datasetVersionId,
+      project_code: projectCode,
+    },
+  });
+}
+
+export function processDatasetSharingRequest(versionSharingRequestId, status, sessionId = null) {
+  const headers = sessionId ? { 'Session-ID': sessionId } : {};
+  return serverAxios({
+    url: `/v1/dataset-version-sharing-requests/${versionSharingRequestId}`,
+    method: 'PATCH',
+    headers: headers,
+    data: {
+      status: status,
+    },
+  });
+}
+
 export function datasetDownloadReturnURLAPI(datasetGeid, version) {
   return serverAxios({
     url: `/v1/dataset/${datasetGeid}/download/pre`,
@@ -553,3 +590,26 @@ export function refreshMetaFromKG(metadataId, username) {
     },
   );
 }
+
+export function bulkRefreshMetaFromKG(datasetID, username) {
+  return serverAxios({
+      url: `/v1/kg/metadata/refresh/dataset/${datasetID}`,
+      method: `GET`,
+      params: {
+        username: username,
+      },
+    },
+  );
+}
+
+export function bulkUpdateMetaToKG(datasetID, username) {
+  return serverAxios({
+      url: `/v1/kg/metadata/update/dataset/${datasetID}`,
+      method: `PUT`,
+      params: {
+        username: username,
+      },
+    },
+  );
+}
+

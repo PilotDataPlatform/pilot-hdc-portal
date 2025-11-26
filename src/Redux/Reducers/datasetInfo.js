@@ -28,6 +28,7 @@ const init = {
   },
   currentVersion: '',
   projectName: '',
+  projectCode: '',
   loading: false,
   hasInit: false,
 };
@@ -40,6 +41,9 @@ export function datasetInfo(state = init, action) {
     }
     case DATASET_INFO.SET_PROJECT_NAME: {
       return { ...state, projectName: payload };
+    }
+    case DATASET_INFO.SET_PROJECT_CODE: {
+      return { ...state, projectCode: payload };
     }
     case DATASET_INFO.SET_LOADING: {
       return { ...state, loading: payload };

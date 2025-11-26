@@ -78,7 +78,7 @@ function AppFooter(props) {
             Pilot HDC Version {packageInfo.displayVersion}
           </small>
         </Button>{' '}
-        © 2022-2024, Indoc Systems Inc.
+        © 2022-2025, Indoc Systems Inc.
       </small>{' '}
       <TermsOfUseModal
         visible={modal}
