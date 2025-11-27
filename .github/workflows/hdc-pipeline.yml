@@ -166,7 +166,7 @@ jobs:
 
   trigger_dev_deployment:
     needs: [build_and_publish, get-version, create-git-tag]
-    runs-on: pilot-dev-runners
+    runs-on: hdc-dev-runners-public
     steps:
       - name: Checkout CSCS-INFRA repo
         run: |
