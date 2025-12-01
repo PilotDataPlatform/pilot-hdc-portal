@@ -58,7 +58,7 @@ const DeleteFilesPlugin = ({
         icon={<DeleteOutlined />}
         style={{ marginRight: 8 }}
       >
-        Delete
+        Move to Trash Bin
       </Button>
 
       <DeleteFilesModal

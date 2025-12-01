@@ -238,7 +238,7 @@ const Newsfeed = ({ data, id, user }) => {
       case 'pipeline':
         actionType = 'Pipeline';
         if (data.action == 'delete') {
-          actionText = 'Delete';
+          actionText = 'Move to Trash Bin';
         } else {
           actionText = 'Copy';
         }

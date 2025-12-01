@@ -12,9 +12,9 @@ import {
   addCopy2CoreList,
   setSuccessNum,
   updateDownloadItemCreator,
-  addDeletedFileList,
+  addMovedToBinList,
   appendDownloadListCreator,
-  updateDeletedFileList,
+  updateMovedToBinList,
   addUploadListCreator,
   updateUploadItemCreator,
   deleteUploadItemCreator,
@@ -39,8 +39,8 @@ const [
   addCopy2CoreList,
   updateDownloadItemCreator,
   appendDownloadListCreator,
-  updateDeletedFileList,
-  addDeletedFileList,
+  updateMovedToBinList,
+  addMovedToBinList,
   addUploadListCreator,
   updateUploadItemCreator,
   deleteUploadItemCreator,
@@ -95,7 +95,7 @@ class FileActionHandler {
   }
 
   delete(data) {
-    const deletedFileList = store.getState().deletedFileList;
+    const deletedFileList = store.getState().movedToBinFileList;
 
     const existingFile = deletedFileList.find(
       (file) => file.jobId === data.jobId,

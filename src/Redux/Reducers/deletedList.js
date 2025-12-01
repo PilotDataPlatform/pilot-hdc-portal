@@ -19,19 +19,21 @@ function deletedFileList(state = init, action) {
 
   switch (type) {
     case ADD_DELETE_LIST:
-      return [...state, ...payload];
+      console.log('payload', payload);
+      console.log('state', state);
+      return [...state, payload];
 
     case UPDATE_DELETE_LIST:
-      const deleteList = [...state];
+      const deletedFileList = [state];
 
       for (const pItem of payload) {
-        const fileIndex = deleteList.findIndex(
+        const fileIndex = deletedFileList.findIndex(
           (item) => pItem.jobId === item.jobId,
         );
 
         if (fileIndex > -1) {
-          deleteList[fileIndex] = {
-            ...deleteList[fileIndex],
+          deletedFileList[fileIndex] = {
+            ...deletedFileList[fileIndex],
             ...pItem,
           };
         } else {
@@ -39,7 +41,7 @@ function deletedFileList(state = init, action) {
         }
       }
 
-      return deleteList;
+      return deletedFileList;
 
     case SET_DELETE_LIST:
       return payload;

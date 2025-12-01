@@ -14,6 +14,7 @@ import StandardLayout from '../../Components/Layout/StandardLayout';
 import MemberProfileCard from './Components/Cards/MemberProfileCard';
 import ProjectMemberCard from './Components/Cards/ProjectMemberCard';
 import RecentActivitiesCard from './Components/Cards/RecentActivitiesCard';
+import RecentDeletedCard from './Components/Cards/RecentDeletedCard';
 import { getUserProfileAPI, checkVMAccountApi } from '../../APIs';
 import i18n from '../../i18n';
 
@@ -52,7 +53,10 @@ const UserProfile = () => {
             <ProjectMemberCard username={username} role={role} />
           </div>
           <div className={styles['user-profile__container-right']}>
-            <RecentActivitiesCard userId={userProfile.id} />
+            <div style={{ marginBottom: 12 }}>
+              <RecentActivitiesCard userId={userProfile.id} />
+            </div>
+            <RecentDeletedCard userId={userProfile.id} />
           </div>
         </div>
       </div>
