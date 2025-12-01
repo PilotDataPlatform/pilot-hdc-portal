@@ -48,8 +48,11 @@ import {
   TRIGGER_EVENT,
   SET_IS_KEYCLOAK_READY,
   SET_IS_RELEASE_NOTE_SHOWN,
-  SET_DELETE_LIST,
+  SET_MOVED_TO_BIN_LIST,
   SET_UPLOAD_FILE_MANIFEST,
+  UPDATE_MOVED_TO_BIN_LIST,
+  ADD_MOVED_TO_BIN_LIST,
+  SET_DELETE_LIST,
   UPDATE_DELETE_LIST,
   ADD_DELETE_LIST,
   SET_SELECTED_FILES,
@@ -324,13 +327,28 @@ export const setIsReleaseNoteShownCreator = (isReleaseNoteShown) => ({
   payload: isReleaseNoteShown,
 });
 
-export const setDeletedFileList = (payload) => ({
-  type: SET_DELETE_LIST,
+export const setUploadFileManifest = (payload) => ({
+  type: SET_UPLOAD_FILE_MANIFEST,
   payload,
 });
 
-export const setUploadFileManifest = (payload) => ({
-  type: SET_UPLOAD_FILE_MANIFEST,
+export const setMovedToBinList = (payload) => ({
+  type: SET_MOVED_TO_BIN_LIST,
+  payload,
+});
+
+export const updateMovedToBinList = (payload) => ({
+  type: UPDATE_MOVED_TO_BIN_LIST,
+  payload,
+});
+
+export const addMovedToBinList = (payload) => ({
+  type: ADD_MOVED_TO_BIN_LIST,
+  payload,
+});
+
+export const setDeletedFileList = (payload) => ({
+  type: SET_DELETE_LIST,
   payload,
 });
 

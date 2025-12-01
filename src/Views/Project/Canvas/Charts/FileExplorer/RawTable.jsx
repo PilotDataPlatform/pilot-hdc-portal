@@ -5,7 +5,7 @@
  * Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
  * You may not use this file except in compliance with the License.
  */
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Button,
   Collapse,
@@ -23,7 +23,6 @@ import {
   Modal,
 } from 'antd';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
 import {
   CloudDownloadOutlined,
   UploadOutlined,
@@ -42,7 +41,7 @@ import {
   appendDownloadListCreator,
   setFolderRouting,
   setTableLayoutReset,
-  fileActionSSEActions,
+  fileActionSSEActions, addMovedToBinList, addDeletedFileList, setDeletedFileList,
 } from '../../../../../Redux/actions';
 import {
   downloadFilesAPI,
@@ -150,7 +149,7 @@ function RawTable(props) {
   const [menuItems, setMenuItems] = useState(0);
   const [tableReady, setTableReady] = useState(false);
   const [showPlugins, setShowPlugins] = useState(true);
-  const [currentDataset] = useCurrentProject();
+  const [currentProject] = useCurrentProject();
   const projectActivePanel = useSelector(
     (state) => state.project && state.project.tree && state.project.tree.active,
   );
@@ -164,13 +163,14 @@ function RawTable(props) {
         (r) => typeof r.folderLevel !== 'undefined',
       )
     : folderRouting[panelKey];
+  const movedToBinFileList = useSelector((state) => state.movedToBinFileList);
   const deletedFileList = useSelector((state) => state.deletedFileList);
   const rolesPermissionsList = useSelector(
     (state) => state.rolePermissions.roles,
   );
   const currentRecordNameSync = useRef(undefined);
   let permission = false;
-  if (currentDataset) permission = currentDataset.permission;
+  if (currentProject) permission = currentProject.permission;
 
   const updateFileManifest = (record, manifestIndex) => {
     const index = _.findIndex(rawFiles.data, (item) => item.key === record.key);
@@ -253,6 +253,25 @@ function RawTable(props) {
     }
   }, [rawFiles.data]);
 
+  useEffect(() => {
+    const items = document.cookie
+          .split('; ')
+          .filter(cookie => cookie.startsWith('record_'))
+          .map(cookie => {
+            const [key, rawValue] = cookie.split('=');
+            const geid = key.replace('record_', '');
+            const value = decodeURIComponent(rawValue);
+            try {
+              const { name, timestamp, project } = JSON.parse(value);
+              return { geid, name, timestamp, project };
+            } catch {
+              return null;
+            }
+          })
+          .filter(Boolean);
+    dispatch(setDeletedFileList(items));
+  }, [dispatch]);
+
   const getColumnWidth = (panelKey, isRootFolder, sidepanelOpen, columnKey) => {
     const OPEN_SIDE = {
       name: '65%',
@@ -303,16 +322,21 @@ function RawTable(props) {
       }
     }
   };
-  const checkIsRecordPendingDelete = (record) =>
-    deletedFileList.find(
+  const checkIsRecordPendingMoveToBin = (record) =>
+    movedToBinFileList.find(
       (el) =>
-        el.projectCode === currentDataset.code &&
+        el.projectCode === currentProject.code &&
         el.targetNames.includes(record.fileName) &&
         el.status === JOB_STATUS.RUNNING,
     );
 
+  const checkIsRecordDeleted = (record) => {
+    return deletedFileList.some(el => el.geid === record.geid);
+  };
+
   let columns = [
-    !panelKey.includes('trash') && rawFiles.data[0]?.displayPath
+    !panelKey.includes('trash') &&
+    rawFiles.data[0]?.displayPath
       ? {
           title: '',
           dataIndex: 'star',
@@ -333,7 +357,7 @@ function RawTable(props) {
                         id: record.geid,
                         user: props.username,
                         type: 'item',
-                        container_code: currentDataset?.code,
+                        container_code: currentProject?.code,
                         zone: zone,
                       });
                       return false;
@@ -408,7 +432,7 @@ function RawTable(props) {
                   : 'default',
             }}
             onClick={(e) => {
-              if (deletedFileList && checkIsRecordPendingDelete(record)) {
+              if (movedToBinFileList && checkIsRecordPendingMoveToBin(record)) {
                 return;
               }
               if (record.nodeLabel.indexOf('Folder') !== -1) {
@@ -429,8 +453,11 @@ function RawTable(props) {
             tableState === TABLE_STATE.COPY_TO_CORE ? (
               <Tag color="default">{SYSTEM_TAGS['COPIED_TAG']}</Tag>
             ) : null}
-            {deletedFileList && checkIsRecordPendingDelete(record) ? (
-              <Tag color="default">to be deleted</Tag>
+            {movedToBinFileList && checkIsRecordPendingMoveToBin(record) ? (
+              <Tag color="default">moving to the bin</Tag>
+            ) : null}
+            {deletedFileList && checkIsRecordDeleted(record)? (
+              <Tag color="default">deleted</Tag>
             ) : null}
             {hasPopover ? (
               <Popover content={<span>{popoverContent}</span>}>
@@ -456,10 +483,8 @@ function RawTable(props) {
           ? [searchText.find((v) => v.key === 'owner').value]
           : null,
       sorter:
-        projectActivePanel === 'greenroom-raw' &&
-        ['collaborator', 'contributor'].includes(permission)
-          ? false
-          : true,
+        !(projectActivePanel === 'greenroom-raw' &&
+          ['collaborator', 'contributor'].includes(permission)),
       width: getColumnWidth(panelKey, isRootFolder, sidepanel, 'owner'),
       searchKey:
         (projectActivePanel &&
@@ -587,27 +612,37 @@ function RawTable(props) {
               }
             };
 
+
             const menu = (
               <Menu style={{ borderRadius: '6px' }}>
                 <Menu.Item
                   disabled={
-                    deletedFileList &&
-                    checkIsRecordPendingDelete(record) &&
+                    movedToBinFileList &&
+                    checkIsRecordPendingMoveToBin(record) &&
+                    checkIsRecordDeleted(record) &&
                     true
                   }
                   onClick={(e) => openFileSider(record)}
                 >
                   Properties
                 </Menu.Item>
+                {panelKey.includes('trash') && (
+                  <Menu.Divider />
+                  )}
+                {panelKey.includes('trash') && (
+                <Menu.Item
+                  onClick={(e) => deleteFile(record)}
+                >
+                  Delete
+                </Menu.Item>
+                )}
                 {!panelKey.includes('trash') && checkDownloadPermissions() && (
                   <Menu.Divider />
                 )}
                 {!panelKey.includes('trash') && checkDownloadPermissions() && (
                   <Menu.Item
-                    disabled={
-                      deletedFileList &&
-                      checkIsRecordPendingDelete(record) &&
-                      true
+                    disabled={(movedToBinFileList && checkIsRecordPendingMoveToBin(record)) ||
+                              (deletedFileList && checkIsRecordDeleted(record))
                     }
                     onClick={async (e) => {
                       setDownloadVisible(true);
@@ -617,7 +652,7 @@ function RawTable(props) {
                       downloadFilesAPI(
                         props.projectId,
                         files,
-                        currentDataset.code,
+                        currentProject.code,
                         props.username,
                         panelKey.startsWith('greenroom') ? 'greenroom' : 'Core',
                         null,
@@ -665,7 +700,7 @@ function RawTable(props) {
                         const { geid } = record;
                         const zipRes = await getZipContentAPI(
                           geid,
-                          currentDataset && currentDataset.globalEntityId,
+                          currentProject && currentProject.globalEntityId,
                         );
                         if (zipRes.status === 200)
                           record = {
@@ -684,13 +719,14 @@ function RawTable(props) {
               </Menu>
             );
             const isDeleted =
-              deletedFileList && checkIsRecordPendingDelete(record);
+              (movedToBinFileList && checkIsRecordPendingMoveToBin(record)) ||
+              (deletedFileList && checkIsRecordDeleted(record));
             return (
               <div className={styles['file-explorer__action-button']}>
                 <Dropdown
                   overlay={menu}
                   placement="bottomRight"
-                  disabled={isDeleted !== undefined}
+                  disabled={isDeleted}
                 >
                   <Button shape="circle">
                     <MoreOutlined />
@@ -711,7 +747,7 @@ function RawTable(props) {
     setPageLoading(false);
   }, [searchInput, props.projectId, props.rawData]);
 
-  const datasetGeid = currentDataset?.globalEntityId;
+  const datasetGeid = currentProject?.globalEntityId;
   async function fetchData() {
     if (currentRouting && currentRouting.length) {
       setRefreshing(true);
@@ -873,7 +909,7 @@ function RawTable(props) {
       'project',
       null,
       PanelKey.GREENROOM_HOME,
-      currentDataset.code,
+      currentProject.code,
     );
   }
   async function firstTimeLoad() {
@@ -940,6 +976,21 @@ function RawTable(props) {
     setSidepanel(true);
   }
 
+async function deleteFile(record) {
+  console.log('delete file', record);
+  dispatch(addDeletedFileList(record));
+  console.log(deletedFileList);
+  const expires = new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString();
+  const timestamp = new Date(Date.now()).toISOString();
+  const cookieKey = `record_${record.geid}`;
+  const cookieValue = encodeURIComponent(JSON.stringify({
+    name: record.name,
+    timestamp: timestamp,
+    project: currentProject.code,
+  }));
+  document.cookie = `${cookieKey}=${cookieValue}; path=/; expires=${expires}`;
+}
+
   function closeFileSider() {
     setSidepanel(false);
   }
@@ -955,13 +1006,14 @@ function RawTable(props) {
           };
         }
       }
-      if (deletedFileList) {
-        const isDeleted = deletedFileList.find((el) => {
-          return (
-            el.targetNames?.indexOf(record.name) !== -1 &&
-            el.status === JOB_STATUS.RUNNING
-          );
-        });
+      if (movedToBinFileList) {
+        // return {
+        //     disabled: true,
+        //   };
+
+        const isDeleted =
+              (movedToBinFileList && checkIsRecordPendingMoveToBin(record)) ||
+              (deletedFileList && checkIsRecordDeleted(record));
         if (isDeleted) {
           return {
             disabled: true,
@@ -985,7 +1037,7 @@ function RawTable(props) {
     downloadFilesAPI(
       props.projectId,
       files,
-      currentDataset.code,
+      currentProject.code,
       props.username,
       panelKey.startsWith('greenroom') ? 'greenroom' : 'Core',
       null,
@@ -1184,7 +1236,7 @@ function RawTable(props) {
         sourceType,
         partial,
         panelKey,
-        currentDataset?.code,
+        currentProject?.code,
       );
       res = await insertManifest(res);
       const { files, total } = resKeyConvert(res);
@@ -1242,7 +1294,7 @@ function RawTable(props) {
             !reFreshing && fetchData();
           }}
           currentRouting={currentRouting}
-          projectCode={currentDataset?.code}
+          projectCode={currentProject?.code}
           uploader={props.username}
           panelKey={panelKey}
         />

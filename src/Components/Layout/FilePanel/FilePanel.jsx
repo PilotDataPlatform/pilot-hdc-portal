@@ -30,7 +30,7 @@ import {
   setUploadListCreator,
   setDownloadListCreator,
   setCopy2CoreList,
-  setDeletedFileList,
+  setMovedToBinList,
   fileActionSSEActions,
   setPanelVisibility,
 } from '../../../Redux/actions';
@@ -50,7 +50,7 @@ function FilePanel(props) {
   const opened = useSelector((state) => state.panelActiveKey);
   let downloadList = useSelector((state) => state.downloadList);
   let copy2CoreList = useSelector((state) => state.copy2CoreList);
-  let deletedFileList = useSelector((state) => state.deletedFileList);
+  let movedToBinFileList = useSelector((state) => state.movedToBinFileList);
   const projectCode = props.projectCode;
   const uploadList = uploadListGlobal.filter(
     (el) => el.projectCode === projectCode,
@@ -59,10 +59,10 @@ function FilePanel(props) {
   downloadList = downloadList.filter((el) => el.projectCode === projectCode);
   downloadList = orderBy(downloadList, ['updatedTime'], ['desc']);
 
-  deletedFileList = deletedFileList.filter(
+  movedToBinFileList = movedToBinFileList.filter(
     (el) => el.projectCode === projectCode,
   );
-  deletedFileList = orderBy(deletedFileList, ['updatedTime'], ['desc']);
+  movedToBinFileList = orderBy(movedToBinFileList, ['updatedTime'], ['desc']);
 
   const dispatch = useDispatch();
   const isMount = useIsMount();
@@ -75,7 +75,7 @@ function FilePanel(props) {
   const clearTabPane = () => {
     dispatch(setUploadListCreator([]));
     dispatch(setDownloadListCreator([]));
-    dispatch(setDeletedFileList([]));
+    dispatch(setMovedToBinList([]));
     dispatch(setCopy2CoreList([]));
   };
 
@@ -399,7 +399,7 @@ function FilePanel(props) {
     ...uploadList,
     ...downloadList,
     ...approvedList,
-    ...deletedFileList,
+    ...movedToBinFileList,
   ];
   inProgressList = allFileList.filter(
     (el) => el.status !== JOB_STATUS.SUCCEED && el.status !== JOB_STATUS.FAILED,
@@ -415,7 +415,7 @@ function FilePanel(props) {
   const downloadSuccessList = downloadList.filter(
     (el) => el.status === JOB_STATUS.SUCCEED,
   );
-  const deletedEndList = deletedFileList.filter(
+  const deletedEndList = movedToBinFileList.filter(
     (el) => el.status === JOB_STATUS.SUCCEED || el.status === JOB_STATUS.FAILED,
   );
 
@@ -456,11 +456,11 @@ function FilePanel(props) {
     JOB_STATUS.FAILED,
   );
   const deletedSuccessNum = getNumFilesByJobStatus(
-    deletedFileList,
+    movedToBinFileList,
     JOB_STATUS.SUCCEED,
   );
   const deleteFailureNum = getNumFilesByJobStatus(
-    deletedFileList,
+    movedToBinFileList,
     JOB_STATUS.FAILED,
   );
 

@@ -29,7 +29,7 @@ import email from './userEmail';
 import copy2CoreList from './copy2CoreList';
 import isKeycloakReady from './isKeycloakReady';
 import isReleaseNoteShown from './isReleaseNoteShown';
-import deletedFileList from './deletedFileList';
+import movedToBinList from './movedToBinList';
 import uploadFileManifest from './uploadFileManifest';
 import fileExplorer from './fileExplorer';
 import serviceRequestRedDot from './serviceRequest';
@@ -48,6 +48,7 @@ import virtualFolders from './virtualFolders';
 import fileActionSSE from './fileActionSSE';
 import rolePermissions from './rolePermissions';
 import kgSpaceList from './kgSpaceList';
+import deletedFileList from './deletedList';
 const appReducer = combineReducers({
   datasetList,
   userList,
@@ -71,6 +72,7 @@ const appReducer = combineReducers({
   email,
   isKeycloakReady,
   isReleaseNoteShown,
+  movedToBinFileList: movedToBinList,
   deletedFileList,
   uploadFileManifest,
   fileExplorer,

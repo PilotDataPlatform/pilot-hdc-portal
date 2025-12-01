@@ -9,7 +9,7 @@ import React from 'react';
 import { Modal, message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  addDeletedFileList,
+  addMovedToBinList,
   setPanelVisibility,
 } from '../../../../../../../Redux/actions';
 import { FILE_OPERATIONS } from '../../FileOperationValues';
@@ -93,10 +93,10 @@ const DeleteFilesModal = ({
         };
         file.projectCode = resFile.containerCode;
         delete file.containerCode;
-
         return file;
       });
-      dispatch(addDeletedFileList(result));
+      console.log(result);
+      dispatch(addMovedToBinList(result));
       dispatch(setPanelVisibility(true));
       if (res.code === 202) {
         message.success(t('success:fileOperations.delete'));
@@ -122,7 +122,7 @@ const DeleteFilesModal = ({
 
   return (
     <Modal
-      title="Delete Files"
+      title="Move Files to Trash Bin"
       visible={visible}
       maskClosable={false}
       confirmLoading={confirmLoading}
