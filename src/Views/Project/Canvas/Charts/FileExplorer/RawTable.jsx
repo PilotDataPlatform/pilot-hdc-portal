@@ -724,6 +724,7 @@ function RawTable(props) {
             return (
               <div className={styles['file-explorer__action-button']}>
                 <Dropdown
+                  trigger={['click', 'hover']}
                   overlay={menu}
                   placement="bottomRight"
                   disabled={isDeleted}
