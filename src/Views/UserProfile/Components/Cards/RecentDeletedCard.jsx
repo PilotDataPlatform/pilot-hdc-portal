@@ -15,7 +15,7 @@ import styles from '../../index.module.scss';
 import { getUserDeletedFiles, markFileForRestore } from '../../../../APIs';
 import { FileOutlined, FolderOutlined } from '@ant-design/icons';
 
-const RecentDeletedCard = ({ userId, currentProject = null }) => {
+const RecentDeletedCard = (userId) => {
   const [deletedItems, setDeletedItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   TimeAgo.addLocale(en)
@@ -39,9 +39,9 @@ const RecentDeletedCard = ({ userId, currentProject = null }) => {
     }
   };
 
-  const restoreItem = (itemId) => {
+  const restoreItem = (itemId, projectCode) => {
     try {
-      markFileForRestore(itemId);
+      markFileForRestore(itemId, projectCode);
       getDeletedItems();
       message.success(`Item restored successfully`);
       } catch {
@@ -92,11 +92,11 @@ const RecentDeletedCard = ({ userId, currentProject = null }) => {
                 {item.containerCode ? `${item.containerCode}` : 'Unknown Project'}
               </Col>
               <Col span={3}>
-                <span>{timeAgo.format(Date.parse(item.lastUpdatedTime), 'mini')}</span>
+                <span>{timeAgo.format(Date.parse(item.deletedTime), 'mini')}</span>
               </Col>
               <Col span={2}>
                 <span>
-                  <Button type="primary" onClick={() => restoreItem(item.id)}>Restore</Button>
+                  <Button type="primary" onClick={() => restoreItem(item.id, item.containerCode)}>Restore</Button>
                 </span>
               </Col>
             </Row>

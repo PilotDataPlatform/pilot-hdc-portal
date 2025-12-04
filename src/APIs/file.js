@@ -127,23 +127,25 @@ function getFilesAPI(datasetId) {
   });
 }
 
-function markFileForDeletion(fileID) {
+function markFileForDeletion(fileID, projectCode) {
   return axios({
     url: `/v1/files/delete`,
     method: 'DELETE',
     params: {
       'ids': fileID,
+      'project_code': projectCode,
       }
     }
   )
 }
 
-function markFileForRestore(fileID) {
+function markFileForRestore(fileID, projectCode) {
   return axios({
     url: `/v1/files/restore`,
     method: 'PUT',
     params: {
       'id': fileID,
+      'project_code': projectCode,
       }
     }
   )
