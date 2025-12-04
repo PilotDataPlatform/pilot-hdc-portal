@@ -59,6 +59,14 @@ function getUserProjectActivitiesAPI(params) {
   });
 }
 
+function getUserDeletedFiles() {
+  return serverAxios({
+    url: '/v1/files/delete',
+    method: 'GET'
+    }
+  )
+}
+
 async function getDatasetsAPI(params = {}) {
   if (params['tags']) {
     params['tags'] = params['tags'].join(',');
@@ -642,6 +650,7 @@ export {
   getProjectActivity,
   searchProjectFilesAPI,
   getUserProjectActivitiesAPI,
+  getUserDeletedFiles,
   getDatasetsAPI,
   createProjectAPI,
   queryDatasetAPI,

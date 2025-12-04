@@ -260,7 +260,7 @@ class FilesTable extends React.Component {
             className={styles.files_raw_table}
             tableLayout={'fixed'}
             rowKey={(record) => record.geid}
-            rowSelection={{ ...this.props.rowSelection, columnWidth: 40 }}
+            rowSelection={this.props.rowSelection ? { ...this.props.rowSelection, columnWidth: 40 } : null}
             key={this.props.tableKey}
             rowClassName={(record) => {
               let classArr = [];
