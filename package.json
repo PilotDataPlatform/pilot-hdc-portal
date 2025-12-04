@@ -1,6 +1,6 @@
 {
   "name": "portal",
-  "version": "1.5.10-hdc",
+  "version": "1.5.11-hdc",
   "displayVersion": "1.5.0",
   "private": true,
   "dependencies": {
@@ -22,7 +22,7 @@
     "animate.css": "^4.1.0",
     "antd": "^4.2.0",
     "antd-img-crop": "^3.13.2",
-    "axios": "1.6.0",
+    "axios": "1.12.0",
     "bizcharts": "^3.5.8",
     "broadcast-channel": "^3.1.0",
     "camelcase-keys": "^6.2.2",
@@ -46,7 +46,7 @@
     "moment-timezone": "^0.5.35",
     "papaparse": "^5.3.1",
     "password-validator": "^5.1.0",
-    "path-to-regexp": "^6.2.0",
+    "path-to-regexp": "^6.3.0",
     "pino": "^6.7.0",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.0.0",
@@ -123,7 +123,9 @@
   "overrides": {
     "craco-less": {
       "@craco/craco": "$@craco/craco"
-    }
+    },
+    "form-data": "4.0.4",
+    "cross-spawn": "7.0.5"
   },
   "config": {
     "commitizen": {
