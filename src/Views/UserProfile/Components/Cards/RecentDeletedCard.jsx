@@ -7,55 +7,29 @@
  */
 import React, { useState, useEffect } from 'react';
 import { Row, Col, List, Button, message, Spin } from 'antd';
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
 
 import BaseCard from './BaseCard';
 import styles from '../../index.module.scss';
-import { getUserProjectActivitiesAPI } from '../../../../APIs';
-import { timeConvert } from '../../../../Utility';
+import { getUserDeletedFiles, markFileForRestore } from '../../../../APIs';
+import { FileOutlined, FolderOutlined } from '@ant-design/icons';
 
 const RecentDeletedCard = ({ userId, currentProject = null }) => {
   const [deletedItems, setDeletedItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
-  const [total, setTotal] = useState(0);
+  TimeAgo.addLocale(en)
+  const timeAgo = new TimeAgo('en')
 
-  const renderTitle = () => (
-    <>Recently Deleted</>
-  );
-
-  const getDeletedItems = async (pageNo, pageSizeSet) => {
+  const getDeletedItems = () => {
     if (userId) {
-      const params = currentProject
-        ? { user_id: userId, project_code: currentProject.code }
-        : { user_id: userId };
-      params['page'] = pageNo;
-      params['page_size'] = pageSizeSet;
-      params['order_by'] = 'timestamp';
-      params['order_type'] = 'desc';
-      params['deleted_only'] = true; // Assuming API supports this filter
       try {
-        const response = await getUserProjectActivitiesAPI(params);
-        setTotal(response.data.total);
-        console.log('Deleted Items Response:', response.data.result);
-        // setDeletedItems(response.data.result);
-        const items = document.cookie
-          .split('; ')
-          .filter(cookie => cookie.startsWith('record_'))
-          .map(cookie => {
-            const [key, rawValue] = cookie.split('=');
-            const geid = key.replace('record_', '');
-            const value = decodeURIComponent(rawValue);
-            try {
-              const { name, timestamp, project } = JSON.parse(value);
-              return { geid, name, timestamp, project };
-            } catch {
-              return null;
-            }
-          })
-          .filter(Boolean);
-        console.log('Deleted Items:', items);
-        setDeletedItems(items);
+        const response = getUserDeletedFiles();
+        response.then(
+          (res) => {
+            setDeletedItems(res.data.result);
+          }
+        );
       } catch {
         message.error(
           'Something went wrong while attempting to retrieve deleted items',
@@ -65,40 +39,41 @@ const RecentDeletedCard = ({ userId, currentProject = null }) => {
     }
   };
 
-  useEffect(() => {
-    getDeletedItems(page, pageSize);
-  }, [userId]);
-
-  async function changePage(pageNo, changedPageSize) {
-    setIsLoading(true);
-    setPage(pageNo - 1);
-    setPageSize(changedPageSize);
-    await getDeletedItems(pageNo - 1, changedPageSize);
+  const restoreItem = (itemId) => {
+    try {
+      markFileForRestore(itemId);
+      getDeletedItems();
+      message.success(`Item restored successfully`);
+      } catch {
+        message.error(
+          'Something went wrong while attempting to restore deleted item',
+        );
+      }
   }
 
-  function getCookieValue(name) {
-  const cookie = document.cookie
-    .split('; ')
-    .find(row => row.startsWith(name + '='));
-  return cookie ? decodeURIComponent(cookie.split('=')[1]) : null;
-}
+  useEffect(() => {
+    getDeletedItems();
+  }, [userId]);
 
-  return (
+  return ( deletedItems.length > 0 ?
     <BaseCard
-      title={renderTitle()}
+      title={'Recently Deleted'}
       className={styles['user-profile__card--activities']}
     >
       <div className={styles['activities__activity-log']}>
         <div className={styles['activity-log__head']}>
-          <Row>
+          <Row gutter={[8, 32]}>
+            <Col span={8}>
+              <span>File/Folder Name</span>
+            </Col>
             <Col span={6}>
               <span>Project Name</span>
             </Col>
-            <Col span={6}>
-              <span>File/Folder Name</span>
+            <Col span={3}>
+              <span>Deleted</span>
             </Col>
-            <Col span={8}>
-              <span>Date</span>
+            <Col span={2}>
+              <span>Actions</span>
             </Col>
           </Row>
         </div>
@@ -107,34 +82,28 @@ const RecentDeletedCard = ({ userId, currentProject = null }) => {
           loading={isLoading}
           key="deleted-log"
           renderItem={(item) => (
-            <Row className={styles['activities-log__activity-item']}>
-              <Col span={6}>
-                {item.project ? `${item.project}` : 'Unknown Project'}
-              </Col>
-              <Col span={6}>
-                {item.name}
-              </Col>
+            <Row className={styles['activities-log__activity-item']} gutter={[8, 32]}>
               <Col span={8}>
                 <span>
-                  {timeConvert(item.timestamp, 'datetime')}
+                  {item.type === 'file' ? <div><FileOutlined/> {item.name}</div> : <div><FolderOutlined/> {item.name}</div>}
+                </span>
+              </Col>
+              <Col span={6}>
+                {item.containerCode ? `${item.containerCode}` : 'Unknown Project'}
+              </Col>
+              <Col span={3}>
+                <span>{timeAgo.format(Date.parse(item.lastUpdatedTime), 'mini')}</span>
+              </Col>
+              <Col span={2}>
+                <span>
+                  <Button type="primary" onClick={() => restoreItem(item.id)}>Restore</Button>
                 </span>
               </Col>
             </Row>
           )}
-          pagination={{
-            current: page + 1,
-            total: total,
-            showSizeChanger: true,
-            onChange: function (pageNo, pageSizePassed) {
-              changePage(pageNo, pageSizePassed);
-            },
-            onShowSizeChange: (pageNo, changePageSize) => {
-              changePage(1, changePageSize);
-            },
-          }}
         />
       </div>
-    </BaseCard>
+    </BaseCard> : null
   );
 };
 

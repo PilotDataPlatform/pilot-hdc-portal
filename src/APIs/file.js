@@ -127,6 +127,28 @@ function getFilesAPI(datasetId) {
   });
 }
 
+function markFileForDeletion(fileID) {
+  return axios({
+    url: `/v1/files/delete`,
+    method: 'DELETE',
+    params: {
+      'ids': fileID,
+      }
+    }
+  )
+}
+
+function markFileForRestore(fileID) {
+  return axios({
+    url: `/v1/files/restore`,
+    method: 'PUT',
+    params: {
+      'id': fileID,
+      }
+    }
+  )
+}
+
 function getFileManifestAttrs(geidsList, lineageView = false) {
   return serverAxiosNoIntercept({
     url: `/v1/file/manifest/query`,
@@ -725,4 +747,6 @@ export {
   getRequestFilesDetailByGeid,
   deleteFileActionStatus,
   getResumableJobs,
+  markFileForDeletion,
+  markFileForRestore,
 };

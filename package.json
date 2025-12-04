@@ -1,6 +1,6 @@
 {
   "name": "portal",
-  "version": "1.5.9-hdc",
+  "version": "1.5.10-hdc",
   "displayVersion": "1.5.0",
   "private": true,
   "dependencies": {
@@ -36,6 +36,7 @@
     "http-proxy-middleware": "^1.1.0",
     "i18next": "^19.8.3",
     "i18next-http-backend": "^1.4.1",
+    "javascript-time-ago": "^2.5.12",
     "js-file-download": "^0.4.12",
     "json-schema": ">=0.4.0",
     "jwt-decode": "^2.2.0",

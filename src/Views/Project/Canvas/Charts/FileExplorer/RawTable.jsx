@@ -50,7 +50,7 @@ import {
   getFileManifestAttrs,
   getProjectFiles,
   addUserFavourite,
-  deleteUserFavourite,
+  deleteUserFavourite, markFileForDeletion,
 } from '../../../../../APIs';
 import GreenRoomUploader from '../../../Components/GreenRoomUploader';
 import FilesTable from './FilesTable';
@@ -384,12 +384,12 @@ function RawTable(props) {
       render: (text, record) => {
         if (record.nodeLabel.indexOf('Folder') !== -1) {
           if (checkGreenAndCore(panelKey) && currentRouting?.length === 0) {
-            return <UserOutlined style={{ float: 'right' }} />;
+            return <UserOutlined style={{ float: 'none' }} />;
           } else {
-            return <FolderOutlined style={{ float: 'right' }} />;
+            return <FolderOutlined style={{ float: 'none' }} />;
           }
         } else {
-          return <FileOutlined style={{ float: 'right' }} />;
+          return <FileOutlined style={{ float: 'none' }} />;
         }
       },
     },
@@ -978,18 +978,8 @@ function RawTable(props) {
   }
 
 async function deleteFile(record) {
-  console.log('delete file', record);
   dispatch(addDeletedFileList(record));
-  console.log(deletedFileList);
-  const expires = new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString();
-  const timestamp = new Date(Date.now()).toISOString();
-  const cookieKey = `record_${record.geid}`;
-  const cookieValue = encodeURIComponent(JSON.stringify({
-    name: record.name,
-    timestamp: timestamp,
-    project: currentProject.code,
-  }));
-  document.cookie = `${cookieKey}=${cookieValue}; path=/; expires=${expires}`;
+  markFileForDeletion(record.geid);
 }
 
   function closeFileSider() {
@@ -1862,7 +1852,7 @@ async function deleteFile(record) {
         updateTable={refreshFiles}
         activePane={activePane}
         projectId={props.projectId}
-        rowSelection={rowSelection}
+        rowSelection={!panelKey.includes('trash') ? rowSelection : null}
         tableKey={tableKey}
         panelKey={panelKey}
         successNum={props.successNum}
