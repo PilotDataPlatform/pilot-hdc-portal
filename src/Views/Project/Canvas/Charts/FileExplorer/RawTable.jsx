@@ -978,8 +978,13 @@ function RawTable(props) {
   }
 
 async function deleteFile(record) {
-  dispatch(addDeletedFileList(record));
-  markFileForDeletion(record.geid);
+    try {
+      dispatch(addDeletedFileList(record));
+      markFileForDeletion(record.geid, currentProject.code);
+    } catch (error) {
+      message.error('Failed to delete file.');
+      console.log(error);
+    }
 }
 
   function closeFileSider() {
