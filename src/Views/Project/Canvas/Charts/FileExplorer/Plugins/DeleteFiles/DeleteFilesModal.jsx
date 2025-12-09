@@ -95,7 +95,6 @@ const DeleteFilesModal = ({
         delete file.containerCode;
         return file;
       });
-      console.log(result);
       dispatch(addMovedToBinList(result));
       dispatch(setPanelVisibility(true));
       if (res.code === 202) {
