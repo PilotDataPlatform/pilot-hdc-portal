@@ -19,8 +19,6 @@ function deletedFileList(state = init, action) {
 
   switch (type) {
     case ADD_DELETE_LIST:
-      console.log('payload', payload);
-      console.log('state', state);
       return [...state, payload];
 
     case UPDATE_DELETE_LIST:

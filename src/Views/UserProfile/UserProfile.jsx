@@ -15,16 +15,25 @@ import MemberProfileCard from './Components/Cards/MemberProfileCard';
 import ProjectMemberCard from './Components/Cards/ProjectMemberCard';
 import RecentActivitiesCard from './Components/Cards/RecentActivitiesCard';
 import RecentDeletedCard from './Components/Cards/RecentDeletedCard';
-import { getUserProfileAPI, checkVMAccountApi } from '../../APIs';
+import { getUserProfileAPI, checkVMAccountApi, getUserDeletedFiles } from '../../APIs';
 import i18n from '../../i18n';
 
 const UserProfile = () => {
   const { username, role } = useSelector((state) => state);
   const [userProfile, setUserProfile] = useState({});
   const [vmUserProfile, setVmUserProfile] = useState(false);
+  const [deletedFiles, setDeletedFiles] = useState([]);
 
   useEffect(() => {
     const getUserProfile = async () => {
+      try {
+        const deletedFilesResponse = await getUserDeletedFiles();
+        setDeletedFiles(deletedFilesResponse.data.result);
+      } catch {
+        message.error(
+          'Something went wrong while attempting to retrieve deleted items',
+        );
+      }
       try {
         const vmAccount = await checkVMAccountApi(username);
         setVmUserProfile(vmAccount.status === 200);
@@ -39,7 +48,7 @@ const UserProfile = () => {
       }
     };
     getUserProfile();
-  }, []);
+  }, [username]);
   return (
     <StandardLayout>
       <div className={styles['user-profile']}>
@@ -56,7 +65,11 @@ const UserProfile = () => {
             <div style={{ marginBottom: 12 }}>
               <RecentActivitiesCard userId={userProfile.id} />
             </div>
-            <RecentDeletedCard userId={userProfile.id} />
+            {deletedFiles.length > 0 ? <div style={{ marginBottom: 12 }}>
+              <RecentDeletedCard
+                deletedItems={deletedFiles}
+              />
+            </div> : null}
           </div>
         </div>
       </div>

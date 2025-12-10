@@ -5,44 +5,26 @@
  * Version 3.0 (the "License") available at https://www.gnu.org/licenses/agpl-3.0.en.html.
  * You may not use this file except in compliance with the License.
  */
-import React, { useState, useEffect } from 'react';
-import { Row, Col, List, Button, message, Spin } from 'antd';
+import React, { useState } from 'react';
+import { Row, Col, List, Button, message } from 'antd';
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 
 import BaseCard from './BaseCard';
 import styles from '../../index.module.scss';
-import { getUserDeletedFiles, markFileForRestore } from '../../../../APIs';
+import { markFileForRestore } from '../../../../APIs';
 import { FileOutlined, FolderOutlined } from '@ant-design/icons';
 
-const RecentDeletedCard = (userId) => {
-  const [deletedItems, setDeletedItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  TimeAgo.addLocale(en)
-  const timeAgo = new TimeAgo('en')
 
-  const getDeletedItems = () => {
-    if (userId) {
-      try {
-        const response = getUserDeletedFiles();
-        response.then(
-          (res) => {
-            setDeletedItems(res.data.result);
-          }
-        );
-      } catch {
-        message.error(
-          'Something went wrong while attempting to retrieve deleted items',
-        );
-      }
-      setIsLoading(false);
-    }
-  };
+const RecentDeletedCard = ({ deletedItems }) => {
+  const [items, setItems] = useState(deletedItems);
+  TimeAgo.addLocale(en);
+  const timeAgo = new TimeAgo('en');
 
   const restoreItem = (itemId, projectCode) => {
     try {
       markFileForRestore(itemId, projectCode);
-      getDeletedItems();
+      setItems(items.filter((item) => item.id !== itemId));
       message.success(`Item restored successfully`);
       } catch {
         message.error(
@@ -51,12 +33,8 @@ const RecentDeletedCard = (userId) => {
       }
   }
 
-  useEffect(() => {
-    getDeletedItems();
-  }, [userId]);
 
-  return ( deletedItems.length > 0 ?
-    <BaseCard
+  return <BaseCard
       title={'Recently Deleted'}
       className={styles['user-profile__card--activities']}
     >
@@ -78,8 +56,7 @@ const RecentDeletedCard = (userId) => {
           </Row>
         </div>
         <List
-          dataSource={deletedItems}
-          loading={isLoading}
+          dataSource={items}
           key="deleted-log"
           renderItem={(item) => (
             <Row className={styles['activities-log__activity-item']} gutter={[8, 32]}>
@@ -92,7 +69,7 @@ const RecentDeletedCard = (userId) => {
                 {item.containerCode ? `${item.containerCode}` : 'Unknown Project'}
               </Col>
               <Col span={3}>
-                <span>{timeAgo.format(Date.parse(item.deletedTime), 'mini')}</span>
+                <span>{timeAgo.format(Date.parse(item.deletedTime), 'round')}</span>
               </Col>
               <Col span={2}>
                 <span>
@@ -103,8 +80,8 @@ const RecentDeletedCard = (userId) => {
           )}
         />
       </div>
-    </BaseCard> : null
-  );
+    </BaseCard>
+    ;
 };
 
 export default RecentDeletedCard;
