@@ -33,6 +33,7 @@ import {
   timeConvertWithOffestValue,
   mapMinutesToUnitObj,
 } from '../../Utility/timeCovert';
+import { IS_NOTIFICATION_FUNCTIONALITY_ENABLED } from '../../config';
 const BellNotifications = ({
   visible,
   data,
@@ -133,9 +134,11 @@ const BellNotifications = ({
         console.log(e);
       }
     }
-    initData();
-    initProjectAnnouncement();
-    initMaintenance();
+    if (IS_NOTIFICATION_FUNCTIONALITY_ENABLED) {
+      initData();
+      initProjectAnnouncement();
+      initMaintenance();
+    }
     setTimeout(() => {
       const width = document.getElementById('header_user_menu')?.offsetWidth;
       setNameWidth(width);

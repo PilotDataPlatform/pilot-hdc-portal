@@ -53,7 +53,10 @@ import InvitationTable from '../../../Components/Table/InvitationTable';
 import CanvasPageHeader from '../Canvas/PageHeader/CanvasPageHeader';
 import styles from './index.module.scss';
 import i18n from '../../../i18n';
-import { KEYCLOAK_REALM } from '../../../config';
+import {
+  KEYCLOAK_REALM,
+  IS_INVITATION_FUNCTIONALITY_ENABLED,
+} from '../../../config';
 import { omit } from 'lodash';
 import MemberProfileModal from './Components/MemberProfileModal';
 const { Content } = Layout;
@@ -619,12 +622,14 @@ class Teams extends Component {
                       tableKey="projectUsers"
                     />
                   </TabPane>
-                  <TabPane tab="Invitations" key="invitations">
-                    <InvitationTable
-                      currentProject={this.props.currentProject}
-                      tableKey="projectInvitations"
-                    />
-                  </TabPane>
+                  {IS_INVITATION_FUNCTIONALITY_ENABLED && (
+                    <TabPane tab="Invitations" key="invitations">
+                      <InvitationTable
+                        currentProject={this.props.currentProject}
+                        tableKey="projectInvitations"
+                      />
+                    </TabPane>
+                  )}
                 </Tabs>
                 {this.state.currentTab == 'users' ? (
                   <Button

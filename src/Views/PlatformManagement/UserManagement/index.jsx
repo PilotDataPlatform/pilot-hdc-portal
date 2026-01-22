@@ -55,7 +55,10 @@ import CreateEmailModal from '../../../Components/Modals/CreateEmailModal';
 import styles from './index.module.scss';
 import i18n from '../../../i18n';
 import UserProfileModal from './Components/UserProfileModal';
-import { KEYCLOAK_REALM } from '../../../config';
+import {
+  KEYCLOAK_REALM,
+  IS_INVITATION_FUNCTIONALITY_ENABLED,
+} from '../../../config';
 const { Content } = Layout;
 const { TabPane } = Tabs;
 
@@ -617,7 +620,7 @@ class UserManagement extends Component {
       </div>
     );
 
-    const extraContent = (
+    const extraContent = IS_INVITATION_FUNCTIONALITY_ENABLED && (
       <div>
         <div
           style={{
@@ -695,20 +698,24 @@ class UserManagement extends Component {
                 />
               </div>
             </TabPane>
-            <TabPane tab="Invitations" key="invitations">
-              <InvitationsTable
-                tableKey="platformInvitations"
-                totalInvitations={this.state.totalInvitations}
-              />
-            </TabPane>
+            {IS_INVITATION_FUNCTIONALITY_ENABLED && (
+              <TabPane tab="Invitations" key="invitations">
+                <InvitationsTable
+                  tableKey="platformInvitations"
+                  totalInvitations={this.state.totalInvitations}
+                />
+              </TabPane>
+            )}
           </Tabs>
         </div>
-        <InviteUserModal
-          visible={this.state.modalVisible}
-          onCancel={() => this.setState({ modalVisible: false })}
-          inviteUserApi={inviteUserApi}
-          getInvitationListApi={this.fetchInvitationUsers}
-        />
+        {IS_INVITATION_FUNCTIONALITY_ENABLED && (
+          <InviteUserModal
+            visible={this.state.modalVisible}
+            onCancel={() => this.setState({ modalVisible: false })}
+            inviteUserApi={inviteUserApi}
+            getInvitationListApi={this.fetchInvitationUsers}
+          />
+        )}
       </>
     );
   }

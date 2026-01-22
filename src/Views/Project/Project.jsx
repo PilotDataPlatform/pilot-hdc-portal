@@ -42,6 +42,7 @@ import { JOB_STATUS } from '../../Components/Layout/FilePanel/jobStatus';
 
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
+import { IS_SEARCH_FUNCTIONALITY_ENABLED } from '../../config';
 
 function Project(props) {
   const { pathname } = useLocation();
@@ -167,6 +168,9 @@ function Project(props) {
             render={(props) => {
               if (!params.projectCode) {
                 throw new Error(`projectCode undefined`);
+              }
+              if (item.path === '/canvas' && !IS_SEARCH_FUNCTIONALITY_ENABLED) {
+                return <Redirect to={`/project/${params.projectCode}/data`} />;
               }
               let res = protectedRoutes(
                 item.protectedType,

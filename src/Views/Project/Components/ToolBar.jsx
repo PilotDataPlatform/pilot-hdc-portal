@@ -39,6 +39,10 @@ import {
   XWIKI,
   SUPERSET_SUBDOMAIN,
   SUPERSET_SUBDOMAIN_BASE,
+  IS_CORE_ZONE_FUNCTIONALITY_ENABLED,
+  IS_WORKBENCH_FUNCTIONALITY_ENABLED,
+  IS_SEARCH_FUNCTIONALITY_ENABLED,
+  IS_NOTIFICATION_FUNCTIONALITY_ENABLED,
 } from '../../../config';
 import { PanelKey } from '../Canvas/Charts/FileExplorer/RawTableValues';
 import i18n from '../../../i18n';
@@ -421,37 +425,41 @@ const ToolBar = ({
               : style['no-radius']
           }
         ></div>
-        <Menu.Item key="canvas" style={{ position: 'relative' }}>
-          <Link to="canvas">
-            {iconSelected === 'canvas' ? (
-              <span role="img" className="anticon icon-dashboard">
-                <DashboardSelected
-                  style={{
-                    marginLeft: -17,
-                  }}
-                />
-              </span>
-            ) : (
-              <span role="img" className="anticon icon-dashboard">
-                <img
-                  style={{ width: 17, marginLeft: -17 }}
-                  src={require('../../../Images/Dashboard.svg').default}
-                  className="tooltip-dashboard"
-                />
-              </span>
-            )}
-            <span>Canvas</span>
-          </Link>
-        </Menu.Item>
-        <div
-          className={
-            iconSelected === 'canvas'
-              ? style['menu-spacing__prev-selected']
-              : iconSelected === 'data'
-              ? style['menu-spacing__after-selected']
-              : style['no-radius']
-          }
-        ></div>
+        {IS_SEARCH_FUNCTIONALITY_ENABLED && (
+        <>
+          <Menu.Item key="canvas" style={{ position: 'relative' }}>
+            <Link to="canvas">
+              {iconSelected === 'canvas' ? (
+                <span role="img" className="anticon icon-dashboard">
+                  <DashboardSelected
+                    style={{
+                      marginLeft: -17,
+                    }}
+                  />
+                </span>
+              ) : (
+                <span role="img" className="anticon icon-dashboard">
+                  <img
+                    style={{ width: 17, marginLeft: -17 }}
+                    src={require('../../../Images/Dashboard.svg').default}
+                    className="tooltip-dashboard"
+                  />
+                </span>
+              )}
+              <span>Canvas</span>
+            </Link>
+          </Menu.Item>
+          <div
+            className={
+              iconSelected === 'canvas'
+                ? style['menu-spacing__prev-selected']
+                : iconSelected === 'data'
+                ? style['menu-spacing__after-selected']
+                : style['no-radius']
+            }
+          ></div>
+        </>
+        )}
         <Menu.Item key="data">
           <Link to="data">
             <CompassOutlined />
@@ -468,34 +476,43 @@ const ToolBar = ({
           }
         ></div>
         <div className={iconSelected === 'data' ? style['space'] : ''}></div>
-        <Menu.Item key="search">
-          <Link to="search">
-            <SearchOutlined />
-            <span>Search</span>
-          </Link>
-        </Menu.Item>
 
-        <div
-          className={
-            iconSelected === 'search'
-              ? style['menu-spacing__prev-selected']
-              : iconSelected === 'announcement'
-              ? style['menu-spacing__after-selected']
-              : style['no-radius']
-          }
-        ></div>
-        <Menu.Item title={null} key="announcement" data-menu="announcement">
-          <AnnouncementButton currentProject={currentProject} />
-        </Menu.Item>
-        <div
-          className={
-            iconSelected === 'announcement'
-              ? style['menu-spacing__prev-selected']
-              : iconSelected === 'teams'
-              ? style['menu-spacing__after-selected']
-              : style['no-radius']
-          }
-        ></div>
+        {IS_SEARCH_FUNCTIONALITY_ENABLED && (
+        <>
+          <Menu.Item key="search">
+            <Link to="search">
+              <SearchOutlined />
+              <span>Search</span>
+            </Link>
+          </Menu.Item>
+          <div
+            className={
+              iconSelected === 'search'
+                ? style['menu-spacing__prev-selected']
+                : iconSelected === 'announcement'
+                ? style['menu-spacing__after-selected']
+                : style['no-radius']
+            }
+          ></div>
+        </>
+        )}
+
+        {IS_NOTIFICATION_FUNCTIONALITY_ENABLED && (
+        <>
+          <Menu.Item title={null} key="announcement" data-menu="announcement">
+            <AnnouncementButton currentProject={currentProject} />
+          </Menu.Item>
+          <div
+            className={
+              iconSelected === 'announcement'
+                ? style['menu-spacing__prev-selected']
+                : iconSelected === 'teams'
+                ? style['menu-spacing__after-selected']
+                : style['no-radius']
+            }
+          ></div>
+        </>
+        )}
         {adminPermission && (
           <Menu.Item key="teams">
             <Link to="teams">
@@ -535,7 +552,7 @@ const ToolBar = ({
             }
           ></div>
         )}
-        {(adminPermission ||
+        {IS_CORE_ZONE_FUNCTIONALITY_ENABLED && (adminPermission ||
           getProjectRolePermission(projectRole, {
             zone: PanelKey.GREENROOM_HOME,
             operation: permissionOperation.create,
@@ -546,39 +563,30 @@ const ToolBar = ({
             operation: permissionOperation.create,
             resource: permissionResource.copyReqOwn,
           })) && (
-          <Menu.Item key="request" onClick={handleRequestToCoreOnClick}>
-            <Link to="request">
-              <div className={style['request-icon']}>
-                <PullRequestOutlined />
-                {showRequestRedDot ? (
-                  <div className="request-icon__dot"></div>
-                ) : null}
-              </div>
-              <span>Requests</span>
-            </Link>
-          </Menu.Item>
-        )}
-        {(adminPermission ||
-          getProjectRolePermission(projectRole, {
-            zone: PanelKey.GREENROOM_HOME,
-            operation: permissionOperation.create,
-            resource: permissionResource.copyReqAny,
-          }) ||
-          getProjectRolePermission(projectRole, {
-            zone: PanelKey.GREENROOM_HOME,
-            operation: permissionOperation.create,
-            resource: permissionResource.copyReqOwn,
-          })) && (
-          <div
-            className={
-              iconSelected === 'request'
-                ? style['menu-spacing__prev-selected--request']
-                : style['no-radius']
-            }
-          ></div>
+          <>
+            <Menu.Item key="request" onClick={handleRequestToCoreOnClick}>
+              <Link to="request">
+                <div className={style['request-icon']}>
+                  <PullRequestOutlined />
+                  {showRequestRedDot ? (
+                    <div className="request-icon__dot"></div>
+                  ) : null}
+                </div>
+                <span>Requests</span>
+              </Link>
+            </Menu.Item>
+            <div
+              className={
+                iconSelected === 'request'
+                  ? style['menu-spacing__prev-selected--request']
+                  : style['no-radius']
+              }
+            ></div>
+          </>
         )}
       </Menu>
 
+      {IS_WORKBENCH_FUNCTIONALITY_ENABLED && (
       <Menu
         mode="inline"
         className={style.lowerMenu}
@@ -627,6 +635,7 @@ const ToolBar = ({
           </a>
         </Menu.Item>
       </Menu>
+      )}
       <GreenRoomUploader
         isShown={isShown}
         cancel={() => {

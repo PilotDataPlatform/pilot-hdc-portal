@@ -8,7 +8,11 @@
 import React, { Component, createRef } from 'react';
 import { Layout, Menu, Button, Modal, Alert, Badge, message } from 'antd';
 import styles from './index.module.scss';
-import { PORTAL_PREFIX } from '../../config';
+import {
+  IS_MAINTENANCE_ANNOUNCEMENT_FUNCTIONALITY_ENABLED,
+  IS_DATASET_FUNCTIONALITY_ENABLED,
+  PORTAL_PREFIX,
+} from '../../config';
 import {
   ContainerOutlined,
   UserOutlined,
@@ -244,7 +248,7 @@ class AppHeader extends Component {
   };
 
   getNotificationsForUser = async () => {
-    if (this.props.user.status !== 'pending') {
+    if (IS_MAINTENANCE_ANNOUNCEMENT_FUNCTIONALITY_ENABLED && this.props.user.status !== 'pending') {
       try {
         const res = await getFilteredNotifications(this.props.username);
         let filteredNotifications = res.data.result;
@@ -322,7 +326,7 @@ class AppHeader extends Component {
                 </Link>
               </Menu.Item>
             )}
-            {!this.props.unauthorized && (
+            {IS_DATASET_FUNCTIONALITY_ENABLED && !this.props.unauthorized && (
               <Menu.Item key="datasets">
                 <Link to="/datasets">
                   <DeploymentUnitOutlined /> Datasets
