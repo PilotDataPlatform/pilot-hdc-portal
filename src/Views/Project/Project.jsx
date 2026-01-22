@@ -170,6 +170,7 @@ function Project(props) {
                 throw new Error(`projectCode undefined`);
               }
               if (item.path === '/canvas' && !IS_SEARCH_FUNCTIONALITY_ENABLED) {
+                // Redirect to file explorer because canvas heavily depends on the search functionality
                 return <Redirect to={`/project/${params.projectCode}/data`} />;
               }
               let res = protectedRoutes(
