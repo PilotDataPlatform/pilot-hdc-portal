@@ -11,6 +11,7 @@ import { DeploymentUnitOutlined } from '@ant-design/icons';
 import PluginTooltip from '../PluginTooltip/PluginTooltip';
 import { TABLE_STATE } from '../../RawTableValues';
 import DatasetsModal from './DatasetsModal';
+import { IS_DATASET_FUNCTIONALITY_ENABLED } from '../../../../../../../config';
 
 const DatasetsPlugin = ({
   selectedRowKeys,
@@ -46,7 +47,7 @@ const DatasetsPlugin = ({
     disabled: selectedRowKeys.length ? false : true,
   };
 
-  return (
+  return IS_DATASET_FUNCTIONALITY_ENABLED && (
     <>
       <Button
         type="link"

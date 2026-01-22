@@ -16,6 +16,7 @@ import { SmileOutlined, UpCircleFilled } from '@ant-design/icons';
 
 import styles from '../MySpace.module.scss';
 import { getAllNewsfeeds } from '../../../APIs';
+import { IS_NOTIFICATION_FUNCTIONALITY_ENABLED } from '../../../config';
 
 const NewsFeedList = ({ type, user }) => {
   const [dataList, setDataList] = useState([]);
@@ -39,7 +40,7 @@ const NewsFeedList = ({ type, user }) => {
         console.log(e);
       }
     }
-    initData();
+    IS_NOTIFICATION_FUNCTIONALITY_ENABLED && initData();
   }, []);
 
   const tagDate = (data) => {

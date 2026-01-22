@@ -15,6 +15,7 @@ import { Tabs } from 'antd';
 import { UserOutlined, BellOutlined } from '@ant-design/icons';
 import { StandardLayout } from '../../Components/Layout';
 import styles from './PlatformManagement.module.scss';
+import { IS_MAINTENANCE_ANNOUNCEMENT_FUNCTIONALITY_ENABLED } from '../../config';
 
 const PlatformManagement = () => {
   const [adminView, setAdminView] = useState(true);
@@ -44,17 +45,19 @@ const PlatformManagement = () => {
                   setAdminView={setAdminView}
                 />
               </Tabs.TabPane>
-              <Tabs.TabPane
-                tab={
-                  <span>
-                    <BellOutlined />
-                    Notifications
-                  </span>
-                }
-                key="notifications"
-              >
-                <Notifications />
-              </Tabs.TabPane>
+              {IS_MAINTENANCE_ANNOUNCEMENT_FUNCTIONALITY_ENABLED && (
+                <Tabs.TabPane
+                  tab={
+                    <span>
+                      <BellOutlined />
+                      Notifications
+                    </span>
+                  }
+                  key="notifications"
+                >
+                  <Notifications />
+                </Tabs.TabPane>
+              )}
             </Tabs>
           </div>
         ) : (

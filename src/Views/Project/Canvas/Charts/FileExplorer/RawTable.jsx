@@ -100,6 +100,7 @@ import i18n from '../../../../../i18n';
 import { JOB_STATUS } from '../../../../../Components/Layout/FilePanel/jobStatus';
 import { hideButton } from './hideButtons';
 import StarButton from '../../../../../Components/Icons/Star';
+import { IS_CORE_ZONE_FUNCTIONALITY_ENABLED } from '../../../../../config';
 const { Panel } = Collapse;
 const { Title } = Typography;
 const _ = require('lodash');
@@ -1396,6 +1397,7 @@ async function deleteFile(record) {
     {
       condition: () => {
         if (
+          IS_CORE_ZONE_FUNCTIONALITY_ENABLED &&
           !isRootFolder &&
           (props.type === DataSourceType.GREENROOM_HOME ||
             props.type === DataSourceType.GREENROOM) &&
@@ -1435,6 +1437,7 @@ async function deleteFile(record) {
     },
     {
       condition: () =>
+        IS_CORE_ZONE_FUNCTIONALITY_ENABLED &&
         !isRootFolder &&
         (props.type === DataSourceType.CORE_HOME ||
           props.type === DataSourceType.CORE) &&

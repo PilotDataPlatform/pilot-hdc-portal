@@ -18,6 +18,7 @@ import { getAllNotifications } from '../../APIs';
 import MaintenanceWarningModel from '../Modals/MaintenanceWarningModel';
 import { notificationActions } from '../../Redux/actions';
 import { mapToNewStructure } from '../../Utility/maintenance/maintenance';
+import { IS_MAINTENANCE_ANNOUNCEMENT_FUNCTIONALITY_ENABLED } from '../../config';
 const { Content } = Layout;
 function StandardLayout(props) {
   const {
@@ -45,7 +46,7 @@ function StandardLayout(props) {
         dispatch(notificationActions.setNotificationList(listData));
       }
     }
-    initData();
+    IS_MAINTENANCE_ANNOUNCEMENT_FUNCTIONALITY_ENABLED && initData();
   }, [updateNotificationTimes]);
   useEffect(() => {
     const interval = setInterval(() => {

@@ -28,6 +28,7 @@ import {
   getProjectInfoAPI,
   getAdminsOnDatasetAPI,
 } from '../../../APIs';
+import { IS_WORKBENCH_FUNCTIONALITY_ENABLED } from '../../../config';
 const { Content } = Layout;
 const { TabPane } = Tabs;
 function Settings(props) {
@@ -252,11 +253,13 @@ function Settings(props) {
                 <FileManifest />
               </div>
             </TabPane>
-            <TabPane tab="Workbench" key="work_bench">
-              <div style={{ backgroundColor: 'white' }}>
-                <WorkBenchPage />
-              </div>
-            </TabPane>
+            {IS_WORKBENCH_FUNCTIONALITY_ENABLED && (
+              <TabPane tab="Workbench" key="work_bench">
+                <div style={{ backgroundColor: 'white' }}>
+                  <WorkBenchPage />
+                </div>
+              </TabPane>
+            )}
           </Tabs>
         </Card>
       </Content>
