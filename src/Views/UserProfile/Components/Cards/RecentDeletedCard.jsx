@@ -7,19 +7,16 @@
  */
 import React, { useState } from 'react';
 import { Row, Col, List, Button, message } from 'antd';
-import TimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
 
 import BaseCard from './BaseCard';
 import styles from '../../index.module.scss';
 import { markFileForRestore } from '../../../../APIs';
 import { FileOutlined, FolderOutlined } from '@ant-design/icons';
+import { timeConvert } from '../../../../Utility';
 
 
 const RecentDeletedCard = ({ deletedItems }) => {
   const [items, setItems] = useState(deletedItems);
-  TimeAgo.addLocale(en);
-  const timeAgo = new TimeAgo('en');
 
   const restoreItem = (itemId, projectCode) => {
     try {
@@ -48,7 +45,7 @@ const RecentDeletedCard = ({ deletedItems }) => {
               <span>Project Name</span>
             </Col>
             <Col span={3}>
-              <span>Deleted</span>
+              <span>Deleted At</span>
             </Col>
             <Col span={2}>
               <span>Actions</span>
@@ -69,7 +66,9 @@ const RecentDeletedCard = ({ deletedItems }) => {
                 {item.containerCode ? `${item.containerCode}` : 'Unknown Project'}
               </Col>
               <Col span={3}>
-                <span>{timeAgo.format(Date.parse(item.deletedTime), 'round')}</span>
+                <span>
+                  {timeConvert(item.deletedTime, 'datetime')}
+                </span>
               </Col>
               <Col span={2}>
                 <span>

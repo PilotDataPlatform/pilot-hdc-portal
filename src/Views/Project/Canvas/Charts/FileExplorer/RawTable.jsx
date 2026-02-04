@@ -627,10 +627,10 @@ function RawTable(props) {
                 >
                   Properties
                 </Menu.Item>
-                {panelKey.includes('trash') && (
+                {panelKey.includes('trash') && permission === 'admin' && (
                   <Menu.Divider />
                   )}
-                {panelKey.includes('trash') && (
+                {panelKey.includes('trash') && permission === 'admin' && (
                 <Menu.Item
                   onClick={(e) => deleteFile(record)}
                 >
