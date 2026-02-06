@@ -132,8 +132,8 @@ function markFileForDeletion(fileID, projectCode) {
     url: `/v1/files/delete`,
     method: 'DELETE',
     params: {
-      'ids': fileID,
-      'project_code': projectCode,
+      ids: fileID,
+      project_code: projectCode,
       }
     }
   )
@@ -144,8 +144,8 @@ function markFileForRestore(fileID, projectCode) {
     url: `/v1/files/restore`,
     method: 'PUT',
     params: {
-      'id': fileID,
-      'project_code': projectCode,
+      id: fileID,
+      project_code: projectCode,
       }
     }
   )
