@@ -1012,7 +1012,10 @@ function RawTable(props) {
       try {
         restoreFileFromBin(record.geid);
         removeRecordByGeid(record.geid);
-        message.success('File restored successfully to: ' + record.nodeLabel.includes('Greenroom') ? 'Green Room' : 'Core');
+        message.success(
+          'File restored successfully to: ' +
+            (record.nodeLabel.includes('Greenroom') ? 'Green Room' : 'Core'),
+        );
       } catch (error) {
         message.error('Failed to restore file from bin.');
         console.log(error);
