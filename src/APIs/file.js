@@ -151,6 +151,18 @@ function markFileForRestore(fileID, projectCode) {
   )
 }
 
+function restoreFileFromBin(fileID) {
+  return axios({
+    url: `/v1/files/bin/restore`,
+    method: 'PATCH',
+    params: {
+      id: fileID,
+      status: 'ACTIVE',
+      }
+    }
+  )
+}
+
 function getFileManifestAttrs(geidsList, lineageView = false) {
   return serverAxiosNoIntercept({
     url: `/v1/file/manifest/query`,
@@ -751,4 +763,5 @@ export {
   getResumableJobs,
   markFileForDeletion,
   markFileForRestore,
+  restoreFileFromBin,
 };

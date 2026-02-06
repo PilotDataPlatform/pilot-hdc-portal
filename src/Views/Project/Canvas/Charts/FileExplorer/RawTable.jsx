@@ -41,7 +41,10 @@ import {
   appendDownloadListCreator,
   setFolderRouting,
   setTableLayoutReset,
-  fileActionSSEActions, addMovedToBinList, addDeletedFileList, setDeletedFileList,
+  fileActionSSEActions,
+  addDeletedFileList,
+  setDeletedFileList,
+  fileExplorerTableActions,
 } from '../../../../../Redux/actions';
 import {
   downloadFilesAPI,
@@ -50,7 +53,7 @@ import {
   getFileManifestAttrs,
   getProjectFiles,
   addUserFavourite,
-  deleteUserFavourite, markFileForDeletion,
+  deleteUserFavourite, markFileForDeletion, restoreFileFromBin,
 } from '../../../../../APIs';
 import GreenRoomUploader from '../../../Components/GreenRoomUploader';
 import FilesTable from './FilesTable';
@@ -334,6 +337,13 @@ function RawTable(props) {
   const checkIsRecordDeleted = (record) => {
     return deletedFileList.some(el => el.geid === record.geid);
   };
+
+  const removeRecordByGeid = (geid) => {
+  setRawFiles(prev => ({
+    ...prev,
+    data: prev.data.filter(record => record.geid !== geid),
+  }));
+}
 
   let columns = [
     !panelKey.includes('trash') &&
@@ -627,6 +637,16 @@ function RawTable(props) {
                 >
                   Properties
                 </Menu.Item>
+                {panelKey.includes('trash') && (
+                  <Menu.Divider />
+                  )}
+                {panelKey.includes('trash') && (
+                <Menu.Item
+                  onClick={(e) => restoreFile(record)}
+                >
+                  Restore
+                </Menu.Item>
+                )}
                 {panelKey.includes('trash') && permission === 'admin' && (
                   <Menu.Divider />
                   )}
@@ -978,15 +998,26 @@ function RawTable(props) {
     setSidepanel(true);
   }
 
-async function deleteFile(record) {
-    try {
-      dispatch(addDeletedFileList(record));
-      markFileForDeletion(record.geid, currentProject.code);
-    } catch (error) {
-      message.error('Failed to delete file.');
-      console.log(error);
-    }
-}
+  async function deleteFile(record) {
+      try {
+        dispatch(addDeletedFileList(record));
+        markFileForDeletion(record.geid, currentProject.code);
+      } catch (error) {
+        message.error('Failed to delete file.');
+        console.log(error);
+      }
+  }
+
+  async function restoreFile(record) {
+      try {
+        restoreFileFromBin(record.geid);
+        removeRecordByGeid(record.geid);
+        message.success('File restored successfully to: ' + record.nodeLabel.includes('Greenroom') ? 'Green Room' : 'Core');
+      } catch (error) {
+        message.error('Failed to restore file from bin.');
+        console.log(error);
+      }
+  }
 
   function closeFileSider() {
     setSidepanel(false);
