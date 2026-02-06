@@ -44,7 +44,6 @@ import {
   fileActionSSEActions,
   addDeletedFileList,
   setDeletedFileList,
-  fileExplorerTableActions,
 } from '../../../../../Redux/actions';
 import {
   downloadFilesAPI,
