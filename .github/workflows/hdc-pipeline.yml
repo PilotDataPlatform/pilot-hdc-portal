@@ -75,7 +75,7 @@ jobs:
 
     strategy:
       matrix:
-        environment: ["hdc-dev","hdc-prod","hdc-lite"]
+        environment: ["hdc-dev","hdc-prod","hdc-lite","ovh-dev"]
 
     environment: ${{ matrix.environment }}
 
@@ -94,6 +94,8 @@ jobs:
             MATRIX_ENV="prod"
           elif [[ "${{ matrix.environment }}" == "hdc-lite" ]]; then
             MATRIX_ENV="lite"
+          elif [[ "${{ matrix.environment }}" == "ovh-dev" ]]; then
+            MATRIX_ENV="ovh-dev"
           else
             echo "Unsupported environment: ${{ matrix.environment }}"
             exit 1
