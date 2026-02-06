@@ -339,11 +339,11 @@ function RawTable(props) {
   };
 
   const removeRecordByGeid = (geid) => {
-  setRawFiles(prev => ({
-    ...prev,
-    data: prev.data.filter(record => record.geid !== geid),
-  }));
-}
+    setRawFiles(prev => ({
+      ...prev,
+      data: prev.data.filter(record => record.geid !== geid),
+    }));
+  };
 
   let columns = [
     !panelKey.includes('trash') &&
