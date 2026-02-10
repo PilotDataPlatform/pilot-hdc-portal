@@ -586,7 +586,7 @@ class AuthHDC extends Component {
               >
                 Documentation
               </a>
-              <span>© 2023-2024 HealthDataCloud , All Rights Reserved</span>
+              <span>© 2023-2026 HealthDataCloud, All Rights Reserved</span>
             </div>
           </div>
         </div>

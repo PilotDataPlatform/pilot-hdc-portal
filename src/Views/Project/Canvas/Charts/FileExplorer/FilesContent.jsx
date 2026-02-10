@@ -54,6 +54,7 @@ import CSSCustomProperties from '../../../../../Themes/Components/Project/Data/p
 import variables from '../../../../../Themes/constants.scss';
 import CollectionCreation from './CollectionCreation';
 import StarButton from '../../../../../Components/Icons/Star';
+import { IS_CORE_ZONE_FUNCTIONALITY_ENABLED } from '../../../../../config';
 
 const { TabPane } = Tabs;
 const VFOLDER_CREATE_LEAF = 'create-vfolder';
@@ -889,7 +890,7 @@ function FilesContent(props) {
               key={treeKey}
             />
           </div>
-          {getProjectRolePermission(currentDataset?.permission, {
+          {IS_CORE_ZONE_FUNCTIONALITY_ENABLED && getProjectRolePermission(currentDataset?.permission, {
             zone: PanelKey.CORE,
             operation: permissionOperation.view,
             resource: [permissionResource.ownFile, permissionResource.anyFile],

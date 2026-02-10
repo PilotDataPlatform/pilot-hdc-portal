@@ -11,6 +11,7 @@ import styles from './index.module.scss';
 import {
   IS_MAINTENANCE_ANNOUNCEMENT_FUNCTIONALITY_ENABLED,
   IS_DATASET_FUNCTIONALITY_ENABLED,
+  IS_WORKBENCH_FUNCTIONALITY_ENABLED,
   PORTAL_PREFIX,
 } from '../../config';
 import {
@@ -372,13 +373,15 @@ class AppHeader extends Component {
                 </Button>
               </Menu.Item>
             </SubMenu>
-            <Menu.Item
-              key="support"
-              style={{ float: 'right' }}
-              onClick={this.showDrawer}
-            >
-              Support
-            </Menu.Item>
+            {IS_WORKBENCH_FUNCTIONALITY_ENABLED && (
+              <Menu.Item
+                key="support"
+                style={{ float: 'right' }}
+                onClick={this.showDrawer}
+              >
+                Support
+              </Menu.Item>
+            )}
             {this.props.match.params.projectCode && (
               <Menu.Item
                 style={{ padding: '5px 2px 0px 2px', marginRight: '1.2rem' }}
@@ -390,22 +393,24 @@ class AppHeader extends Component {
                 />
               </Menu.Item>
             )}
-            <Menu.Item
-              key="bell-notificiation"
-              id="bell-notificiation"
-              style={{
-                float: 'right',
-                color: '#FF8B18',
-                position: 'relative',
-                paddingTop: '0.7rem',
-                lineHeight: '5.9rem',
-              }}
-              onClick={() => {
-                this.toggleBellNotification();
-              }}
-            >
-              <BellOutlined />
-            </Menu.Item>
+            {IS_MAINTENANCE_ANNOUNCEMENT_FUNCTIONALITY_ENABLED && (
+              <Menu.Item
+                key="bell-notificiation"
+                id="bell-notificiation"
+                style={{
+                  float: 'right',
+                  color: '#FF8B18',
+                  position: 'relative',
+                  paddingTop: '0.7rem',
+                  lineHeight: '5.9rem',
+                }}
+                onClick={() => {
+                  this.toggleBellNotification();
+                }}
+              >
+                <BellOutlined />
+              </Menu.Item>
+            )}
           </Menu>
         </Menu>
         <BellNotifications
