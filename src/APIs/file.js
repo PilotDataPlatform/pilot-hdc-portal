@@ -151,13 +151,14 @@ function markFileForRestore(fileID, projectCode) {
   )
 }
 
-function restoreFileFromBin(fileID) {
+function restoreFileFromBin(fileID, projectCode) {
   return axios({
     url: `/v1/files/bin/restore`,
     method: 'PATCH',
     params: {
       id: fileID,
       status: 'ACTIVE',
+      project_code: projectCode,
       }
     }
   )

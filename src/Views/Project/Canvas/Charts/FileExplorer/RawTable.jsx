@@ -1009,7 +1009,7 @@ function RawTable(props) {
 
   async function restoreFile(record) {
       try {
-        restoreFileFromBin(record.geid);
+        restoreFileFromBin(record.geid, currentProject.code);
         removeRecordByGeid(record.geid);
         message.success(
           'File restored successfully to: ' +
