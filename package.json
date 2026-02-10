@@ -1,6 +1,6 @@
 {
   "name": "portal",
-  "version": "1.6.5-hdc",
+  "version": "1.6.6-hdc",
   "displayVersion": "1.5.0",
   "private": true,
   "dependencies": {
