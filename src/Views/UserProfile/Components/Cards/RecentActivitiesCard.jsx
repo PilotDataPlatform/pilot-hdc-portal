@@ -6,8 +6,7 @@
  * You may not use this file except in compliance with the License.
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, List, Button, message, Spin } from 'antd';
-import { EyeOutlined } from '@ant-design/icons';
+import { Row, Col, List, message } from 'antd';
 
 import BaseCard from './BaseCard';
 import RecentActivitiesItem from '../ListItems/RecentActivitiesItem';

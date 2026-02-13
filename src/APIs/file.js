@@ -11,14 +11,13 @@ import {
   serverAxios as axios,
   axios as Axios,
   uploadAxios,
-  serverAxios,
   downloadGRAxios,
 } from './config';
 import { JOB_STATUS } from '../Components/Layout/FilePanel/jobStatus';
-import { objectKeysToSnakeCase, checkGreenAndCore } from '../Utility';
+import { objectKeysToSnakeCase } from '../Utility';
 import _ from 'lodash';
 import { keycloak } from '../Service/keycloak';
-import { API_PATH, DOWNLOAD_GR, DOWNLOAD_CORE } from '../config';
+import { DOWNLOAD_GR, DOWNLOAD_CORE } from '../config';
 
 function uploadFileApi2(postedUrl, content, sessionId) {
   return Axios({
@@ -134,9 +133,19 @@ function markFileForDeletion(fileID, projectCode) {
     params: {
       ids: fileID,
       project_code: projectCode,
-      }
-    }
-  )
+      },
+  });
+}
+
+function deleteFile(fileID, projectCode) {
+  return axios({
+    url: `/v1/file/delete`,
+    method: 'DELETE',
+    params: {
+      id: fileID,
+      project_code: projectCode,
+      },
+  });
 }
 
 function markFileForRestore(fileID, projectCode) {
@@ -146,9 +155,8 @@ function markFileForRestore(fileID, projectCode) {
     params: {
       id: fileID,
       project_code: projectCode,
-      }
-    }
-  )
+      },
+  });
 }
 
 function restoreFileFromBin(fileID, projectCode) {
@@ -159,9 +167,8 @@ function restoreFileFromBin(fileID, projectCode) {
       id: fileID,
       status: 'ACTIVE',
       project_code: projectCode,
-      }
-    }
-  )
+      },
+  });
 }
 
 function getFileManifestAttrs(geidsList, lineageView = false) {
@@ -765,4 +772,5 @@ export {
   markFileForDeletion,
   markFileForRestore,
   restoreFileFromBin,
+  deleteFile,
 };
