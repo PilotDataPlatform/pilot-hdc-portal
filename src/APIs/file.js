@@ -133,9 +133,8 @@ function markFileForDeletion(fileID, projectCode) {
     params: {
       ids: fileID,
       project_code: projectCode,
-      }
-    }
-  )
+      },
+  });
 }
 
 function deleteFile(fileID, projectCode) {
@@ -145,9 +144,8 @@ function deleteFile(fileID, projectCode) {
     params: {
       id: fileID,
       project_code: projectCode,
-      }
-    }
-  )
+      },
+  });
 }
 
 function markFileForRestore(fileID, projectCode) {
@@ -157,9 +155,8 @@ function markFileForRestore(fileID, projectCode) {
     params: {
       id: fileID,
       project_code: projectCode,
-      }
-    }
-  )
+      },
+  });
 }
 
 function restoreFileFromBin(fileID, projectCode) {
@@ -170,9 +167,8 @@ function restoreFileFromBin(fileID, projectCode) {
       id: fileID,
       status: 'ACTIVE',
       project_code: projectCode,
-      }
-    }
-  )
+      },
+  });
 }
 
 function getFileManifestAttrs(geidsList, lineageView = false) {

@@ -403,4 +403,123 @@
       }
     }
   }
+  &--deleteditems {
+    padding-bottom: 14px !important;
+    flex: 1 1 100%;
+
+    :global {
+      .ant-card-body {
+        padding: 0;
+      }
+      .ant-row {
+        padding: 0 28px;
+
+        > .ant-col {
+          display: flex;
+        }
+      }
+      .ant-list {
+        flex: 1 1 100%;
+        display: flex;
+        flex-direction: column;
+        .ant-spin-nested-loading {
+          flex: 1 1 100%;
+          display: flex;
+          flex-direction: column;
+
+          .ant-spin-container {
+            flex: 1 1 100%;
+            display: flex;
+            flex-direction: column;
+
+            .ant-list-empty-text {
+              display: flex;
+              flex-direction: column;
+              flex: 1 1 100%;
+              justify-content: center;
+            }
+          }
+        }
+
+        @media (max-width: 1075px) {
+          min-height: 225px;
+        }
+      }
+
+      .ant-pagination {
+        padding: 0 15px;
+      }
+    }
+
+    .deleteditems__view-all-button {
+      font-weight: 500;
+      color: #595959;
+    }
+
+    .deleteditems__activity-log {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .activity-log__head {
+      background-color: #f8f8f8;
+      margin-bottom: 24px;
+      :global {
+        .ant-row {
+          font-weight: 500;
+        }
+      }
+    }
+
+    .deleteditems-log__activity-item {
+      margin-bottom: 10px;
+
+      :global {
+        .anticon {
+          color: #002a51;
+          margin-right: 12px;
+        }
+        .anticon-close,
+        .anticon-exclamation {
+          color: #ff4d4f;
+        }
+
+        .ant-row {
+          flex-flow: row nowrap;
+        }
+
+        .ant-col.activity-item__action {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          .ant-row {
+            padding: 0;
+
+            .ant-col {
+              margin-right: 0;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+            }
+          }
+        }
+      }
+      .action__action-detail {
+        font-size: 12px;
+        display: block;
+        line-height: 12px;
+      }
+    }
+  }
+}
+
+.truncate {
+  display: inline-block;
+  width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
 }
