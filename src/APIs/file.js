@@ -738,6 +738,26 @@ async function getResumableJobs(projectCode) {
     return null;
   }
 }
+
+async function initCentralNodeUpload(fileId, sessionId) {
+  return await axios({
+    url: `/v1/central-node/upload`,
+    method: 'POST',
+    data: {
+      file_id: fileId,
+      session_id: sessionId,
+    },
+  });
+}
+
+async function waitCentralNodeAccess(uploadKey, signal) {
+  return await axios({
+    url: `/v1/central-node/upload/${uploadKey}`,
+    method: 'GET',
+    signal: signal,
+  });
+}
+
 export {
   getFilesAPI,
   downloadFilesAPI,
@@ -773,4 +793,6 @@ export {
   markFileForRestore,
   restoreFileFromBin,
   deleteFile,
+  initCentralNodeUpload,
+  waitCentralNodeAccess,
 };
