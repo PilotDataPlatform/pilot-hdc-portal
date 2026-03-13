@@ -140,7 +140,7 @@ jobs:
         run: echo '${{ vars.ENV }}' > .env
       - name: Add feature flag
         run: |
-          if [[ "${{ matrix.environment }}" == "hdc-dev" ]]; then
+          if [[ "${{ matrix.environment }}" == "hdc-dev" || "${{ matrix.environment }}" == "hdc-lite" ]]; then
             echo -e '\nREACT_APP_IS_CENTRAL_NODE_FUNCTIONALITY_ENABLED=true\n' >> .env
           fi
       - name: Build image and push to GitHub Container Registry
