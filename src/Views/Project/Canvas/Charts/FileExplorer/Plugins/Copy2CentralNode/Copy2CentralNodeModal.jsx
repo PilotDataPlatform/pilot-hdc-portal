@@ -66,7 +66,7 @@ const Copy2CentralNodeModal = ({ visible, selectedRows, onClose }) => {
     abortControllerRef.current = new AbortController();
 
     try {
-      const response = await waitCentralNodeAccess(uploadKey, abortControllerRef.current.signal)
+      const response = await waitCentralNodeAccess(uploadKey, abortControllerRef.current.signal);
 
       if (response.status !== 202) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -78,7 +78,7 @@ const Copy2CentralNodeModal = ({ visible, selectedRows, onClose }) => {
       setCurrentStep(2);
     } catch (error) {
       console.error('Long-polling error:', error);
-      setPollingStatus('error');
+      setPollingStatus((error.name === 'AbortError') ? 'idle': 'error');
       setPolling(false);
     }
   };
@@ -116,7 +116,8 @@ const Copy2CentralNodeModal = ({ visible, selectedRows, onClose }) => {
 
   const handleOpenExternal = () => {
     if (!loginUrl) {
-      throw new Error('Login URL is not available');
+      message.error('Login URL is not available.', 3);
+      return;
     }
     window.open(loginUrl, '_blank', 'noopener,noreferrer');
     startLongPolling();
