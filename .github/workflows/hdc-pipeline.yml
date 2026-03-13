@@ -138,11 +138,12 @@ jobs:
         run: npm ci
       - name: Create .env file
         run: echo '${{ vars.ENV }}' > .env
-      - name: Add feature flag
+      - name: Add feature flag (temporary solution)
         run: |
           if [[ "${{ matrix.environment }}" == "hdc-dev" || "${{ matrix.environment }}" == "hdc-lite" ]]; then
             echo -e '\nREACT_APP_IS_CENTRAL_NODE_FUNCTIONALITY_ENABLED=true\n' >> .env
           fi
+          cat .env
       - name: Build image and push to GitHub Container Registry
         uses: docker/build-push-action@v4
         with:
