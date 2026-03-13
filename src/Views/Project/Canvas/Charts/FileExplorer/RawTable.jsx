@@ -84,6 +84,7 @@ import {
   SYSTEM_TAGS,
   PanelKey,
 } from './RawTableValues';
+import Copy2CentralNodePlugin from './Plugins/Copy2CentralNode/Copy2CentralNodePlugin';
 import Copy2CorePlugin from './Plugins/Copy2Core/Copy2CorePlugin';
 import VirtualFolderPlugin from './Plugins/VirtualFolders/VirtualFolderPlugin';
 import VirtualFolderFilesDeletePlugin from './Plugins/VirtualFolderDeleteFiles/VirtualFolderFilesDeletePlugin';
@@ -103,6 +104,7 @@ import { JOB_STATUS } from '../../../../../Components/Layout/FilePanel/jobStatus
 import { hideButton } from './hideButtons';
 import StarButton from '../../../../../Components/Icons/Star';
 import {
+  IS_CENTRAL_NODE_FUNCTIONALITY_ENABLED,
   IS_CORE_ZONE_FUNCTIONALITY_ENABLED,
   IS_DATASET_FUNCTIONALITY_ENABLED,
 } from '../../../../../config';
@@ -237,6 +239,7 @@ function RawTable(props) {
     window.addEventListener('resize', debounced);
   }, []);
   const hasSelected = selectedRowKeys.length > 0;
+  const hasOneFileSelected = !!(selectedRows.length === 1 && selectedRows[0].nodeLabel?.includes('File'));
   useEffect(() => {
     const menuItems = hideButton(actionBarRef, moreActionRef);
     setMenuItems(menuItems);
@@ -1480,6 +1483,43 @@ function RawTable(props) {
         hasSelected,
       elm: (
         <VirtualFolderPlugin
+          tableState={tableState}
+          setTableState={setTableState}
+          selectedRowKeys={selectedRowKeys}
+          clearSelection={clearSelection}
+          selectedRows={selectedRows}
+          panelKey={panelKey}
+        />
+      ),
+    },
+    {
+      condition: () => {
+        if (
+          IS_CENTRAL_NODE_FUNCTIONALITY_ENABLED &&
+          !isRootFolder &&
+          (props.type === DataSourceType.GREENROOM_HOME ||
+            props.type === DataSourceType.GREENROOM) &&
+          hasOneFileSelected &&
+          currentRouting
+        ) {
+          const PermAnyFile = getProjectRolePermission(permission, {
+            zone: panelKey,
+            resource: permissionResource.anyFile,
+            operation: permissionOperation.copy,
+          });
+          if (PermAnyFile) return true;
+          if (currentRouting && currentRouting[0]?.name === props.username) {
+            return getProjectRolePermission(permission, {
+              zone: panelKey,
+              resource: permissionResource.ownFile,
+              operation: permissionOperation.copy,
+            });
+          }
+          return false;
+        }
+      },
+      elm: (
+        <Copy2CentralNodePlugin
           tableState={tableState}
           setTableState={setTableState}
           selectedRowKeys={selectedRowKeys}
