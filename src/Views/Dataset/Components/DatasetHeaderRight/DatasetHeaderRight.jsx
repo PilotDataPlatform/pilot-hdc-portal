@@ -17,6 +17,8 @@ import { createKGSpace, getKGSpace, deleteDatasetApi } from '../../../../APIs';
 import { setKgSpaceBind } from '../../../../Redux/actions';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import { useKeycloak } from '@react-keycloak/web';
+import { getProjectsAndRoles } from '../../../../Utility/userProjects';
 import { getWithExpiry, setWithExpiry } from '../../../../Utility';
 
 export default function DatasetHeaderRight(props) {
@@ -28,8 +30,18 @@ export default function DatasetHeaderRight(props) {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const {
-    basicInfo: { size, totalFiles, tags, code, projectGeid },
+    basicInfo: { size, totalFiles, tags, code, projectGeid, creator },
   } = useSelector((state) => state.datasetInfo);
+  const datasetProjectCode = useSelector(
+    (state) => state.datasetInfo.projectCode,
+  );
+  const { keycloak } = useKeycloak();
+  const username = useSelector((state) => state.username);
+  const userProjectsAndRoles = getProjectsAndRoles(keycloak?.tokenParsed);
+  const isDatasetCreator = username === creator;
+  const isAssociatedProjectAdmin =
+    datasetProjectCode && userProjectsAndRoles[datasetProjectCode] === 'admin';
+  const canDeleteDataset = isDatasetCreator || isAssociatedProjectAdmin;
   const [kgSpaceBtnLoading, setKgSpaceBtnLoading] = useState(false);
   const { spaceBind } = useSelector((state) => state.kgSpaceList);
   const spaceBindName = spaceBind ? 'collab-hdc-' + spaceBind.name : null;
@@ -148,13 +160,15 @@ export default function DatasetHeaderRight(props) {
         >
           Release New Version
         </Button>
-        <Button
-          icon={<DeleteOutlined />}
-          danger
-          onClick={() => setDeleteModalVisible(true)}
-        >
-          Delete Dataset
-        </Button>
+        {canDeleteDataset && (
+          <Button
+            icon={<DeleteOutlined />}
+            danger
+            onClick={() => setDeleteModalVisible(true)}
+          >
+            Delete Dataset
+          </Button>
+        )}
       </div>
 
       <PublishNewVersion
@@ -164,7 +178,7 @@ export default function DatasetHeaderRight(props) {
 
       <Modal
         title="Delete Dataset"
-        visible={deleteModalVisible}
+        open={deleteModalVisible}
         onCancel={() => setDeleteModalVisible(false)}
         footer={[
           <Button key="cancel" onClick={() => setDeleteModalVisible(false)}>
