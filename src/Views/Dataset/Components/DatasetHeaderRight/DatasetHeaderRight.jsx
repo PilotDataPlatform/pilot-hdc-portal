@@ -6,7 +6,7 @@
  * You may not use this file except in compliance with the License.
  */
 import React, { useEffect, useState, useRef } from 'react';
-import { Tag, Button, Tooltip, message, Modal } from 'antd';
+import { Button, Tooltip, message, Modal } from 'antd';
 import styles from './DatasetHeaderRight.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { getFileSize, getTags } from '../../../../Utility';
@@ -164,7 +164,7 @@ export default function DatasetHeaderRight(props) {
 
       <Modal
         title="Delete Dataset"
-        open={deleteModalVisible}
+        visible={deleteModalVisible}
         onCancel={() => setDeleteModalVisible(false)}
         footer={[
           <Button key="cancel" onClick={() => setDeleteModalVisible(false)}>

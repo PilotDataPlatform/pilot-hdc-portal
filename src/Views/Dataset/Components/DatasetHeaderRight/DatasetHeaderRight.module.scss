@@ -54,15 +54,7 @@
     color: #595959;
   }
   :global {
-    .ant-btn-primary {
-      border-radius: 6px;
-      padding: 2px 0px;
-      height: 2.7rem;
-      width: 17.3rem;
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-left: 2rem;
-    }
+    .ant-btn-primary,
     .ant-btn-dangerous {
       border-radius: 6px;
       padding: 2px 0px;

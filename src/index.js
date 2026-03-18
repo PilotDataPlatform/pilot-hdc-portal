@@ -18,14 +18,21 @@ import { ThemeProvider, theme } from './Themes/theme';
 // Suppress benign ResizeObserver loop errors triggered by Ant Design components
 // during rapid layout changes. This is a known browser-level issue and does not
 // affect functionality. See: https://github.com/WICG/resize-observer/issues/38
-window.addEventListener('error', (e) => {
-  if (
-    e.message ===
-    'ResizeObserver loop completed with undelivered notifications.'
-  ) {
-    e.stopImmediatePropagation();
-  }
-});
+if (process.env.NODE_ENV !== 'production') {
+  window.addEventListener('error', (e) => {
+    const message =
+      (e && typeof e.message === 'string' && e.message) ||
+      (e && e.error && typeof e.error.message === 'string' && e.error.message) ||
+      '';
+
+    if (
+      message.includes('ResizeObserver loop completed with undelivered notifications.') ||
+      message.includes('ResizeObserver loop limit exceeded')
+    ) {
+      e.stopImmediatePropagation();
+    }
+  });
+}
 
 ReactDOM.render(
   <CookiesProvider>
