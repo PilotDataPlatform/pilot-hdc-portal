@@ -6,23 +6,27 @@
  * You may not use this file except in compliance with the License.
  */
 import React, { useEffect, useState, useRef } from 'react';
-import { Tag, Button, Tooltip, message } from 'antd';
+import { Tag, Button, Tooltip, message, Modal } from 'antd';
 import styles from './DatasetHeaderRight.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { getFileSize, getTags } from '../../../../Utility';
 import DatasetFilePanel from '../DatasetFilePanel/DatasetFilePanel';
-import { RocketOutlined } from '@ant-design/icons';
+import { RocketOutlined, DeleteOutlined } from '@ant-design/icons';
 import PublishNewVersion from '../PublishNewVersion/PublishNewVersion';
-import { createKGSpace, getKGSpace } from '../../../../APIs';
+import { createKGSpace, getKGSpace, deleteDatasetApi } from '../../../../APIs';
 import { setKgSpaceBind } from '../../../../Redux/actions';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import { getWithExpiry, setWithExpiry } from '../../../../Utility';
 
 export default function DatasetHeaderRight(props) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { t } = useTranslation(['errormessages', 'success']);
   const [newVersionModalVisibility, setNewVersionModalVisibility] =
     useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const {
     basicInfo: { size, totalFiles, tags, code, projectGeid },
   } = useSelector((state) => state.datasetInfo);
@@ -87,6 +91,21 @@ export default function DatasetHeaderRight(props) {
 
     message.success(t('success:createKGSpace.default.0'));
   };
+
+  const handleDeleteDataset = async () => {
+    setDeleteLoading(true);
+    try {
+      await deleteDatasetApi(code);
+      message.success(`Dataset ${code} has been deleted successfully.`);
+      setDeleteModalVisible(false);
+      history.push('/datasets');
+    } catch (e) {
+      message.error('Failed to delete the dataset. Please try again later.');
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
+
   return (
     <>
       <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -129,12 +148,44 @@ export default function DatasetHeaderRight(props) {
         >
           Release New Version
         </Button>
+        <Button
+          icon={<DeleteOutlined />}
+          danger
+          onClick={() => setDeleteModalVisible(true)}
+        >
+          Delete Dataset
+        </Button>
       </div>
 
       <PublishNewVersion
         newVersionModalVisibility={newVersionModalVisibility}
         setNewVersionModalVisibility={setNewVersionModalVisibility}
       />
+
+      <Modal
+        title="Delete Dataset"
+        open={deleteModalVisible}
+        onCancel={() => setDeleteModalVisible(false)}
+        footer={[
+          <Button key="cancel" onClick={() => setDeleteModalVisible(false)}>
+            Cancel
+          </Button>,
+          <Button
+            key="delete"
+            type="primary"
+            danger
+            loading={deleteLoading}
+            onClick={handleDeleteDataset}
+          >
+            Delete
+          </Button>,
+        ]}
+      >
+        <p>
+          Are you sure you want to delete dataset <b>{code}</b>? This action cannot be
+          undone.
+        </p>
+      </Modal>
     </>
   );
 }

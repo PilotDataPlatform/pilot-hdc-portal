@@ -15,6 +15,18 @@ import KeyCloakMiddleware from './KeyCloakMiddleware';
 import './i18n';
 import { ThemeProvider, theme } from './Themes/theme';
 
+// Suppress benign ResizeObserver loop errors triggered by Ant Design components
+// during rapid layout changes. This is a known browser-level issue and does not
+// affect functionality. See: https://github.com/WICG/resize-observer/issues/38
+window.addEventListener('error', (e) => {
+  if (
+    e.message ===
+    'ResizeObserver loop completed with undelivered notifications.'
+  ) {
+    e.stopImmediatePropagation();
+  }
+});
+
 ReactDOM.render(
   <CookiesProvider>
     <Provider store={store}>

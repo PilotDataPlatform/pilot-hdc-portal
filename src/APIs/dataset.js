@@ -131,6 +131,13 @@ const mapBasicInfo = (result) => {
   return basicInfo;
 };
 
+export function deleteDatasetApi(datasetCode) {
+  return serverAxios({
+    url: `/v1/datasets/${datasetCode}`,
+    method: 'DELETE',
+  });
+}
+
 export function getDatasetByDatasetCode(datasetCode) {
   return serverAxios({
     url: `/v1/datasets/${datasetCode}`,
