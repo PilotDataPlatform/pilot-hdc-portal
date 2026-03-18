@@ -131,9 +131,18 @@ const mapBasicInfo = (result) => {
   return basicInfo;
 };
 
-export function getDatasetByDatasetCode(datasetCode) {
+export function deleteDatasetApi(datasetCode) {
+  const encodedDatasetCode = encodeURIComponent(datasetCode);
   return serverAxios({
-    url: `/v1/datasets/${datasetCode}`,
+    url: `/v1/datasets/${encodedDatasetCode}`,
+    method: 'DELETE',
+  });
+}
+
+export function getDatasetByDatasetCode(datasetCode) {
+  const encodedDatasetCode = encodeURIComponent(datasetCode);
+  return serverAxios({
+    url: `/v1/datasets/${encodedDatasetCode}`,
   }).then((res) => {
     _.set(res, 'data', mapBasicInfo(res.data));
     return res;

@@ -1,6 +1,6 @@
 {
   "name": "portal",
-  "version": "1.6.11-hdc",
+  "version": "1.7.0-hdc",
   "displayVersion": "1.6.0",
   "private": true,
   "dependencies": {
@@ -22,7 +22,7 @@
     "animate.css": "^4.1.0",
     "antd": "^4.2.0",
     "antd-img-crop": "^3.13.2",
-    "axios": "1.12.0",
+    "axios": "1.13.5",
     "bizcharts": "^3.5.8",
     "broadcast-channel": "^3.1.0",
     "camelcase-keys": "^6.2.2",
