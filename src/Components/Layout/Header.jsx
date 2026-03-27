@@ -9,6 +9,7 @@ import React, { Component, createRef } from 'react';
 import { Layout, Menu, Button, Modal, Alert, Badge, message } from 'antd';
 import styles from './index.module.scss';
 import {
+  IS_CENTRAL_NODE_FUNCTIONALITY_ENABLED,
   IS_MAINTENANCE_ANNOUNCEMENT_FUNCTIONALITY_ENABLED,
   IS_DATASET_FUNCTIONALITY_ENABLED,
   IS_WORKBENCH_FUNCTIONALITY_ENABLED,
@@ -314,6 +315,7 @@ class AppHeader extends Component {
                   style={{ width: '8rem', marginTop: 0 }}
                 />
               </a>
+              {IS_CENTRAL_NODE_FUNCTIONALITY_ENABLED && (<span style={{ marginLeft: 5 }}>Lite</span>)}
             </Menu.Item>
             <Menu.Item key="bridge">
               <Link to="/landing">
