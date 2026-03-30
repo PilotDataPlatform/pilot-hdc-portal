@@ -176,8 +176,14 @@ jobs:
   trigger_dev_deployment:
     needs: [build_and_publish, get-version, create-git-tag]
     if: github.event_name != 'pull_request'
+    strategy:
+      matrix:
+        include:
+          - environment: dev
+            tag_suffix: ovh-dev
     uses: PilotDataPlatform/pilot-hdc-ci-tools/.github/workflows/update_gitops_versions.yml@main
     with:
       service_key: portal
-      image_tag: ${{ needs.get-version.outputs.app_version }}
+      image_tag: ${{ needs.get-version.outputs.app_version }}-${{ matrix.tag_suffix }}
+      environment: ${{ matrix.environment }}
     secrets: inherit
