@@ -175,24 +175,9 @@ jobs:
 
   trigger_dev_deployment:
     needs: [build_and_publish, get-version, create-git-tag]
-    runs-on: hdc-dev-runners-public
-    steps:
-      - name: Checkout CSCS-INFRA repo
-        run: |
-          git clone https://robot_user:${{ secrets.HDC_CSCS_INFRA_READ_WRITE_TOKEN }}@github.com/Indoc-Research/cscs-infra.git
-
-      - name: Configure Git User
-        run: |
-          # navigate to the repo directory
-          cd $(basename github.com/Indoc-Research/cscs-infra.git .git)
-          git config user.name "GitHub Actions"
-          git config user.email "github-actions@users.noreply.indocresearch.org"
-
-      - name: Update service version in CSCS-Infra repo
-        run: |
-          cd $(basename github.com/Indoc-Research/cscs-infra.git .git)
-          BASE_FILE='./Intern-terr/config/base/base.tfvars'
-          sed -i 's/\(portal_app_version\s*=\s*"\)[0-9.]\+-hdc\("\)/\1${{needs.get-version.outputs.app_version}}\2/' $BASE_FILE
-          git add $BASE_FILE
-          git commit -m "Deploy portal ${{needs.get-version.outputs.app_version}} [target:helm_release.portal] "
-          git push origin main
+    if: github.event_name != 'pull_request'
+    uses: PilotDataPlatform/pilot-hdc-ci-tools/.github/workflows/update_gitops_versions.yml@main
+    with:
+      service_key: portal
+      image_tag: ${{ needs.get-version.outputs.app_version }}
+    secrets: inherit
