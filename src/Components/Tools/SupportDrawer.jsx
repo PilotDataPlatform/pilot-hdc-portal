@@ -164,7 +164,7 @@ function SupportDrawer(props) {
 
       <Button type="primary" ghost>
         <a
-          href="https://xwiki.hdc.humanbrainproject.eu/bin/view/userguide/"
+          href="https://xwiki.hdc.ebrains.eu/bin/view/userguide/"
           target="_blank"
         >
           User Guide

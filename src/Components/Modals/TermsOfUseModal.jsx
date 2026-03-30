@@ -125,8 +125,8 @@ function TermsOfUseModal(props) {
             </ul>
           <h4 className='ant-typography' id='third'>3 Accessing the HDC</h4>
           <p>For additional information about how the HDC is accessed and used, please refer to the HDC Access Policy
-            available at <a href='https://object.hdc.humanbrainproject.eu/public-resources/HDC-Access-Policy.pdf'
-                            target='_blank'>https://object.hdc.humanbrainproject.eu/public-resources/HDC-Access-Policy.pdf</a>
+            available at <a href='https://object.hdc.ebrains.eu/public-resources/HDC-Access-Policy.pdf'
+                            target='_blank'>https://object.hdc.ebrains.eu/public-resources/HDC-Access-Policy.pdf</a>
           </p>
           <h5 id='third-one'>3.1 HDC User Account</h5>
           <p>Access to the HDC requires an HDC user account consisting of a username and
@@ -134,7 +134,7 @@ function TermsOfUseModal(props) {
             provider in association with applying for an HDC user account are accurate</p>
           <p>You agree to keep details of your user account, including password, secret.Account credentials are not to
             be shared with anyone. You must inform HDC support immediately if you suspect any unauthorized use of or
-            access to your password or account (hdc@humanbrainproject.eu)</p>
+            access to your password or account (hdc@ebrains.eu)</p>
           <p>The HDC service provider and its sub-service providers will not be responsible if you
             or others suffer any harm or loss because you do not keep your account secure.</p>
           <h5 id='third-two'>3.2 Personal information we collect</h5>
@@ -143,8 +143,8 @@ function TermsOfUseModal(props) {
             you are accessing or using. The purposes for processing categories of personal
             data collected and the legal basis for processing can be found in the HDC Privacy
             Policy available at <a
-              href='https://object.hdc.humanbrainproject.eu/public-resources/HDC-Privacy-Policy.pdf'
-              target='_blank'>https://object.hdc.humanbrainproject.eu/public-resources/HDC-Privacy-Policy.pdf</a></p>
+              href='https://object.hdc.ebrains.eu/public-resources/HDC-Privacy-Policy.pdf'
+              target='_blank'>https://object.hdc.ebrains.eu/public-resources/HDC-Privacy-Policy.pdf</a></p>
           <h5 id='third-three'>3.3 HDC responsibilities</h5>
           <p>HDC service provider and its sub-service providers will take appropriate measures
             to ensure that the processing of your<b>User Account information</b> is done in a safe
@@ -230,7 +230,7 @@ function TermsOfUseModal(props) {
                 or to the underlying infrastructure, by any illegitimate means. You are
                 required to promptly report any known or suspected illegitimate use or
                 identified weakness to the HDC support team at
-                <a href='mailto:hdc@humanbrainproject.eu'>hdc@humanbrainproject.eu</a>.
+                <a href='mailto:hdc@ebrains.eu'>hdc@ebrains.eu</a>.
               </li>
               <li>You commit to comply with any additional rules and regulations imposed by
                 your institution and your institutional review board in accessing and using
@@ -268,7 +268,7 @@ function TermsOfUseModal(props) {
             services.</p>
           <h4 className='ant-typography' id='seventh'>7 Other policies and conditions that may apply to you</h4>
           <p>Further HDC policies and conditions may apply to you and
-            can be found at https://hdc.humanbrainproject.eu.</p>
+            can be found at https://hdc.ebrains.eu.</p>
           <h4 className='ant-typography' id='eighth'>8 Termination and Liability</h4>
           <p>The data and features available in the HDC are provided on an "as is" and "as
             available" basis. Please note that HDC features, and content may contain bugs,
@@ -306,7 +306,7 @@ function TermsOfUseModal(props) {
             jurisdiction.</p>
           <h4 className='ant-typography' id='tenth'>10 Contact Us</h4>
           <p>If you have any queries, comments, or concerns about these General Terms of
-            Use, please contact hdc@humanbrainproject.eu.</p>
+            Use, please contact hdc@ebrains.eu.</p>
           <h4 className='ant-typography' id='eleventh'>11 Imprint</h4>
           <p>The HDC is made available and operated by:</p>
           <p><a

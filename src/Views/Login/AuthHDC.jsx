@@ -582,7 +582,7 @@ class AuthHDC extends Component {
               </a>
               <a
                 target="_blank"
-                href="https://xwiki.hdc.humanbrainproject.eu/bin/view/userguide/"
+                href="https://xwiki.hdc.ebrains.eu/bin/view/userguide/"
               >
                 Documentation
               </a>
