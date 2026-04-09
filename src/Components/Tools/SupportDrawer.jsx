@@ -13,8 +13,8 @@ import ContactUsForm from './ContactUsForm';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './index.module.scss';
-import { xwikis } from '../../externalLinks';
 import _ from 'lodash';
+import { XWIKI } from '../../config';
 
 const { Title } = Typography;
 const { Link } = Anchor;
@@ -164,7 +164,7 @@ function SupportDrawer(props) {
 
       <Button type="primary" ghost>
         <a
-          href="https://xwiki.hdc.ebrains.eu/bin/view/userguide/"
+          href={`https://${XWIKI}/bin/view/userguide/`}
           target="_blank"
         >
           User Guide

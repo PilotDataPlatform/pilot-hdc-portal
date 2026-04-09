@@ -6,7 +6,7 @@
  * You may not use this file except in compliance with the License.
  */
 import React, { Component } from 'react';
-import { Col, Row, Button, Modal, notification, message } from 'antd';
+import { Button, Modal, notification, message } from 'antd';
 import { ExclamationCircleOutlined, UserOutlined } from '@ant-design/icons';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
@@ -26,7 +26,7 @@ import {
 import { login as keycloakLogin } from '../../Utility/keycloakActions';
 
 import { tokenManager } from '../../Service/tokenManager';
-import { PORTAL_PREFIX, PLATFORM } from '../../config';
+import { PORTAL_PREFIX, PLATFORM, XWIKI } from '../../config';
 import { xwikis } from '../../externalLinks';
 import i18n from '../../i18n';
 const { detect } = require('detect-browser');
@@ -582,7 +582,7 @@ class AuthHDC extends Component {
               </a>
               <a
                 target="_blank"
-                href="https://xwiki.hdc.ebrains.eu/bin/view/userguide/"
+                href={`https://${XWIKI}/bin/view/userguide/`}
               >
                 Documentation
               </a>
