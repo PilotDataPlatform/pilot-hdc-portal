@@ -1,0 +1,35 @@
+name: Deploy to prod
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to deploy (e.g. 1.7.6). See "List available versions" job for recent tags'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  list_versions:
+    name: List available versions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Recent tags
+        run: |
+          echo "## Recent portal versions (last 10 git tags):"
+          git tag -l --sort=-v:refname | head -10
+
+  deploy_prod:
+    name: Deploy portal ${{ inputs.version }}-ovh-prod
+    needs: [list_versions]
+    uses: PilotDataPlatform/pilot-hdc-ci-tools/.github/workflows/update_gitops_versions.yml@main
+    with:
+      service_key: portal
+      image_tag: ${{ inputs.version }}-ovh-prod
+      environment: prod
+    secrets: inherit
