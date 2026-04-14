@@ -56,6 +56,26 @@ run `npm build`. After the compilation completed, the minimized static files are
 
 The terms of use are in `public/files/terms-of-use.html`
 
+## CI/CD
+
+### Build pipeline (`hdc-pipeline.yml`)
+
+Triggered on every push/PR to `main`. Builds Docker images for each environment in the matrix:
+
+| Environment | Image tag suffix |
+|-------------|-----------------|
+| hdc-lite    | `lite`          |
+| ovh-dev     | `ovh-dev`       |
+| ovh-prod    | `ovh-prod`      |
+
+Images are pushed to both the eBRAINS Harbor registry and the OVH registry. On push to `main` (not PRs), the pipeline also:
+- Creates a git tag from the version in `package.json`
+- Triggers automatic deployment to **dev** by bumping `clusters/dev/versions.yaml` in the [gitops repo](https://github.com/PilotDataPlatform/pilot-hdc-platform-gitops)
+
+### Production deployment (`deploy-prod.yml`)
+
+Manual `workflow_dispatch` trigger. Go to **Actions > Deploy to prod > Run workflow** and enter the version (e.g. `1.7.8-hdc`). The workflow appends `-ovh-prod` to produce the full image tag and bumps `clusters/prod/versions.yaml` in the gitops repo. ArgoCD picks up the change automatically.
+
 ## Acknowledgements
 The development of the HealthDataCloud open source software was supported by the EBRAINS research infrastructure, funded from the European Union's Horizon 2020 Framework Programme for Research and Innovation under the Specific Grant Agreement No. 945539 (Human Brain Project SGA3) and H2020 Research and Innovation Action Grant Interactive Computing E-Infrastructure for the Human Brain Project ICEI 800858.
 
