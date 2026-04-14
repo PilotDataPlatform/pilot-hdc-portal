@@ -75,7 +75,7 @@ jobs:
 
     strategy:
       matrix:
-        environment: ["hdc-dev","hdc-prod","hdc-lite","ovh-dev","ovh-prod"]
+        environment: ["hdc-lite","ovh-dev","ovh-prod"]
 
     environment: ${{ matrix.environment }}
 
@@ -88,11 +88,7 @@ jobs:
       - name: Set docker tag with environment
         shell: bash
         run: |
-          if [[ "${{ matrix.environment }}" == "hdc-dev" ]]; then
-            MATRIX_ENV="dev"
-          elif [[ "${{ matrix.environment }}" == "hdc-prod" ]]; then
-            MATRIX_ENV="prod"
-          elif [[ "${{ matrix.environment }}" == "hdc-lite" ]]; then
+          if [[ "${{ matrix.environment }}" == "hdc-lite" ]]; then
             MATRIX_ENV="lite"
           elif [[ "${{ matrix.environment }}" == "ovh-dev" ]]; then
             MATRIX_ENV="ovh-dev"
