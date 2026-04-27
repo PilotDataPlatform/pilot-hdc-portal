@@ -1,7 +1,7 @@
 {
   "name": "portal",
-  "version": "1.7.8-hdc",
-  "displayVersion": "1.6.0",
+  "version": "1.7.9-hdc",
+  "displayVersion": "1.7.0",
   "private": true,
   "dependencies": {
     "@ant-design/charts": "^1.3.6",
