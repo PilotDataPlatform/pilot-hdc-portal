@@ -76,17 +76,22 @@ class AuthHDC extends Component {
         message: 'Cookies on this site',
         description: (
           <>
-            <p>
-              We use cookies to make your experience better by keeping your
-              session information and login status. By using the {PLATFORM} you
-              accept our use of cookies in accordance with our{' '}
+            <p style={{marginBottom: 0}}>
+              We use cookies to improve your experience by keeping your session information and login status.
+            </p>
+            <p style={{marginBottom: 0}}>
+              By using the {PLATFORM} you accept our use of cookies in accordance with our{' '}
               <a
                 target="_blank"
                 rel="noopener noreferrer"
                 href={xwikis.privacyPolicy}
               >
                 Privacy Policy
-              </a>
+              </a>.
+            </p>
+            <p style={{marginBottom: 0}}>
+              Additionally, we use a web analytics service to collect aggregated statistics.
+              If you do not wish to share this data, you can opt out on your user account page.
             </p>
           </>
         ),

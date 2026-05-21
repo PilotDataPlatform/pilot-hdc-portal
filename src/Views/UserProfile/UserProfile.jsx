@@ -15,6 +15,7 @@ import MemberProfileCard from './Components/Cards/MemberProfileCard';
 import ProjectMemberCard from './Components/Cards/ProjectMemberCard';
 import RecentActivitiesCard from './Components/Cards/RecentActivitiesCard';
 import RecentDeletedCard from './Components/Cards/RecentDeletedCard';
+import WebAnalyticsPreferencesCard from './Components/Cards/WebAnalyticsPreferencesCard';
 import { getUserProfileAPI, checkVMAccountApi, getUserDeletedFiles } from '../../APIs';
 import i18n from '../../i18n';
 
@@ -60,6 +61,7 @@ const UserProfile = () => {
               showVMPasswordReset={!vmUserProfile}
             />
             <ProjectMemberCard username={username} role={role} />
+            <WebAnalyticsPreferencesCard />
           </div>
           <div className={styles['user-profile__container-right']}>
             <div style={{ marginBottom: 12 }}>
