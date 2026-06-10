@@ -107,6 +107,7 @@ import {
   IS_CENTRAL_NODE_FUNCTIONALITY_ENABLED,
   IS_CORE_ZONE_FUNCTIONALITY_ENABLED,
   IS_DATASET_FUNCTIONALITY_ENABLED,
+  IS_LINEAGE_FUNCTIONALITY_ENABLED,
 } from '../../../../../config';
 const { Panel } = Collapse;
 const { Title } = Typography;
@@ -2049,7 +2050,7 @@ function RawTable(props) {
                   />
                 </Panel>
               ) : null}
-              {currentRecord.nodeLabel.indexOf('Folder') === -1 ? (
+              {IS_LINEAGE_FUNCTIONALITY_ENABLED && currentRecord.nodeLabel.indexOf('Folder') === -1 ? (
                 <Panel
                   header={
                     <span
