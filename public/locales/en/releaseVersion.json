@@ -44,6 +44,11 @@
       "version": "1.7.0",
       "date": "24.04.2026",
       "note": "<h3>New Features:</h3><ul><li>Dataset Deletion: Dataset creators and administrators of the linked project can now delete datasets directly through the user interface.</li><li>Pilot-HDC Lite: A simplified, lightweight version of Pilot-HDC is now available for local deployment. This streamlined version focuses on essential functionality, allowing users to efficiently copy files to the Pilot-HDC Central Node.</li></ul><h3>Improvements:</h3><ul><li>Infrastructure Migration: Successfully migrated the platform to a new infrastructure, significantly reducing resource consumption while enhancing overall system responsiveness.</li><li>Domain Transition: Reconfigured all URLs, shifting target destinations from hdc.humanbrainproject.eu to hdc.ebrains.eu to to ensure accurate and uninterrupted user navigation.</li></ul><h3>Bug Fixes:</h3><ul><li>Resolved an issue where users lacked the correct permissions upon joining a starting project.</li><li>Fixed an issue causing the \"Generate VM Password\" button to be disabled in specific scenarios.</li></ul>"
+    },
+    {
+      "version": "1.8.0",
+      "date": "26.06.2026",
+      "note": "<h3>New Features:</h3><ul><li>Web Analytics: Matomo has been integrated to collect anonymized, aggregated usage statistics. This data collection can be opted out of at any time from the user account page.</li></ul><h3>Improvements:</h3><ul><li>Email Infrastructure: Automatic notification emails have been migrated to a new SMTP server and now are sent from no-reply@hdc.ebrains.eu address.</li><li>Cluster Backup: Backup functionality within the cluster has been improved by routing backup data to an external object storage system, ensuring backups remain secure and accessible.</li><li>Privacy Policy: New version of the Privacy Policy has been published to reflect the recent implementation of web analytics services.</li></ul><h3>Bug Fixes:</h3><ul><li>Resolved an issue that occasionally caused the network origin to be incorrectly detected in the activity logs.</li><li>Fixed an issue that caused lineage information to be unavailable for certain files.</li></ul>"
     }
   ]
 }
